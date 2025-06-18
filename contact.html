@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .header-fixed {
+      top: 2.5rem; /* top-10 */
+    }
+        .poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+        .poppin {
+            font-family: 'Poppins', sans-serif;
+        }
+        .loading {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="w-full pt-26 mx-auto max-w-[1500px]">
+       <!-- notification -->
+    <div class="fixed top-0 left-0 w-full z-50">
+      <div class="bg-[#E0B654] w-full text-black h-10 flex items-center justify-center relative">
+        <div class="noti flex justify-center items-center gap-x-2 w-full text-[12px] sm:text-[14px] font-semibold">
+           <i class="fa-solid fa-server"></i>
+         <h2 class="flex items-center justify-center flex gap-x-2">30% off storewide — Limited time!
+          <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
+            Shop Now <ArrowRightIcon class="font-light" size={18} />
+          </span>
+          </h2> 
+        </div>
+        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 h-3.5 cursor-pointer"></i>
+      </div>
+    </div>
+    <!-- header -->
+      <div class="fixed header-fixed left-0 w-full z-50">
+    <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
+
+      <!-- Logo -->
+      <img src="assets/logo.jpg" alt="logo" class="h-16" />
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
+        <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
+        <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+        <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></a>
+</li>
+<li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></a>
+</li>
+      </ul>
+
+      <!-- Icons Section -->
+      <div class="flex gap-x-3 items-center">
+        <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
+        <button id="signupBtn" class="signupBtn">
+          <a href="signup.html" title="signup">
+          <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i> </a>
+        </button>
+        <button id="cartBtn" class="relative">
+          <a href="cart.html" title="cart">
+          <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i> 
+          <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div> </a>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
+        <i class="fas fa-bars text-[#141718] text-xl"></i>
+      </button>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
+        <ul class="flex flex-col items-center py-4 space-y-2">
+          <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
+          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+          <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- Thank You Message (Initially Hidden) -->
+    <div id="thankYouMessage" class="bg-white p-8 rounded-lg shadow-md max-w-3xl mx-auto mt-20 hidden">
+        <div class="text-center py-10">
+            <h2 class="text-2xl font-bold text-green-600 mb-4">Thank You!</h2>
+            <p class="mb-6">
+                Your message has been submitted successfully. We'll get back to you soon.
+            </p>
+            <button
+                onclick="handleNewMessage()"
+                class="bg-[#38CB89] text-white py-2 px-6 rounded-md transition-colors hover:bg-green-600"
+            >
+                Send Another Message
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Contact Form (Initially Visible) -->
+    <div id="mainContent">
+        <!-- Hero Image Section -->
+        <div class="relative w-full ">
+            <div class="relative w-full h-[55vh] overflow-hidden">
+                <div class=" min-w-[100vw] min-h-[50vh]">
+                    <img
+                        src="/assets/contact.png"
+                        alt="Contact us"
+                        class="h-full w-full object-cover object-center loading"
+                        onload="this.classList.remove('loading'); this.classList.add('loaded');"
+                        onerror="this.style.display='none';"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Cards Section -->
+        <div class="flex justify-center mt-15 items-center flex-wrap gap-x-6 gap-6">
+            <!-- Policy Question -->
+            <div class="bg-[#1F83401A] p-8 gap-4 rounded-lg flex flex-col items-center text-center">
+                <i class="fas fa-question-circle w-8 h-8 text-teal-600 mb-3 text-2xl"></i>
+                <h3 class="text-md font-semibold text-gray-800 mb-2">
+                    Policy Question
+                </h3>
+                <p class="text-gray-600 text-sm w-[200px]">
+                    Have a question about our products, please contact idowucouture.
+                </p>
+            </div>
+
+            <!-- Report a Case -->
+            <div class="bg-[#1F83401A] p-8 gap-4 rounded-lg flex flex-col items-center text-center">
+                <i class="fas fa-exclamation-triangle w-8 h-8 text-teal-600 mb-3 text-2xl"></i>
+                <h3 class="text-md font-semibold text-gray-800 mb-2">
+                    Report a case
+                </h3>
+                <p class="text-gray-600 text-sm w-[200px]">
+                    We guide you through the simple, hassle-free process securing your items.
+                </p>
+            </div>
+
+            <!-- Ongoing Support -->
+            <div class="bg-[#1F83401A] p-8 gap-4 rounded-lg flex flex-col items-center text-center">
+                <i class="fas fa-headphones w-8 h-8 text-teal-600 mb-3 text-2xl"></i>
+                <h3 class="text-md font-semibold text-gray-800 mb-2">
+                    Ongoing Support
+                </h3>
+                <p class="text-gray-600 text-sm w-[200px]">
+                    Enjoy peace of mind with our 24/7 support and assistance whenever you need it.
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div class="py-20 pt-20" id="aniSection">
+            <div class="bg-[#7AB58D0D] px-5 md:px-10 text-black lg:px-20 mb-5 py-10 flex space-x-10 items-start flex-wrap justify-center sm:justify-around">
+                <!-- Contact Information Section -->
+                <div class="grid gap-6 mb-6">
+                    <!-- Enquiry Section -->
+                    <div class="bg-white max-w-[350px] border h-fit border-gray-500 sm:max-w-[500px] p-4 md:px-8 rounded-lg">
+                        <div class="flex items-start">
+                            <img 
+                                src="/assets/call.png" 
+                                alt="call" 
+                                class="w-10 h-10 mr-2 loading"
+                                onload="this.classList.remove('loading'); this.classList.add('loaded');"
+                                onerror="this.style.display='none';"
+                            />
+                            <div>
+                                <h2 class="text-base poppins font-medium text-[#383C39]">
+                                    Enquiry now
+                                </h2>
+                                <p class="text-black font-bold poppin text-[18px]">
+                                    +234 80234545061
+                                </p>
+                                <p class="text-black font-bold poppin text-[16px]">
+                                    contact@npfinsurance.com
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address Section -->
+                    <div class="bg-white max-w-[350px] border h-fit border-gray-500 sm:max-w-[500px] p-4 md:px-8 rounded-lg">
+                        <div class="flex items-start mb-3">
+                            <img 
+                                src="/assets/geo.png" 
+                                alt="location" 
+                                class="w-10 h-10 mr-2 loading"
+                                onload="this.classList.remove('loading'); this.classList.add('loaded');"
+                                onerror="this.style.display='none';"
+                            />
+                            <div>
+                                <h2 class="text-base poppins font-medium text-[#383C39]">
+                                    Address
+                                </h2>
+                                <p class="text-black poppins text-[16px] max-w-[300px]">
+                                    Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road
+                                    junction, 3rd Avenue Gwarinpa
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Container -->
+                <div class="mb-6 flex-1">
+                    <div id="formSection">
+                        <h1 class="poppins font-medium text-[18px] md:text-[20px] text-[#6F6969] mb-1">
+                            I'M NEW HERE
+                        </h1>
+                        <h1 class="text-2xl md:text-3xl font-medium text-black poppins mb-1">
+                            Interested in a product?
+                        </h1>
+                        <h2 class="text-[#575454] poppins font-medium text-[20px] md:text-[25px] mb-1">
+                            Talk to our sales team.
+                        </h2>
+                        <p class="text-gray-500 text-sm md:text-base poppins font-normal">
+                            From questions about insurance to online personal policy, we're
+                            here to connect & help get you started.
+                        </p>
+                        <div class="bg-white p-8 mt-4 rounded-lg shadow-md w-full max-w-3xl">
+                            <form id="contactForm">
+                                <!-- Full Name and Email - Side by side on sm and above -->
+                                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                                    <div class="flex-1">
+                                        <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Full Name *
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="fullName"
+                                            name="fullName"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                            placeholder="John Doe"
+                                        />
+                                        <p id="fullNameError" class="mt-1 text-sm text-red-600 hidden"></p>
+                                    </div>
+
+                                    <div class="flex-1">
+                                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Email Address *
+                                        </label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                            placeholder="johndoe@example.com"
+                                        />
+                                        <p id="emailError" class="mt-1 text-sm text-red-600 hidden"></p>
+                                    </div>
+                                </div>
+
+                                <!-- Phone and Subject - Side by side on sm and above -->
+                                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                                    <div class="flex-1">
+                                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Phone Number *
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                            placeholder="(123) 456-7890"
+                                        />
+                                        <p id="phoneError" class="mt-1 text-sm text-red-600 hidden"></p>
+                                    </div>
+
+                                    <div class="flex-1">
+                                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Subject *
+                                        </label>
+                                        <select
+                                            id="subject"
+                                            name="subject"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                        >
+                                            <option value="">Select a topic</option>
+                                            <option value="General Inquiry">General Inquiry</option>
+                                            <option value="Technical Support">Technical Support</option>
+                                            <option value="Billing Question">Billing Question</option>
+                                            <option value="Partnership Opportunity">Partnership Opportunity</option>
+                                            <option value="Feedback">Feedback</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <p id="subjectError" class="mt-1 text-sm text-red-600 hidden"></p>
+                                    </div>
+                                </div>
+
+                                <!-- Message Textarea -->
+                                <div class="mb-6">
+                                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Your Message *
+                                    </label>
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        rows="5"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                        placeholder="Please enter your message here..."
+                                    ></textarea>
+                                    <p id="messageError" class="mt-1 text-sm text-red-600 hidden"></p>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="text-center">
+                                    <button
+                                        type="submit"
+                                        id="submitBtn"
+                                        class="px-6 py-3 rounded-md bg-[#E0B654] transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer text-white font-medium hover:bg-amber-300 hover:text-black transition-colors"
+                                    >
+                                        Submit Message
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div class="px-5 sm:px-10 lg:px-20 py-10">
+         <!-- Seventh Section: Newsletter (Secondletter Component) -->
+    <div class="mt-25">
+      <div class="bg-black w-full text-white md:p-8 py-5 my-8 rounded-xl flex items-center justify-between">
+        <div class="flex w-full flex-col md:flex-row items-center justify-between gap-4 px-4">
+          <div class="text-2xl md:text-[40px] font-bold max-w-[551px] text-center md:text-left">
+            STAY UPTO DATE ABOUT OUR LATEST OFFERS
+          </div>
+          <form class="flex flex-col gap-2 max-w-[350px] w-full">
+            <div class="relative">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                class="px-4 pl-8 py-3 rounded-3xl bg-white max-w-[350px] w-full outline-none text-black flex-1"
+              >
+              <i class="fas fa-envelope absolute left-2 text-black opacity-80 w-[20px] top-3"></i>
+            </div>
+            <button class="bg-white text-black max-w-[350px] w-full px-4 py-3 rounded-3xl font-semibold hover:bg-gray-200 transition">
+              Subscribe to Newsletter
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+   <!-- Footer -->
+  <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
+    <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
+      
+      <!-- Logo & Socials -->
+      <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+        <img src="assets/logo.png" alt="logo" class="h-20 mb-4" />
+        <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6">
+          More than just a game.<br>It’s a lifestyle.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Link Sections -->
+      <div class="flex flex-wrap justify-between md:justify-start gap-10" id="footer-sections">
+        
+        <!-- Page -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
+            <button data-section="page" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+            <li><a href="product.html" class="hover:text-white transition">Product</a></li>
+            <li><a href="#article" class="hover:text-white transition">Articles</a></li>
+            <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Info</h3>
+            <button data-section="info" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="info" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="#" class="hover:text-white transition">Shipping Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">Return & Refund</a></li>
+            <li><a href="term.html" class="hover:text-white transition">Terms and Condition</a></li>
+            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Office -->
+        <div class="md:w-[160px] w-full">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
+            <button data-section="office" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
+            <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
+            <li>Abuja</li>
+            <li class="mt-3">+234 80234545061</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Area -->
+    <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      
+      <!-- Mobile -->
+      <div class="flex flex-col gap-6 md:hidden text-center">
+        <div class="flex gap-2 items-center justify-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+        <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+        </ul>
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved
+        </p>
+      </div>
+
+      <!-- Desktop -->
+      <div class="hidden md:flex w-full items-center justify-between">
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved |
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
+        </p>
+        <div class="flex gap-2 items-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+    <script  src="header.js"></script>
+    <script src="footer.js"></script>
+    <script>
+        // Form data and state management
+        let formData = {
+            fullName: "",
+            email: "",
+            phone: "",
+            subject: "",
+            message: ""
+        };
+        
+        let errors = {};
+        let isSubmitting = false;
+        let submitted = false;
+
+        // Form validation function
+        function validate() {
+            const newErrors = {};
+
+            // Full Name validation
+            if (!formData.fullName.trim()) {
+                newErrors.fullName = "Full name is required";
+            } else if (formData.fullName.trim().length < 2) {
+                newErrors.fullName = "Full name must be at least 2 characters";
+            }
+
+            // Email validation
+            if (!formData.email.trim()) {
+                newErrors.email = "Email is required";
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
+                newErrors.email = "Invalid email address";
+            }
+
+            // Phone validation
+            if (formData.phone && !/^[0-9+\-() ]{10,15}$/.test(formData.phone)) {
+                newErrors.phone = "Please enter a valid phone number";
+            }
+
+            // Subject validation
+            if (!formData.subject) {
+                newErrors.subject = "Please select a subject";
+            }
+
+            // Message validation
+            if (!formData.message.trim()) {
+                newErrors.message = "Message is required";
+            } else if (formData.message.trim().length < 10) {
+                newErrors.message = "Message must be at least 10 characters";
+            }
+
+            return newErrors;
+        }
+
+        // Handle input changes
+        function handleChange(e) {
+            const { name, value } = e.target;
+            formData[name] = value;
+
+            // Clear error if it exists
+            if (errors[name]) {
+                errors[name] = null;
+                hideError(name);
+            }
+        }
+
+        // Show error message
+        function showError(fieldName, message) {
+            const errorElement = document.getElementById(fieldName + 'Error');
+            const inputElement = document.getElementById(fieldName);
+            
+            if (errorElement && inputElement) {
+                errorElement.textContent = message;
+                errorElement.classList.remove('hidden');
+                inputElement.classList.add('border-red-500', 'focus:ring-red-200');
+                inputElement.classList.remove('border-gray-300', 'focus:ring-blue-200', 'focus:ring-gray-200');
+            }
+        }
+
+        // Hide error message
+        function hideError(fieldName) {
+            const errorElement = document.getElementById(fieldName + 'Error');
+            const inputElement = document.getElementById(fieldName);
+            
+            if (errorElement && inputElement) {
+                errorElement.classList.add('hidden');
+                inputElement.classList.remove('border-red-500', 'focus:ring-red-200');
+                inputElement.classList.add('border-gray-300', 'focus:ring-blue-200');
+            }
+        }
+
+        // Handle form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            if (isSubmitting) return;
+            
+            isSubmitting = true;
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            // Get form data
+            const form = document.getElementById('contactForm');
+            const formDataObj = new FormData(form);
+            
+            for (let [key, value] of formDataObj.entries()) {
+                formData[key] = value;
+            }
+
+            // Validate form
+            const validationErrors = validate();
+            errors = validationErrors;
+
+            // Clear all previous errors
+            ['fullName', 'email', 'phone', 'subject', 'message'].forEach(field => {
+                hideError(field);
+            });
+
+            // Show validation errors
+            Object.keys(validationErrors).forEach(field => {
+                showError(field, validationErrors[field]);
+            });
+
+            if (Object.keys(validationErrors).length === 0) {
+                // Simulate form submission
+                setTimeout(() => {
+                    console.log("Form submitted:", formData);
+                    submitted = true;
+                    isSubmitting = false;
+                    
+                    // Show thank you message
+                    document.getElementById('mainContent').classList.add('hidden');
+                    document.getElementById('thankYouMessage').classList.remove('hidden');
+                }, 1000);
+            } else {
+                isSubmitting = false;
+                submitBtn.textContent = 'Submit Message';
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        }
+
+        // Handle new message
+        function handleNewMessage() {
+            // Reset form data
+            formData = {
+                fullName: "",
+                email: "",
+                phone: "",
+                subject: "",
+                message: ""
+            };
+            
+            submitted = false;
+            
+            // Reset form
+            document.getElementById('contactForm').reset();
+            
+            // Clear all errors
+            ['fullName', 'email', 'phone', 'subject', 'message'].forEach(field => {
+                hideError(field);
+            });
+            
+            // Show main content
+            document.getElementById('thankYouMessage').classList.add('hidden');
+            document.getElementById('mainContent').classList.remove('hidden');
+        }
+
+        // GSAP Scroll Animation
+        function initScrollAnimation() {
+            if (window.innerWidth >= 768) {
+                const aniSection = document.getElementById('aniSection');
+                const formSection = document.getElementById('formSection');
+
+                if (aniSection && formSection) {
+                    // Register ScrollTrigger plugin
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    // Wrap form section in a container for scrolling
+                    const formContainer = formSection.parentElement;
+                    formContainer.style.overflow = "hidden";
+                    formContainer.style.height = `${window.innerHeight * 0.8}px`;
+
+                    // Pin the entire ani section
+                    ScrollTrigger.create({
+                        trigger: aniSection,
+                        start: "top top",
+                        end: () => `+=${formSection.offsetHeight - window.innerHeight * 0.8}`,
+                        pin: aniSection,
+                        pinSpacing: false,
+                        scrub: true,
+                        markers: false,
+                    });
+
+                    // Animate form section to scroll within the container
+                    gsap.to(formSection, {
+                        y: () => -(formSection.offsetHeight - window.innerHeight * 0.8),
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: aniSection,
+                            start: "top top",
+                            end: () => `+=${formSection.offsetHeight - window.innerHeight * 0.8}`,
+                            scrub: true,
+                        },
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners to form inputs
+            const form = document.getElementById('contactForm');
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', handleChange);
+                input.addEventListener('change', handleChange);
+            });
+
+            // Add form submit listener
+            form.addEventListener('submit', handleSubmit);
+
+            // Initialize GSAP animation
+            initScrollAnimation();
+        });
+
+        // Reinitialize on window resize
+        window.addEventListener('resize', () => {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+            initScrollAnimation();
+        });
+    </script>
+</body>
+</html>
