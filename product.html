@@ -3,14 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product Slider</title>
+    <title>Product</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Google Fonts: Poppins -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
@@ -23,365 +19,113 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <style>
-       .poppins {
-      font-family: 'Poppins', sans-serif;
-    }
-     .header-fixed {
-      top: 2.5rem; /* top-10 */
-    }
-  </style>
-</head>
-<body class="w-full  mx-auto max-w-[1500px]">
+      .poppins {
+        font-family: 'Poppins', sans-serif;
+      }
+      .header-fixed {
+        top: 2.5rem; /* top-10 */
+      }
+     .overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.375rem 0.375rem 0 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.overlay.active {
+  opacity: 1;
+      }
+    </style>
+  </head>
+  <body class="w-full mx-auto max-w-[1500px]">
     <!-- notification -->
     <div class="fixed top-0 left-0 w-full z-50">
       <div class="bg-[#E0B654] w-full text-black h-10 flex items-center justify-center relative">
         <div class="noti flex justify-center items-center gap-x-2 w-full text-[12px] sm:text-[14px] font-semibold">
-           <i class="fa-solid fa-server"></i>
-         <h2 class="flex items-center justify-center flex gap-x-2">30% off storewide — Limited time!
-          <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
-            Shop Now <ArrowRightIcon class="font-light" size={18} />
-          </span>
-          </h2> 
+          <i class="fa-solid fa-server"></i>
+          <h2 class="flex items-center justify-center flex gap-x-2">
+            30% off storewide — Limited time!
+            <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-2xl border-b-black">
+              Shop Now <img src="/assets/arrow-right.svg" alt="icon" class="w-4 h-4" />
+            </span>
+          </h2>
         </div>
-        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 h-3.5 cursor-pointer"></i>
+        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 cursor-pointer"></i>
       </div>
     </div>
-<!-- header -->
-      <div class="fixed header-fixed left-0 w-full z-50">
-    <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
-
-      <!-- Logo -->
-      <img src="assets/logo.jpg" alt="logo" class="h-16" />
-
-      <!-- Desktop Navigation -->
-      <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
-        <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
-        <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
-        <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></a>
+    <!-- Header -->
+    <div class="fixed header-fixed left-0 w-full z-50">
+      <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
+        <!-- Logo -->
+        <img src="assets/logo.png" alt="logo" class="h-16" />
+        <!-- Desktop Navigation -->
+        <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
+          <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
+          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></a>
 </li>
 <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></a>
 </li>
-      </ul>
-
-      <!-- Icons Section -->
-      <div class="flex gap-x-3 items-center">
-        <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
-        <button id="signupBtn" class="signupBtn">
-          <a href="signup.html" title="signup">
-          <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i> </a>
-        </button>
-        <button id="cartBtn" class="relative">
-          <a href="cart.html" title="cart">
-          <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i> 
-          <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div> </a>
-        </button>
-      </div>
-
-      <!-- Mobile Menu Toggle -->
-      <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
-        <i class="fas fa-bars text-[#141718] text-xl"></i>
-      </button>
-
-      <!-- Mobile Menu -->
-      <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
-        <ul class="flex flex-col items-center py-4 space-y-2">
-          <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
-          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
-          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
-          <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-  <div class="min-h-[50vh] pt-26 flex items-center justify-center">
-    <h1 class="font-normal text-[#333333]">no product clicked yet</h1>
-  </div>
-    <section class="py-8 px-4 max-w-7xl mx-auto w-full">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="md:text-[28px] text-[20px] font-medium">
-          You might also like
-        </h2>
-        <a
-          href="#"
-          class="text-base font-medium text-[#141718] hover:underline"
-          >More Products →</a
-        >
-      </div>
-
-      <!-- Swiper -->
-      <div class="swiper product-swiper">
-        <div class="swiper-wrapper">
-          <!-- Product Card Template -->
-          <!-- Repeat this block for each product -->
-          <div class="swiper-slide px-2">
-            <div
-              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
-            >
-              <span
-                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
-                >NEW</span
-              >
-              <span
-                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
-                >-50%</span
-              >
-              <div class="absolute right-3 top-2">
-                <button class="text-gray-500 hover:text-red-500">
-                  <i class="fa-regular fa-heart"></i>
-                </button>
-              </div>
-              <img
-                src="/assets/pimage1.jpg"
-                loading="lazy"
-                alt="Loveseat Sofa"
-                class="w-full h-60 object-cover bg-gray-300 mb-3"
-              />
-              <div class="px-2 w-full">
-                <div class="flex w-full justify-start">
-                  <!-- Star rating -->
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                </div>
-                <div class="text-start w-full mt-2">
-                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
-                  <div class="flex flex-col gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="text-sm font-bold">₦199.00</span>
-                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
-                    </div>
-                    <button
-                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide px-2">
-            <div
-              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
-            >
-              <span
-                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
-                >NEW</span
-              >
-              <span
-                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
-                >-50%</span
-              >
-              <div class="absolute right-3 top-2">
-                <button class="text-gray-500 hover:text-red-500">
-                  <i class="fa-regular fa-heart"></i>
-                </button>
-              </div>
-              <img
-                src="/assets/pimage2.jpg"
-                loading="lazy"
-                alt="Loveseat Sofa"
-                class="w-full h-60 object-cover bg-gray-300 mb-3"
-              />
-              <div class="px-2 w-full">
-                <div class="flex w-full justify-start">
-                  <!-- Star rating -->
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                </div>
-                <div class="text-start w-full mt-2">
-                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
-                  <div class="flex flex-col gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="text-sm font-bold">₦199.00</span>
-                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
-                    </div>
-                    <button
-                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide px-2">
-            <div
-              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
-            >
-              <span
-                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
-                >NEW</span
-              >
-              <span
-                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
-                >-50%</span
-              >
-              <div class="absolute right-3 top-2">
-                <button class="text-gray-500 hover:text-red-500">
-                  <i class="fa-regular fa-heart"></i>
-                </button>
-              </div>
-              <img
-                src="/assets/pimage3.jpg"
-                loading="lazy"
-                alt="Loveseat Sofa"
-                class="w-full h-60 object-cover bg-gray-300 mb-3"
-              />
-              <div class="px-2 w-full">
-                <div class="flex w-full justify-start">
-                  <!-- Star rating -->
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                </div>
-                <div class="text-start w-full mt-2">
-                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
-                  <div class="flex flex-col gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="text-sm font-bold">₦199.00</span>
-                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
-                    </div>
-                    <button
-                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide px-2">
-            <div
-              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
-            >
-              <span
-                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
-                >NEW</span
-              >
-              <span
-                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
-                >-50%</span
-              >
-              <div class="absolute right-3 top-2">
-                <button class="text-gray-500 hover:text-red-500">
-                  <i class="fa-regular fa-heart"></i>
-                </button>
-              </div>
-              <img
-                src="/assets/pimage4.jpg"
-                loading="lazy"
-                alt="Loveseat Sofa"
-                class="w-full h-60 object-cover bg-gray-300 mb-3"
-              />
-              <div class="px-2 w-full">
-                <div class="flex w-full justify-start">
-                  <!-- Star rating -->
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                </div>
-                <div class="text-start w-full mt-2">
-                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
-                  <div class="flex flex-col gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="text-sm font-bold">₦199.00</span>
-                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
-                    </div>
-                    <button
-                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide px-2">
-            <div
-              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
-            >
-              <span
-                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
-                >NEW</span
-              >
-              <span
-                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
-                >-50%</span
-              >
-              <div class="absolute right-3 top-2">
-                <button class="text-gray-500 hover:text-red-500">
-                  <i class="fa-regular fa-heart"></i>
-                </button>
-              </div>
-              <img
-                src="/assets/pimage5.jpg"
-                loading="lazy"
-                alt="Loveseat Sofa"
-                class="w-full h-60 object-cover bg-gray-300 mb-3"
-              />
-              <div class="px-2 w-full">
-                <div class="flex w-full justify-start">
-                  <!-- Star rating -->
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                  <i class="fa-solid fa-star text-yellow-400"></i>
-                </div>
-                <div class="text-start w-full mt-2">
-                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
-                  <div class="flex flex-col gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="text-sm font-bold">₦199.00</span>
-                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
-                    </div>
-                    <button
-                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Product Card -->
+</ul>
+        <!-- Icons Section -->
+        <div class="flex gap-x-3 items-center">
+          <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
+          <button id="signupBtn" class="signupBtn">
+            <a href="signup.html" title="signup">
+              <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i> </a>
+          </button>
+          <button id="cartBtn" class="relative">
+            <a href="cart.html" title="cart">
+              <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i> 
+              <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div> </a>
+          </button>
         </div>
-
-        <!-- Swiper Nav -->
-        <div
-          class="swiper-button-next bg-black text-white rounded-full p-2 hover:bg-slate-800 opacity-80 hover:opacity-100"
-        ></div>
-        <div
-          class="swiper-button-prev bg-black text-white rounded-full p-2 hover:bg-slate-800 opacity-80 hover:opacity-100"
-        ></div>
+        <!-- Mobile Menu Toggle -->
+        <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
+          <i class="fas fa-bars text-[#141718] text-xl"></i>
+        </button>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
+          <ul class="flex flex-col items-center py-4 space-y-2">
+            <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
+            <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+            <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+            <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+          </ul>
+        </div>
       </div>
-
-      <!-- Progress bar -->
-      <div class="mt-8 w-full h-1 bg-gray-300 rounded-full overflow-hidden">
-        <div
-          class="h-full bg-black transition-all duration-500"
-          id="progress-bar"
-          style="width: 0%"
-        ></div>
+    </div>
+    <!-- Product Details Section -->
+    <div class="px-5 sm:px-10 lg:px-20 py-8 pt-26">
+      <nav class="flex items-center gap-x-2 text-sm mb-6">
+        <a href="index.html" class="text-[#605F5F]">Home</a>
+        <i class="fas fa-chevron-right text-gray-400" style="font-size: 10px;"></i>
+        <a href="product.html" class="text-[#605F5F] font-medium">Product</a>
+        <i class="fas fa-chevron-right text-gray-400" style="font-size: 10px;"></i>
+        <span id="product-title" class="text-black font-medium"></span>
+      </nav>
+      <div id="product-content" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Product details will be inserted here -->
       </div>
-
+    </div>
+    <!-- Feature Slider Section -->
+    <section class="py-8 px-4 max-w-7xl mx-auto w-full overflow-hidden">
+      <div class="flex justify-between items-center mb-6 overflow-hidden">
+        <h2 class="md:text-[28px] text-[20px] font-medium">You might also like</h2>
+        <a href="#" class="text-base font-medium text-[#141718] hover:underline">More Products →</a>
+      </div>
+      <div class="swiper-container ">
+        <div class="swiper-wrapper ">
+          <!-- Products will be dynamically inserted here by JavaScript -->
+        </div>
+        <!-- <div class="swiper-pagination mt-4"></div> -->
+      </div>
     </section>
-     <!-- Seventh Section: Newsletter (Secondletter Component) -->
+    <!-- Newsletter Section -->
     <div class="my-20 px-5 sm:px-10 lg:px-20">
       <div class="bg-black w-full text-white md:p-8 py-5 my-8 rounded-xl flex items-center justify-between">
         <div class="flex w-full flex-col md:flex-row items-center justify-between gap-4 px-4">
@@ -404,43 +148,39 @@
         </div>
       </div>
     </div>
- <!-- Footer -->
-  <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
-    <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
-      
-      <!-- Logo & Socials -->
-      <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b-1 border-b-gray-700 md:border-b-0 pb-4">
-        <img src="assets/logo.png" alt="logo" class="h-20 mb-4" />
-        <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6">
-          More than just a game.<br>It’s a lifestyle.
-        </p>
-        <div class="flex gap-4">
-          <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
-          <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
-          <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
-        </div>
-      </div>
-
-      <!-- Link Sections -->
-      <div class="flex flex-wrap justify-between md:justify-start gap-10" id="footer-sections">
-        
-        <!-- Page -->
-        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
-          <div class="flex justify-between items-center">
-            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
-            <button data-section="page" class="md:hidden">
-              <i class="fas fa-chevron-up"></i>
-            </button>
+    <!-- Footer -->
+    <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
+      <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
+        <!-- Logo & Socials -->
+        <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <img src="assets/logo.png" alt="logo" class="h-20 mb-4" />
+          <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6">
+            More than just a game.<br>It’s a lifestyle.
+          </p>
+          <div class="flex gap-4">
+            <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
+            <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
+            <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
           </div>
-          <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
-            <li><a href="index.html" class="hover:text-white transition">Home</a></li>
-            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
-            <li><a href="product.html" class="hover:text-white transition">Product</a></li>
-            <li><a href="#article" class="hover:text-white transition">Articles</a></li>
-            <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
-          </ul>
         </div>
-
+        <!-- Link Sections -->
+        <div class="flex flex-wrap justify-between md:justify-start gap-10" id="footer-sections">
+          <!-- Page -->
+          <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+            <div class="flex justify-between items-center">
+              <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
+              <button data-section="page" class="md:hidden">
+                <i class="fas fa-chevron-up"></i>
+              </button>
+            </div>
+            <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
+              <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+              <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+              <li><a href="product.html" class="hover:text-white transition">Product</a></li>
+              <li><a href="#article" class="hover:text-white transition">Articles</a></li>
+              <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+            </ul>
+          </div>
         <!-- Info -->
         <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
           <div class="flex justify-between items-center">
@@ -454,89 +194,163 @@
             <li><a href="#" class="hover:text-white transition">Return & Refund</a></li>
             <li><a href="term.html" class="hover:text-white transition">Terms and Condition</a></li>
             <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
-            <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+            <li><a href="#" class="hover:text-white transition">Liability</a></li>
           </ul>
         </div>
-
-        <!-- Office -->
-        <div class="md:w-[160px] w-full">
-          <div class="flex justify-between items-center">
-            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
-            <button data-section="office" class="md:hidden">
-              <i class="fas fa-chevron-up"></i>
-            </button>
+          <!-- Office -->
+          <div class="md:w-[160px] w-full">
+            <div class="flex justify-between items-center">
+              <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
+              <button data-section="office" class="md:hidden">
+                <i class="fas fa-chevron-up"></i>
+              </button>
+            </div>
+            <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
+              <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
+              <li>Abuja</li>
+              <li class="mt-3">+234 8023454506</li>
+            </ul>
           </div>
-          <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
-            <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
-            <li>Abuja</li>
-            <li class="mt-3">+234 80234545061</li>
+
+        </div>
+      </div>
+
+      <!-- Bottom Area -->
+      <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <!-- Mobile -->
+        <div class="flex flex-col gap-6 md:hidden text-center">
+          <div class="flex gap-2 items-center justify-center flex-wrap">
+            <img src="assets/visa.png" class="h-6" alt="Visa" />
+            <img src="assets/express.png" class="h-6" alt="Amex" />
+            <img src="assets/card.png" class="h-6" alt="Mastercard" />
+            <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+            <img src="assets/pay.png" class="h-6" alt="PayPal" />
+            <img src="assets/paypal.png" class="h-6" alt="apple-pay" />
+          </div>
+          <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
+            <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white">Contact</a></li>
           </ul>
+          <p class="text-[#E8ECEF] poppins text-[12px]">
+            © 2025 Idowucouture</a>. All rights reserved
+          </p>
+        </div>
+
+        <!-- Desktop Section -->
+        <div class="hidden md:flex w-full items-center justify-between">
+          <p class="text-[#E8ECEF] poppins text-[12px]">
+            © 2025 Idowucouture. All rights reserved |
+            <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+            <a href="#" class="text-[#6C7275] hover:text-white ml-1">Contact</a>
+          </p>
+          <div class="flex gap-2 items-center flex-wrap">
+            <img src="assets/visa.png" class="h-6" alt="Visa" />
+            <img src="assets/express.png" class="h-6" alt="Amex" />
+            <img src="assets/card.png" class="h-6" alt="Mastercard" />
+            <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+            <img src="assets/pay.png" class="h-6" alt="Paypal" />
+            <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+          </div>
         </div>
 
       </div>
-    </div>
+    </footer>
 
-    <!-- Bottom Area -->
-    <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-      
-      <!-- Mobile -->
-      <div class="flex flex-col gap-6 md:hidden text-center">
-        <div class="flex gap-2 items-center justify-center flex-wrap">
-          <img src="assets/visa.png" class="h-6" alt="Visa" />
-          <img src="assets/express.png" class="h-6" alt="Amex" />
-          <img src="assets/card.png" class="h-6" alt="Mastercard" />
-          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
-          <img src="assets/pay.png" class="h-6" alt="PayPal" />
-          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
-        </div>
-        <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
-          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-          <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
-        </ul>
-        <p class="text-[#E8ECEF] poppins text-[12px]">
-          © 2025 Idowucouture. All rights reserved
-        </p>
-      </div>
-
-      <!-- Desktop -->
-      <div class="hidden md:flex w-full items-center justify-between">
-        <p class="text-[#E8ECEF] poppins text-[12px]">
-          © 2025 Idowucouture. All rights reserved |
-          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
-          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
-        </p>
-        <div class="flex gap-2 items-center flex-wrap">
-          <img src="assets/visa.png" class="h-6" alt="Visa" />
-          <img src="assets/express.png" class="h-6" alt="Amex" />
-          <img src="assets/card.png" class="h-6" alt="Mastercard" />
-          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
-          <img src="assets/pay.png" class="h-6" alt="PayPal" />
-          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
-        </div>
-      </div>
-
-    </div>
-  </footer>
-
+    <script src="app.js"></script>
+    <script src="product.js"></script>
+    <script src="feature.js"></script>
     <script>
-      const swiper = new Swiper('.product-swiper', {
-        slidesPerView: 4,
-        spaceBetween: 20,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        breakpoints: {
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 4 },
-        },
-        on: {
-          slideChange: function () {
-            const progress = ((this.activeIndex + this.params.slidesPerView) / this.slides.length) * 100;
-            document.getElementById('progress-bar').style.width = Math.min(progress, 100) + '%';
-          },
-        },
+      function getProductId() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+      }
+
+      function renderProduct() {
+        const productId = getProductId();
+        const product = products.find(p => p.id == productId);
+        if (!product) {
+          document.querySelector('#product-content').innerHTML = '<h1 class="font-normal text-[#333333] text-center">No product clicked yet</h1>';
+          return;
+        }
+
+        document.querySelector('#product-title').textContent = product.name;
+        document.querySelector('#product-content').innerHTML = `
+          <div class="space-y-4">
+            <div class="relative">
+              <img src="${product.image}" alt="${product.name}" class="w-full h-82 object-fill rounded">
+              <span class="absolute top-4 left-4 bg-white text-black px-2 py-1 text-xs font-semibold uppercase">New</span>
+              ${product.discount ? `<span class="absolute top-4 right-4 bg-green-500 text-black px-2 py-1 text-xs font-semibold uppercase">-${product.discount}%</span>` : ''}
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center mb-2">
+              <div class="flex">
+                ${'<i class="fa-solid fa-star text-yellow-400"></i>'.repeat(product.rating)}
+              </div>
+              <span class="ml-2 text-[12px] font-normal text-[#141718] poppins">${product.rating} Reviews</span>
+            </div>
+            <h1 class="text-2xl md:text-[40px] font-normal poppins text-[#141718] mb-3">${product.name}</h1>
+            <p class="text-[#6C7275] text-base font-normal mb-4">Buy one or buy a few and make every space where you sit more convenient.</p>
+            <div class="flex items-center mb-4">
+              <span class="text-[24px] font-bold text-[#121212] mr-4">₦${product.price.toFixed(2)}</span>
+              ${product.originalPrice ? `<span class="text-[24px] font-normal text-[#6C7275] line-through">₦${product.originalPrice.toFixed(2)}</span>` : ''}
+            </div>
+            <div class="mb-6">
+              <h3 class="font-medium text-base text-[#6C7275] mb-2">Choose Color</h3>
+              <p class="mt-2 text-sm text-[#6C7275] mb-2">Selected: <span id="selected-color-text">Black</span></p>
+              <div class="flex space-x-4">
+                <img src="${product.image}" alt="Black" class="w-8 h-8 rounded-md border cursor-pointer ring-2 ring-offset-1 ring-black" data-color="black" onclick="selectColor('black')">
+                <img src="${product.image}" alt="Gray" class="w-8 h-8 rounded-md border cursor-pointer ring-1 ring-gray-200" data-color="gray" onclick="selectColor('gray')">
+                <img src="${product.image}" alt="Red" class="w-8 h-8 rounded-md border cursor-pointer ring-1 ring-gray-200" data-color="red" onclick="selectColor('red')">
+                <img src="${product.image}" alt="White" class="w-8 h-8 rounded-md border cursor-pointer ring-1 ring-gray-200" data-color="white" onclick="selectColor('white')">
+              </div>
+            </div>
+            <div class="flex gap-x-3 items-center w-full mb-5">
+              <div class="flex rounded-lg p-1 bg-[#F5F5F5] w-fit items-center space-x-4">
+                <button onclick="updateQuantity(-1)" class="p-2"><i class="fas fa-minus" style="font-size: 16px;"></i></button>
+                <span id="quantity" class="text-lg poppins font-medium">1</span>
+                <button onclick="updateQuantity(1)" class="p-2"><i class="fas fa-plus" style="font-size: 16px;"></i></button>
+              </div>
+            </div>
+            <button onclick="handleAddToCart('${product.id}')" class="md:col-4 py-3 mb-2 bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer w-full text-center text-white rounded-md">Add to Cart</button>
+          </div>
+        `;
+      }
+
+      let quantity = 1;
+      let selectedColor = 'black';
+
+      function selectColor(color) {
+        selectedColor = color;
+        document.querySelector('#selected-color-text').textContent = color.charAt(0).toUpperCase() + color.slice(1);
+        document.querySelectorAll('[data-color]').forEach(img => {
+          img.className = `w-8 h-8 rounded-md border cursor-pointer ${img.dataset.color === color ? 'ring-2 ring-offset-1 ring-black' : 'ring-1 ring-gray-200'}`;
+        });
+      }
+
+      function updateQuantity(change) {
+        quantity = Math.max(1, quantity + change);
+        document.querySelector('#quantity').textContent = quantity;
+      }
+
+      function handleAddToCart(productId) {
+        const product = products.find(p => p.id == productId);
+        if (quantity <= 0 || !product) return;
+        addToCart({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          color: selectedColor,
+          qty: quantity
+        });
+        quantity = 1;
+        document.querySelector('#quantity').textContent = '1';
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        renderProduct();
+        updateCartIcon();
       });
     </script>
     <script src="header.js"></script>

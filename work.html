@@ -1,0 +1,1133 @@
+<!-- cart section -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cart</title>
+
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Swiper.js -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+       .poppins {
+      font-family: 'Poppins', sans-serif;
+    }
+     .header-fixed {
+      top: 2.5rem; /* top-10 */
+    }
+  </style>
+</head>
+<body class="w-full pt-26 mx-auto max-w-[1500px]">
+    <!-- notification -->
+    <div class="fixed top-0 left-0 w-full z-50">
+      <div class="bg-[#E0B654] w-full text-black h-10 flex items-center justify-center relative">
+        <div class="noti flex justify-center items-center gap-x-2 w-full text-[12px] sm:text-[14px] font-semibold">
+           <i class="fa-solid fa-server"></i>
+         <h2 class="flex items-center justify-center flex gap-x-2">30% off storewide — Limited time!
+          <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
+            Shop Now <ArrowRightIcon class="font-light" size={18} />
+          </span>
+          </h2> 
+        </div>
+        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 h-3.5 cursor-pointer"></i>
+      </div>
+    </div>
+ <!-- header -->
+      <div class="fixed header-fixed left-0 w-full z-50">
+    <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
+
+      <!-- Logo -->
+      <img src="assets/logo.jpg" alt="logo" class="h-16" />
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
+        <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
+        <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+        <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></a>
+</li>
+<li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></a>
+</li>
+      </ul>
+
+      <!-- Icons Section -->
+      <div class="flex gap-x-3 items-center">
+        <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
+        <button id="signupBtn" class="signupBtn">
+          <a href="signup.html" title="signup">
+          <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i> </a>
+        </button>
+        <button id="cartBtn" class="relative">
+          <a href="cart.html" title="cart">
+          <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i> 
+          <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div> </a>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
+        <i class="fas fa-bars text-[#141718] text-xl"></i>
+      </button>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
+        <ul class="flex flex-col items-center py-4 space-y-2">
+          <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
+          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+          <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+<div class="px-5 sm:px-10 lg:px-20">
+  <!-- Breadcrumb -->
+  <div class="flex items-center gap-x-1  font-normal  text-black text-[16px]">
+    <h1 class="opacity-60 flex items-center">
+      <a href="/" class="hover:underline">Home</a>
+      <i class="fas fa-chevron-right ml-1" style="font-size: 15px;"></i>
+    </h1>
+    <span>Cart</span>
+  </div>
+
+  <div class="mx-auto w-full pb-6 pt-3 flex-grow">
+    <h1 class="md:text-[40px] text-xl font-bold mb-5">Your cart</h1>
+
+    <div id="cart-empty-message" class="text-center text-gray-500 hidden">
+      Your cart is empty.
+    </div>
+
+    <div id="cart-content" class="flex flex-col lg:flex-row gap-5 gap-x-5">
+
+      <!-- Cart Items -->
+      <div
+        id="cart-items"
+        class="flex-1 bg-white h-[385px] overflow-y-auto cartshadow px-4 py-1 rounded-xl border border-gray-100"
+      >
+        <!-- Cart items will be dynamically inserted here -->
+      </div>
+
+      <!-- Order Summary -->
+      <div
+        class="w-full lg:min-w-1/3 lg:w-fit bg-white cartshadow rounded-xl p-6 border border-gray-100"
+      >
+        <h2 class="font-bold text-2xl mb-4">Order Summary</h2>
+
+        <div class="flex justify-between py-1">
+          <span class="text-[20px] opacity-60 font-medium">Subtotal</span>
+          <span id="subtotal" class="text-[20px] font-bold">₦0.00</span>
+        </div>
+
+        <div class="flex justify-between py-1">
+          <span class="text-[20px] opacity-60 font-medium">Discount (-20%)</span>
+          <span id="discount" class="text-[#FF3333] text-[20px] font-bold">-₦0.00</span>
+        </div>
+
+        <div class="flex justify-between py-1">
+          <span class="text-[20px] opacity-60 font-medium">Delivery Fee</span>
+          <span id="delivery" class="text-[20px] font-bold">₦15.00</span>
+        </div>
+
+        <div class="border-t border-t-gray-300 my-2"></div>
+
+        <div class="flex justify-between font-bold text-lg py-1">
+          <span class="text-[20px] font-medium">Total</span>
+          <span id="total">₦0.00</span>
+        </div>
+
+        <div class="flex w-full px-4 justify-center mt-4 gap-2">
+          <input
+            id="promo-code"
+            type="text"
+            placeholder="Add promo code"
+            class="md:flex-1 w-full px-3 py-2 bg-[#F0F0F0] rounded-4xl text-black outline-none placeholder:text-[#6C7275]"
+          />
+          <button
+            id="apply-promo"
+            class="bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-105 text-16 rounded-4xl cursor-pointer text-white px-4 md:px-6 py-2"
+          >
+            Apply
+          </button>
+        </div>
+
+        <a href="/checkout">
+          <button
+            class="w-full flex justify-center gap-x-2 cursor-pointer bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-105 text-white py-3 rounded-4xl mt-4 font-semibold"
+          >
+            Go to Checkout
+            <i class="fas fa-arrow-right w-[30px] ml-2"></i>
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+      <!-- Seventh Section: Newsletter (Secondletter Component) -->
+    <div class="my-20 px-5 sm:px-10 lg:px-20">
+      <div class="bg-black w-full text-white md:p-8 py-5 my-8 rounded-xl flex items-center justify-between">
+        <div class="flex w-full flex-col md:flex-row items-center justify-between gap-4 px-4">
+          <div class="text-2xl md:text-[40px] font-bold max-w-[551px] text-center md:text-left">
+            STAY UPTO DATE ABOUT OUR LATEST OFFERS
+          </div>
+          <form class="flex flex-col gap-2 max-w-[350px] w-full">
+            <div class="relative">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                class="px-4 pl-8 py-3 rounded-3xl bg-white max-w-[350px] w-full outline-none text-black flex-1"
+              >
+              <i class="fas fa-envelope absolute left-2 text-black opacity-80 w-[20px] top-3"></i>
+            </div>
+            <button class="bg-white text-black max-w-[350px] w-full px-4 py-3 rounded-3xl font-semibold hover:bg-gray-200 transition">
+              Subscribe to Newsletter
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+ <!-- Footer -->
+  <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
+    <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
+      
+      <!-- Logo & Socials -->
+      <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+        <img src="assets/logo.png" alt="logo" class="h-20 mb-4" />
+        <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6">
+          More than just a game.<br>It’s a lifestyle.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Link Sections -->
+      <div class="flex flex-wrap justify-between md:justify-start gap-10" id="footer-sections">
+        
+        <!-- Page -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
+            <button data-section="page" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+            <li><a href="product.html" class="hover:text-white transition">Product</a></li>
+            <li><a href="#article" class="hover:text-white transition">Articles</a></li>
+            <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Info</h3>
+            <button data-section="info" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="info" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="#" class="hover:text-white transition">Shipping Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">Return & Refund</a></li>
+            <li><a href="term.html" class="hover:text-white transition">Terms and Condition</a></li>
+            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Office -->
+        <div class="md:w-[160px] w-full">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
+            <button data-section="office" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
+            <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
+            <li>Abuja</li>
+            <li class="mt-3">+234 80234545061</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Area -->
+    <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      
+      <!-- Mobile -->
+      <div class="flex flex-col gap-6 md:hidden text-center">
+        <div class="flex gap-2 items-center justify-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+        <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+        </ul>
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved
+        </p>
+      </div>
+
+      <!-- Desktop -->
+      <div class="hidden md:flex w-full items-center justify-between">
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved |
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
+        </p>
+        <div class="flex gap-2 items-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Swipe.js for slider (if needed) -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/swiper/swiper-bundle.min.css"
+  />
+
+  <script>
+    // Sample cart data to simulate useCart context
+    let cart = [
+      {
+        id: 1,
+        name: "Product 1",
+        price: 1000,
+        qty: 2,
+        size: "M",
+        color: "Red",
+        image: "product1.jpg",
+      },
+      {
+        id: 2,
+        name: "Product 2",
+        price: 500,
+        qty: 1,
+        size: "L",
+        color: "Blue",
+        image: "product2.jpg",
+      },
+    ];
+
+    const deliveryFee = 15;
+    let discountPercent = 0.2; // 20% discount
+
+    // Elements
+    const cartItemsContainer = document.getElementById("cart-items");
+    const cartEmptyMessage = document.getElementById("cart-empty-message");
+    const subtotalEl = document.getElementById("subtotal");
+    const discountEl = document.getElementById("discount");
+    const deliveryEl = document.getElementById("delivery");
+    const totalEl = document.getElementById("total");
+    const promoInput = document.getElementById("promo-code");
+    const applyPromoBtn = document.getElementById("apply-promo");
+
+    function renderCart() {
+      cartItemsContainer.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartEmptyMessage.classList.remove("hidden");
+        cartItemsContainer.style.display = "none";
+        document.querySelector("#cart-content").style.display = "none";
+        return;
+      } else {
+        cartEmptyMessage.classList.add("hidden");
+        cartItemsContainer.style.display = "block";
+        document.querySelector("#cart-content").style.display = "flex";
+      }
+
+      cart.forEach((item, index) => {
+        const borderClass = index < cart.length - 1 ? "border-b border-b-gray-200" : "";
+        const itemDiv = document.createElement("div");
+        itemDiv.className = `${borderClass} flex items-center gap-x-2 py-3`;
+
+        // Image with optimized loading and alt
+        const img = document.createElement("img");
+        img.src = `/assets/${item.image}`;
+        img.alt = item.name;
+        img.className = "w-20 h-22 rounded-sm object-cover";
+        img.loading = "lazy";
+
+        // Item details container
+        const detailsDiv = document.createElement("div");
+        detailsDiv.className = "flex-1";
+
+        // Name and remove button row
+        const topRow = document.createElement("div");
+        topRow.className = "flex items-center justify-between w-full";
+
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "font-bold text-sm md:text-[20px] text-black";
+        nameDiv.textContent = item.name;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.className = "text-red-500 cursor-pointer hover:text-red-700";
+        removeBtn.title = "Remove";
+        removeBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        removeBtn.addEventListener("click", () => {
+          removeFromCart(item.id);
+        });
+
+        topRow.appendChild(nameDiv);
+        topRow.appendChild(removeBtn);
+
+        // Size and color info
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "text-sm text-black font-normal";
+        infoDiv.innerHTML = `Size: <span class="opacity-60">${item.size || "N/A"}</span><br />Color: <span class="opacity-60">${item.color || "N/A"}</span>`;
+
+        // Price and quantity controls row
+        const bottomRow = document.createElement("div");
+        bottomRow.className = "flex items-center justify-between w-full";
+
+        const priceDiv = document.createElement("div");
+        priceDiv.className = "font-bold mt-1";
+        priceDiv.textContent = `₦${item.price}`;
+
+        const qtyControls = document.createElement("div");
+        qtyControls.className = "flex items-center p-1 px-1.5 bg-[#F0F0F0] rounded-2xl gap-x-3";
+
+        const btnMinus = document.createElement("button");
+        btnMinus.className = "w-[20px] cursor-pointer";
+        btnMinus.textContent = "-";
+        btnMinus.addEventListener("click", () => updateQty(item.id, -1));
+
+        const qtySpan = document.createElement("span");
+        qtySpan.className = "text-[15px]";
+        qtySpan.textContent = item.qty;
+
+        const btnPlus = document.createElement("button");
+        btnPlus.className = "w-[20px] cursor-pointer";
+        btnPlus.textContent = "+";
+        btnPlus.addEventListener("click", () => updateQty(item.id, 1));
+
+        qtyControls.appendChild(btnMinus);
+        qtyControls.appendChild(qtySpan);
+        qtyControls.appendChild(btnPlus);
+
+        bottomRow.appendChild(priceDiv);
+        bottomRow.appendChild(qtyControls);
+
+        detailsDiv.appendChild(topRow);
+        detailsDiv.appendChild(infoDiv);
+        detailsDiv.appendChild(bottomRow);
+
+        itemDiv.appendChild(img);
+        itemDiv.appendChild(detailsDiv);
+
+        cartItemsContainer.appendChild(itemDiv);
+      });
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const discount = Math.round(subtotal * discountPercent);
+      const total = subtotal - discount + deliveryFee;
+
+      subtotalEl.textContent = `₦${subtotal.toFixed(2)}`;
+      discountEl.textContent = `-₦${discount.toFixed(2)}`;
+      deliveryEl.textContent = `₦${deliveryFee.toFixed(2)}`;
+      totalEl.textContent = `₦${total.toFixed(2)}`;
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter((item) => item.id !== id);
+      renderCart();
+    }
+
+    function updateQty(id, change) {
+      cart = cart.map((item) =>
+        item.id === id
+          ? { ...item, qty: Math.max(1, item.qty + change) }
+          : item
+      );
+      renderCart();
+    }
+
+    applyPromoBtn.addEventListener("click", () => {
+      const code = promoInput.value.trim();
+      if (code) {
+        alert(`Promo code "${code}" applied (functionality to be implemented).`);
+      }
+    });
+
+    // Initial render
+    renderCart();
+
+    // Placeholder for Secondletter component content
+    document.getElementById("secondletter").textContent = "";
+
+    // Swipe.js slider initialization example (if you add slider markup)
+    /*
+    const swiper = new Swiper('.swiper-container', {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+    */
+  </script>
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+</body>
+</html>
+
+<!-- product section -->
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Slider</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <!-- Google Fonts: Poppins -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Swiper.js -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+       .poppins {
+      font-family: 'Poppins', sans-serif;
+    }
+     .header-fixed {
+      top: 2.5rem; /* top-10 */
+    }
+  </style>
+</head>
+<body class="w-full  mx-auto max-w-[1500px]">
+    <!-- notification -->
+    <div class="fixed top-0 left-0 w-full z-50">
+      <div class="bg-[#E0B654] w-full text-black h-10 flex items-center justify-center relative">
+        <div class="noti flex justify-center items-center gap-x-2 w-full text-[12px] sm:text-[14px] font-semibold">
+           <i class="fa-solid fa-server"></i>
+         <h2 class="flex items-center justify-center flex gap-x-2">30% off storewide — Limited time!
+          <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
+            Shop Now <ArrowRightIcon class="font-light" size={18} />
+          </span>
+          </h2> 
+        </div>
+        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 h-3.5 cursor-pointer"></i>
+      </div>
+    </div>
+<!-- header -->
+      <div class="fixed header-fixed left-0 w-full z-50">
+    <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
+
+      <!-- Logo -->
+      <img src="assets/logo.jpg" alt="logo" class="h-16" />
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
+        <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
+        <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+        <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></a>
+</li>
+<li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></a>
+</li>
+      </ul>
+
+      <!-- Icons Section -->
+      <div class="flex gap-x-3 items-center">
+        <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
+        <button id="signupBtn" class="signupBtn">
+          <a href="signup.html" title="signup">
+          <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i> </a>
+        </button>
+        <button id="cartBtn" class="relative">
+          <a href="cart.html" title="cart">
+          <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i> 
+          <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div> </a>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
+        <i class="fas fa-bars text-[#141718] text-xl"></i>
+      </button>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
+        <ul class="flex flex-col items-center py-4 space-y-2">
+          <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
+          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+          <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="min-h-[50vh] pt-26 flex items-center justify-center">
+    <h1 class="font-normal text-[#333333]">no product clicked yet</h1>
+  </div>
+    <section class="py-8 px-4 max-w-7xl mx-auto w-full">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="md:text-[28px] text-[20px] font-medium">
+          You might also like
+        </h2>
+        <a
+          href="#"
+          class="text-base font-medium text-[#141718] hover:underline"
+          >More Products →</a
+        >
+      </div>
+
+      <!-- Swiper -->
+      <div class="swiper product-swiper">
+        <div class="swiper-wrapper">
+          <!-- Product Card Template -->
+          <!-- Repeat this block for each product -->
+          <div class="swiper-slide px-2">
+            <div
+              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
+            >
+              <span
+                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
+                >NEW</span
+              >
+              <span
+                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
+                >-50%</span
+              >
+              <div class="absolute right-3 top-2">
+                <button class="text-gray-500 hover:text-red-500">
+                  <i class="fa-regular fa-heart"></i>
+                </button>
+              </div>
+              <img
+                src="/assets/pimage1.jpg"
+                loading="lazy"
+                alt="Loveseat Sofa"
+                class="w-full h-60 object-cover bg-gray-300 mb-3"
+              />
+              <div class="px-2 w-full">
+                <div class="flex w-full justify-start">
+                  <!-- Star rating -->
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                </div>
+                <div class="text-start w-full mt-2">
+                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
+                  <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-bold">₦199.00</span>
+                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
+                    </div>
+                    <button
+                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide px-2">
+            <div
+              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
+            >
+              <span
+                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
+                >NEW</span
+              >
+              <span
+                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
+                >-50%</span
+              >
+              <div class="absolute right-3 top-2">
+                <button class="text-gray-500 hover:text-red-500">
+                  <i class="fa-regular fa-heart"></i>
+                </button>
+              </div>
+              <img
+                src="/assets/pimage2.jpg"
+                loading="lazy"
+                alt="Loveseat Sofa"
+                class="w-full h-60 object-cover bg-gray-300 mb-3"
+              />
+              <div class="px-2 w-full">
+                <div class="flex w-full justify-start">
+                  <!-- Star rating -->
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                </div>
+                <div class="text-start w-full mt-2">
+                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
+                  <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-bold">₦199.00</span>
+                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
+                    </div>
+                    <button
+                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide px-2">
+            <div
+              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
+            >
+              <span
+                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
+                >NEW</span
+              >
+              <span
+                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
+                >-50%</span
+              >
+              <div class="absolute right-3 top-2">
+                <button class="text-gray-500 hover:text-red-500">
+                  <i class="fa-regular fa-heart"></i>
+                </button>
+              </div>
+              <img
+                src="/assets/pimage3.jpg"
+                loading="lazy"
+                alt="Loveseat Sofa"
+                class="w-full h-60 object-cover bg-gray-300 mb-3"
+              />
+              <div class="px-2 w-full">
+                <div class="flex w-full justify-start">
+                  <!-- Star rating -->
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                </div>
+                <div class="text-start w-full mt-2">
+                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
+                  <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-bold">₦199.00</span>
+                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
+                    </div>
+                    <button
+                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide px-2">
+            <div
+              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
+            >
+              <span
+                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
+                >NEW</span
+              >
+              <span
+                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
+                >-50%</span
+              >
+              <div class="absolute right-3 top-2">
+                <button class="text-gray-500 hover:text-red-500">
+                  <i class="fa-regular fa-heart"></i>
+                </button>
+              </div>
+              <img
+                src="/assets/pimage4.jpg"
+                loading="lazy"
+                alt="Loveseat Sofa"
+                class="w-full h-60 object-cover bg-gray-300 mb-3"
+              />
+              <div class="px-2 w-full">
+                <div class="flex w-full justify-start">
+                  <!-- Star rating -->
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                </div>
+                <div class="text-start w-full mt-2">
+                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
+                  <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-bold">₦199.00</span>
+                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
+                    </div>
+                    <button
+                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide px-2">
+            <div
+              class="bg-white rounded-lg shadow-sm pb-4 items-center relative group hover:shadow-lg transition"
+            >
+              <span
+                class="absolute left-3 top-2 bg-white text-green-700 text-xs font-bold px-2 py-0.5 rounded"
+                >NEW</span
+              >
+              <span
+                class="absolute left-3 top-8 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded"
+                >-50%</span
+              >
+              <div class="absolute right-3 top-2">
+                <button class="text-gray-500 hover:text-red-500">
+                  <i class="fa-regular fa-heart"></i>
+                </button>
+              </div>
+              <img
+                src="/assets/pimage5.jpg"
+                loading="lazy"
+                alt="Loveseat Sofa"
+                class="w-full h-60 object-cover bg-gray-300 mb-3"
+              />
+              <div class="px-2 w-full">
+                <div class="flex w-full justify-start">
+                  <!-- Star rating -->
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                  <i class="fa-solid fa-star text-yellow-400"></i>
+                </div>
+                <div class="text-start w-full mt-2">
+                  <div class="font-semibold w-full text-base">Loveseat Sofa</div>
+                  <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-bold">₦199.00</span>
+                      <span class="text-sm text-gray-400 line-through">₦400.00</span>
+                    </div>
+                    <button
+                      class="bg-gray-900 text-white text-sm py-2 px-6 rounded w-full hover:bg-amber-300 transition-all duration-300"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Product Card -->
+        </div>
+
+        <!-- Swiper Nav -->
+        <div
+          class="swiper-button-next bg-black text-white rounded-full p-2 hover:bg-slate-800 opacity-80 hover:opacity-100"
+        ></div>
+        <div
+          class="swiper-button-prev bg-black text-white rounded-full p-2 hover:bg-slate-800 opacity-80 hover:opacity-100"
+        ></div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="mt-8 w-full h-1 bg-gray-300 rounded-full overflow-hidden">
+        <div
+          class="h-full bg-black transition-all duration-500"
+          id="progress-bar"
+          style="width: 0%"
+        ></div>
+      </div>
+
+    </section>
+     <!-- Seventh Section: Newsletter (Secondletter Component) -->
+    <div class="my-20 px-5 sm:px-10 lg:px-20">
+      <div class="bg-black w-full text-white md:p-8 py-5 my-8 rounded-xl flex items-center justify-between">
+        <div class="flex w-full flex-col md:flex-row items-center justify-between gap-4 px-4">
+          <div class="text-2xl md:text-[40px] font-bold max-w-[551px] text-center md:text-left">
+            STAY UPTO DATE ABOUT OUR LATEST OFFERS
+          </div>
+          <form class="flex flex-col gap-2 max-w-[350px] w-full">
+            <div class="relative">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                class="px-4 pl-8 py-3 rounded-3xl bg-white max-w-[350px] w-full outline-none text-black flex-1"
+              >
+              <i class="fas fa-envelope absolute left-2 text-black opacity-80 w-[20px] top-3"></i>
+            </div>
+            <button class="bg-white text-black max-w-[350px] w-full px-4 py-3 rounded-3xl font-semibold hover:bg-gray-200 transition">
+              Subscribe to Newsletter
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+ <!-- Footer -->
+  <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
+    <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
+      
+      <!-- Logo & Socials -->
+      <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+        <img src="assets/logo.png" alt="logo" class="h-20 mb-4" />
+        <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6">
+          More than just a game.<br>It’s a lifestyle.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Link Sections -->
+      <div class="flex flex-wrap justify-between md:justify-start gap-10" id="footer-sections">
+        
+        <!-- Page -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
+            <button data-section="page" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+            <li><a href="product.html" class="hover:text-white transition">Product</a></li>
+            <li><a href="#article" class="hover:text-white transition">Articles</a></li>
+            <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Info</h3>
+            <button data-section="info" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="info" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="#" class="hover:text-white transition">Shipping Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">Return & Refund</a></li>
+            <li><a href="term.html" class="hover:text-white transition">Terms and Condition</a></li>
+            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Office -->
+        <div class="md:w-[160px] w-full">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
+            <button data-section="office" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
+            <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
+            <li>Abuja</li>
+            <li class="mt-3">+234 80234545061</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Area -->
+    <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      
+      <!-- Mobile -->
+      <div class="flex flex-col gap-6 md:hidden text-center">
+        <div class="flex gap-2 items-center justify-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+        <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+        </ul>
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved
+        </p>
+      </div>
+
+      <!-- Desktop -->
+      <div class="hidden md:flex w-full items-center justify-between">
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved |
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
+        </p>
+        <div class="flex gap-2 items-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+    <script>
+      const swiper = new Swiper('.product-swiper', {
+        slidesPerView: 4,
+        spaceBetween: 20,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+          1280: { slidesPerView: 4 },
+        },
+        on: {
+          slideChange: function () {
+            const progress = ((this.activeIndex + this.params.slidesPerView) / this.slides.length) * 100;
+            document.getElementById('progress-bar').style.width = Math.min(progress, 100) + '%';
+          },
+        },
+      });
+    </script>
+    <script src="header.js"></script>
+    <script src="footer.js"></script>
+  </body>
+</html>
+
+<!-- product javascript -->
+ // js/products.js
+const products = [
+  {
+    id: 1,
+    name: "Men's cabretta golf glove",
+    price: 19.0,
+    image: "/assets/fimage1.jpg",
+    rating: 5,
+    hot: true,
+    discount: null,
+  },
+  {
+    id: 2,
+    name: "Greg Norman - Men's Shirt",
+    price: 24.99,
+    originalPrice: 40.0,
+    image: "/assets/fimage2.jpg",
+    rating: 5,
+    hot: true,
+    discount: 50,
+  },
+  {
+    id: 3,
+    name: "G/FORE - Mens 2023",
+    price: 30.0,
+    image: "./assets/fimage3.jpg",
+    rating: 5,
+    hot: true,
+    discount: null,
+  },
+  {
+    id: 4,
+    name: "Utility Rover-R Double - 2023",
+    price: 209.99,
+    image: "./assets/fimage4.jpg",
+    rating: 5,
+    hot: true,
+    discount: null,
+  },
+  {
+    id: 5,
+    name: "Air Jordan 1 - SS23",
+    price: 111.99,
+    originalPrice: 200.0,
+    image: "./assets/fimage5.jpg",
+    rating: 5,
+    hot: true,
+    discount: 50,
+  },
+  {
+    id: 6,
+    name: "Air Jordan 1 - SS23",
+    price: 111.99,
+    originalPrice: 200.0,
+    image: "./assets/fimage6.jpg",
+    rating: 5,
+    hot: true,
+    discount: 50,
+  },
+  {
+    id: 7,
+    name: "Air Jordan 1 - SS23",
+    price: 111.99,
+    originalPrice: 200.0,
+    image: "./assets/fimage7.jpg",
+    rating: 5,
+    hot: true,
+    discount: 50,
+  },
+];
+
+export default products;

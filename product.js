@@ -1,5 +1,5 @@
-// js/products.js
-const products = [
+console.log('products.js loaded');
+window.products = [
   {
     id: 1,
     name: "Men's cabretta golf glove",
@@ -23,7 +23,7 @@ const products = [
     id: 3,
     name: "G/FORE - Mens 2023",
     price: 30.0,
-    image: "./assets/fimage3.jpg",
+    image: "/assets/fimage3.jpg",
     rating: 5,
     hot: true,
     discount: null,
@@ -32,7 +32,7 @@ const products = [
     id: 4,
     name: "Utility Rover-R Double - 2023",
     price: 209.99,
-    image: "./assets/fimage4.jpg",
+    image: "/assets/fimage4.jpg",
     rating: 5,
     hot: true,
     discount: null,
@@ -42,7 +42,7 @@ const products = [
     name: "Air Jordan 1 - SS23",
     price: 111.99,
     originalPrice: 200.0,
-    image: "./assets/fimage5.jpg",
+    image: "/assets/fimage5.jpg",
     rating: 5,
     hot: true,
     discount: 50,
@@ -52,7 +52,7 @@ const products = [
     name: "Air Jordan 1 - SS23",
     price: 111.99,
     originalPrice: 200.0,
-    image: "./assets/fimage6.jpg",
+    image: "/assets/fimage6.jpg",
     rating: 5,
     hot: true,
     discount: 50,
@@ -62,11 +62,9 @@ const products = [
     name: "Air Jordan 1 - SS23",
     price: 111.99,
     originalPrice: 200.0,
-    image: "./assets/fimage7.jpg",
+    image: "/assets/fimage7.jpg",
     rating: 5,
     hot: true,
     discount: 50,
   },
 ];
-
-export default products;

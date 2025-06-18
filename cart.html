@@ -316,195 +316,136 @@
     href="https://unpkg.com/swiper/swiper-bundle.min.css"
   />
 
-  <script>
-    // Sample cart data to simulate useCart context
-    let cart = [
-      {
-        id: 1,
-        name: "Product 1",
-        price: 1000,
-        qty: 2,
-        size: "M",
-        color: "Red",
-        image: "product1.jpg",
-      },
-      {
-        id: 2,
-        name: "Product 2",
-        price: 500,
-        qty: 1,
-        size: "L",
-        color: "Blue",
-        image: "product2.jpg",
-      },
-    ];
+  <script src="app.js"></script>
+<script>
+  const deliveryFee = 15;
+  const discountPercent = 0.2; // 20% discount
 
-    const deliveryFee = 15;
-    let discountPercent = 0.2; // 20% discount
+  // Elements
+  const cartItemsContainer = document.getElementById("cart-items");
+  const cartEmptyMessage = document.getElementById("cart-empty-message");
+  const subtotalEl = document.getElementById("subtotal");
+  const discountEl = document.getElementById("discount");
+  const deliveryEl = document.getElementById("delivery");
+  const totalEl = document.getElementById("total");
+  const promoInput = document.getElementById("promo-code");
+  const applyPromoBtn = document.getElementById("apply-promo");
 
-    // Elements
-    const cartItemsContainer = document.getElementById("cart-items");
-    const cartEmptyMessage = document.getElementById("cart-empty-message");
-    const subtotalEl = document.getElementById("subtotal");
-    const discountEl = document.getElementById("discount");
-    const deliveryEl = document.getElementById("delivery");
-    const totalEl = document.getElementById("total");
-    const promoInput = document.getElementById("promo-code");
-    const applyPromoBtn = document.getElementById("apply-promo");
+  function renderCart() {
+    cartItemsContainer.innerHTML = "";
 
-    function renderCart() {
-      cartItemsContainer.innerHTML = "";
-
-      if (cart.length === 0) {
-        cartEmptyMessage.classList.remove("hidden");
-        cartItemsContainer.style.display = "none";
-        document.querySelector("#cart-content").style.display = "none";
-        return;
-      } else {
-        cartEmptyMessage.classList.add("hidden");
-        cartItemsContainer.style.display = "block";
-        document.querySelector("#cart-content").style.display = "flex";
-      }
-
-      cart.forEach((item, index) => {
-        const borderClass = index < cart.length - 1 ? "border-b border-b-gray-200" : "";
-        const itemDiv = document.createElement("div");
-        itemDiv.className = `${borderClass} flex items-center gap-x-2 py-3`;
-
-        // Image with optimized loading and alt
-        const img = document.createElement("img");
-        img.src = `/assets/${item.image}`;
-        img.alt = item.name;
-        img.className = "w-20 h-22 rounded-sm object-cover";
-        img.loading = "lazy";
-
-        // Item details container
-        const detailsDiv = document.createElement("div");
-        detailsDiv.className = "flex-1";
-
-        // Name and remove button row
-        const topRow = document.createElement("div");
-        topRow.className = "flex items-center justify-between w-full";
-
-        const nameDiv = document.createElement("div");
-        nameDiv.className = "font-bold text-sm md:text-[20px] text-black";
-        nameDiv.textContent = item.name;
-
-        const removeBtn = document.createElement("button");
-        removeBtn.className = "text-red-500 cursor-pointer hover:text-red-700";
-        removeBtn.title = "Remove";
-        removeBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-        removeBtn.addEventListener("click", () => {
-          removeFromCart(item.id);
-        });
-
-        topRow.appendChild(nameDiv);
-        topRow.appendChild(removeBtn);
-
-        // Size and color info
-        const infoDiv = document.createElement("div");
-        infoDiv.className = "text-sm text-black font-normal";
-        infoDiv.innerHTML = `Size: <span class="opacity-60">${item.size || "N/A"}</span><br />Color: <span class="opacity-60">${item.color || "N/A"}</span>`;
-
-        // Price and quantity controls row
-        const bottomRow = document.createElement("div");
-        bottomRow.className = "flex items-center justify-between w-full";
-
-        const priceDiv = document.createElement("div");
-        priceDiv.className = "font-bold mt-1";
-        priceDiv.textContent = `₦${item.price}`;
-
-        const qtyControls = document.createElement("div");
-        qtyControls.className = "flex items-center p-1 px-1.5 bg-[#F0F0F0] rounded-2xl gap-x-3";
-
-        const btnMinus = document.createElement("button");
-        btnMinus.className = "w-[20px] cursor-pointer";
-        btnMinus.textContent = "-";
-        btnMinus.addEventListener("click", () => updateQty(item.id, -1));
-
-        const qtySpan = document.createElement("span");
-        qtySpan.className = "text-[15px]";
-        qtySpan.textContent = item.qty;
-
-        const btnPlus = document.createElement("button");
-        btnPlus.className = "w-[20px] cursor-pointer";
-        btnPlus.textContent = "+";
-        btnPlus.addEventListener("click", () => updateQty(item.id, 1));
-
-        qtyControls.appendChild(btnMinus);
-        qtyControls.appendChild(qtySpan);
-        qtyControls.appendChild(btnPlus);
-
-        bottomRow.appendChild(priceDiv);
-        bottomRow.appendChild(qtyControls);
-
-        detailsDiv.appendChild(topRow);
-        detailsDiv.appendChild(infoDiv);
-        detailsDiv.appendChild(bottomRow);
-
-        itemDiv.appendChild(img);
-        itemDiv.appendChild(detailsDiv);
-
-        cartItemsContainer.appendChild(itemDiv);
-      });
-
-      updateSummary();
+    if (cart.length === 0) {
+      cartEmptyMessage.classList.remove("hidden");
+      cartItemsContainer.style.display = "none";
+      document.querySelector("#cart-content").style.display = "none";
+      return;
+    } else {
+      cartEmptyMessage.classList.add("hidden");
+      cartItemsContainer.style.display = "block";
+      document.querySelector("#cart-content").style.display = "flex";
     }
 
-    function updateSummary() {
-      const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const discount = Math.round(subtotal * discountPercent);
-      const total = subtotal - discount + deliveryFee;
+    cart.forEach((item, index) => {
+      const borderClass = index < cart.length - 1 ? "border-b border-b-gray-200" : "";
+      const itemDiv = document.createElement("div");
+      itemDiv.className = `${borderClass} flex items-center gap-x-2 py-3`;
 
-      subtotalEl.textContent = `₦${subtotal.toFixed(2)}`;
-      discountEl.textContent = `-₦${discount.toFixed(2)}`;
-      deliveryEl.textContent = `₦${deliveryFee.toFixed(2)}`;
-      totalEl.textContent = `₦${total.toFixed(2)}`;
-    }
+      const img = document.createElement("img");
+      img.src = item.image;
+      img.alt = item.name;
+      img.className = "w-20 h-22 rounded-sm object-cover";
+      img.loading = "lazy";
 
-    function removeFromCart(id) {
-      cart = cart.filter((item) => item.id !== id);
-      renderCart();
-    }
+      const detailsDiv = document.createElement("div");
+      detailsDiv.className = "flex-1";
 
-    function updateQty(id, change) {
-      cart = cart.map((item) =>
-        item.id === id
-          ? { ...item, qty: Math.max(1, item.qty + change) }
-          : item
-      );
-      renderCart();
-    }
+      const topRow = document.createElement("div");
+      topRow.className = "flex items-center justify-between w-full";
 
-    applyPromoBtn.addEventListener("click", () => {
-      const code = promoInput.value.trim();
-      if (code) {
-        alert(`Promo code "${code}" applied (functionality to be implemented).`);
-      }
+      const nameDiv = document.createElement("div");
+      nameDiv.className = "font-bold text-sm md:text-[20px] text-black";
+      nameDiv.textContent = item.name;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.className = "text-red-500 cursor-pointer hover:text-red-700";
+      removeBtn.title = "Remove";
+      removeBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+      removeBtn.addEventListener("click", () => removeFromCart(item.id));
+
+      topRow.appendChild(nameDiv);
+      topRow.appendChild(removeBtn);
+
+      const infoDiv = document.createElement("div");
+      infoDiv.className = "text-sm text-black font-normal";
+      infoDiv.innerHTML = `Size: <span class="opacity-60">${item.size || "N/A"}</span><br />Color: <span class="opacity-60">${item.color || "N/A"}</span>`;
+
+      const bottomRow = document.createElement("div");
+      bottomRow.className = "flex items-center justify-between w-full";
+
+      const priceDiv = document.createElement("div");
+      priceDiv.className = "font-bold mt-1";
+      priceDiv.textContent = `₦${item.price.toFixed(2)}`;
+
+      const qtyControls = document.createElement("div");
+      qtyControls.className = "flex items-center p-1 px-1.5 bg-[#F0F0F0] rounded-2xl gap-x-3";
+
+      const btnMinus = document.createElement("button");
+      btnMinus.className = "w-[20px] cursor-pointer";
+      btnMinus.textContent = "-";
+      btnMinus.addEventListener("click", () => updateQty(item.id, -1));
+
+      const qtySpan = document.createElement("span");
+      qtySpan.className = "text-[15px]";
+      qtySpan.textContent = item.qty;
+
+      const btnPlus = document.createElement("button");
+      btnPlus.className = "w-[20px] cursor-pointer";
+      btnPlus.textContent = "+";
+      btnPlus.addEventListener("click", () => updateQty(item.id, 1));
+
+      qtyControls.appendChild(btnMinus);
+      qtyControls.appendChild(qtySpan);
+      qtyControls.appendChild(btnPlus);
+
+      bottomRow.appendChild(priceDiv);
+      bottomRow.appendChild(qtyControls);
+
+      detailsDiv.appendChild(topRow);
+      detailsDiv.appendChild(infoDiv);
+      detailsDiv.appendChild(bottomRow);
+
+      itemDiv.appendChild(img);
+      itemDiv.appendChild(detailsDiv);
+
+      cartItemsContainer.appendChild(itemDiv);
     });
 
-    // Initial render
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const discount = Math.round(subtotal * discountPercent);
+    const total = subtotal - discount + deliveryFee;
+
+    subtotalEl.textContent = `₦${subtotal.toFixed(2)}`;
+    discountEl.textContent = `-₦${discount.toFixed(2)}`;
+    deliveryEl.textContent = `₦${deliveryFee.toFixed(2)}`;
+    totalEl.textContent = `₦${total.toFixed(2)}`;
+  }
+
+  applyPromoBtn.addEventListener("click", () => {
+    const code = promoInput.value.trim();
+    if (code) {
+      alert(`Promo code "${code}" applied (functionality to be implemented).`);
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
     renderCart();
-
-    // Placeholder for Secondletter component content
-    document.getElementById("secondletter").textContent = "";
-
-    // Swipe.js slider initialization example (if you add slider markup)
-    /*
-    const swiper = new Swiper('.swiper-container', {
-      slidesPerView: 1,
-      spaceBetween: 10,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
-    */
-  </script>
+    updateCartIcon();
+  });
+</script>
   <script src="header.js"></script>
   <script src="footer.js"></script>
 </body>
