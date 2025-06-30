@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Terms & Condition</title>
+ <!-- Font Awesome CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+     .header-fixed {
+      top: 2.5rem; /* top-10 */
+    }
+    body {
+  font-family: 'Montserrat', sans-serif;
+}
+  </style>
+</head>
+<body class="w-full pt-26 mx-auto max-w-[1500px]">
+    <!-- notification -->
+    <div class="fixed top-0 left-0 w-full z-50">
+      <div class="bg-[#E0B654] w-full text-black h-10 flex items-center justify-center relative">
+        <div class="noti flex justify-center items-center gap-x-2 w-full text-[12px] sm:text-[14px] font-semibold">
+           <i class="fa-solid fa-server"></i>
+         <h2 class="flex items-center justify-center flex gap-x-2">30% off storewide — Limited time!
+          <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
+            Shop Now <ArrowRightIcon class="font-light" size={18} />
+          </span>
+          </h2> 
+        </div>
+        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 h-3.5 cursor-pointer"></i>
+      </div>
+    </div>
+<!-- header -->
+      <div class="fixed header-fixed left-0 w-full z-50">
+    <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
+
+      <!-- Logo -->
+      <img src="assets/logo.jpg" alt="logo" class="h-16" />
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
+        <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
+        <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+        <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></a>
+</li>
+<li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></a>
+</li>
+      </ul>
+
+      <!-- Icons Section -->
+      <div class="flex gap-x-3 items-center">
+        <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
+        <button id="signupBtn" class="signupBtn">
+          <a href="signup.html" title="signup">
+          <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i> </a>
+        </button>
+        <button id="cartBtn" class="relative">
+          <a href="cart.html" title="cart">
+          <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i> 
+          <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div> </a>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
+        <i class="fas fa-bars text-[#141718] text-xl"></i>
+      </button>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
+        <ul class="flex flex-col items-center py-4 space-y-2">
+          <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
+          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+          <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Banner Section -->
+  <div class="relative w-full h-[50vh] overflow-hidden">
+    <div class="absolute inset-0 min-w-[100vw] min-h-[50vh]">
+      <img
+        src="/assets/term.png"
+        alt="term"
+        class="h-full w-full object-cover object-center"
+        loading="lazy"
+        decoding="async"
+        width="1920"
+        height="600"
+      />
+    </div>
+    <div class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-[#E0B654] px-5 py-3 md:text-5xl text-2xl font-bold text-white flex items-center gap-3">
+      <i class="fa-solid fa-file-contract"></i>
+      Terms & Condition
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="px-5 md:px-10 text-black lg:px-20 py-20">
+    <!-- <h2 class="font-bold mon text-[24px] md:text-[40px] mb-4">Terms & Condition</h2> -->
+    <h3 class="font-bold mon text-[20px] md:text-[30px] mb-4">Introduction</h3>
+    <h4 class="font-normal mon text-[15px] md:text-[18px] mb-4">
+      These Website Standard Terms and Conditions written on this webpage shall manage your use of our website, ReyTheme accessible at www.gallerbebe.com <br>
+      These Terms will be applied fully and affect to your use of this Website. By using this Website, you agreed to accept all terms and conditions written in here. You must not use this Website if you disagree with any of these Website Standard Terms and Conditions. <br>
+      Minors or people below 18 years old are not allowed to use this Website.
+    </h4>
+    <h3 class="font-bold mon text-[20px] md:text-[30px] mb-4">Intellectual Property Rights</h3>
+    <h4 class="font-normal mon text-[15px] md:text-[18px] mb-4">
+      Other than the content you own, under these Terms, Rey Theme and/or its licensors own all the intellectual property rights and materials contained in this Website. <br>
+      You are granted limited license only for purposes of viewing the material contained on this Website.
+    </h4>
+    <h3 class="font-bold mon text-[20px] md:text-[30px] mb-4">Restrictions</h3>
+    <h4 class="font-normal mon text-[15px] md:text-[18px] mb-2">
+      You are specifically restricted from all of the following:
+    </h4>
+    <ul class="list-disc pl-4 mb-4">
+      <li class="font-normal mon text-[15px] md:text-[18px] mb-1.5 ml-5 marker:text-sm marker:text-black">
+        publishing any Website material in any other media;
+      </li>
+      <li class="font-normal mon text-[15px] md:text-[18px] mb-1.5 ml-5 marker:text-sm marker:text-black">
+        selling, sublicensing and/or otherwise commercializing any Website material;
+      </li>
+      <li class="font-normal mon text-[15px] md:text-[18px] mb-1.5 ml-5 marker:text-sm marker:text-black">
+        publicly performing and/or showing any Website material;
+      </li>
+      <li class="font-normal mon text-[15px] md:text-[18px] mb-1.5 ml-5 marker:text-sm marker:text-black">
+        using this Website in any way that is or may be damaging to this Website;
+      </li>
+      <li class="font-normal mon text-[15px] md:text-[18px] mb-1.5 ml-5 marker:text-sm marker:text-black">
+        using this Website in any way that impacts user access to this Website;
+      </li>
+      <li class="font-normal mon text-[15px] md:text-[18px] mb-1.5 ml-5 marker:text-sm marker:text-black">
+        using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website, or to any person or business entity;
+      </li>
+      <li class="font-normal mon text-[15px] md:text-[18px] mb-1.5 ml-5 marker:text-sm marker:text-black">
+        engaging in any data mining, data harvesting, data extracting or any other similar activity in relation to this Website;
+      </li>
+      <li class="font-normal mon text-[15px] md:text-[18px] mb-1.5 ml-5 marker:text-sm marker:text-black">
+        using this Website to engage in any advertising or marketing.
+      </li>
+    </ul>
+    <h4 class="font-normal mon text-[15px] md:text-[18px] mb-2">
+      Certain areas of this Website are restricted from being access by you and Rey Theme may further restrict access by you to any areas of this Website, at any time, in absolute discretion. Any user ID and password you may have for this Website are confidential and you must maintain confidentiality as well.
+    </h4>
+    <h3 class="font-bold mon text-[20px] md:text-[30px] mb-4">Your Content</h3>
+    <h4 class="font-normal mon text-[15px] md:text-[18px] mb-4">
+      In these Website Standard Terms and Conditions, “Your Content” shall mean any audio, video text, images or other material you choose to display on this Website. By displaying Your Content, you grant Rey Theme a non-exclusive, worldwide irrevocable, sub licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media. <br>
+      Your Content must be your own and must not be invading any third-party’s rights. Rey Theme reserves the right to remove any of Your Content from this Website at any time without notice.
+    </h4>
+    <h3 class="font-bold mon text-[20px] md:text-[30px] mb-4">Your Privacy</h3>
+    <h4 class="font-normal mon text-[15px] md:text-[18px] mb-4">
+      Please read Privacy Policy.
+    </h4>
+    <h3 class="font-bold mon text-[20px] md:text-[30px] mb-4">No warranties</h3>
+    <h4 class="font-normal mon text-[15px] md:text-[18px] mb-4">
+      This Website is provided “as is,” with all faults, and Rey Theme express no representations or warranties, of any kind related to this Website or the materials contained on this Website. Also, nothing contained on this Website shall be interpreted as advising you. <br>
+      Limitation of liability <br>
+      In no event shall Rey Theme, nor any of its officers, directors and employees, shall be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract. Rey Theme, including its officers, directors and employees shall not be held liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.
+    </h4>
+    <h3 class="font-bold mon text-[20px] md:text-[30px] mb-4">Indemnification</h3>
+    <h4 class="font-normal mon text-[15px] md:text-[18px] mb-4">
+      You hereby indemnify to the fullest extent Rey Theme from and against any and/or all liabilities, costs, demands, causes of action, damages and expenses arising in any way related to your breach of any of the provisions of these Terms.
+    </h4>
+    <div class="mt-25">
+      <!-- Replace this with the content of your Secondletter component -->
+      <!-- Example: -->
+      <!-- <p class="text-gray-600">[Secondletter content goes here]</p> -->
+    </div>
+  </div>
+
+  <!-- Seventh Section: Newsletter (Secondletter Component) -->
+    <div class="mb-25 px-5 sm:px-10 lg:px-20">
+      <div class="bg-black w-full text-white md:p-8 py-5 my-8 rounded-xl flex items-center justify-between">
+        <div class="flex w-full flex-col md:flex-row items-center justify-between gap-4 px-4">
+          <div class="text-2xl md:text-[40px] font-bold max-w-[551px] text-center md:text-left">
+            STAY UPTO DATE ABOUT OUR LATEST OFFERS
+          </div>
+          <form class="flex flex-col gap-2 max-w-[350px] w-full">
+            <div class="relative">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                class="px-4 pl-8 py-3 rounded-3xl bg-white max-w-[350px] w-full outline-none text-black flex-1"
+              >
+              <i class="fas fa-envelope absolute left-2 text-black opacity-80 w-[20px] top-3"></i>
+            </div>
+            <button class="bg-white text-black max-w-[350px] w-full px-4 py-3 rounded-3xl font-semibold hover:bg-gray-200 transition">
+              Subscribe to Newsletter
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+ <!-- Footer -->
+  <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
+    <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
+      
+      <!-- Logo & Socials -->
+      <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+        <img src="assets/logo.png" alt="logo" class="h-20 mb-4" />
+        <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6">
+          More than just a game.<br>It’s a lifestyle.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Link Sections -->
+      <div class="flex flex-wrap justify-between md:justify-start gap-10" id="footer-sections">
+        
+        <!-- Page -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
+            <button data-section="page" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+            <li><a href="product.html" class="hover:text-white transition">Product</a></li>
+            <li><a href="#article" class="hover:text-white transition">Articles</a></li>
+            <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Info</h3>
+            <button data-section="info" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="info" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="#" class="hover:text-white transition">Shipping Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">Return & Refund</a></li>
+            <li><a href="term.html" class="hover:text-white transition">Terms and Condition</a></li>
+            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Office -->
+        <div class="md:w-[160px] w-full">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
+            <button data-section="office" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
+            <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
+            <li>Abuja</li>
+            <li class="mt-3">+234 80234545061</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Area -->
+    <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      
+      <!-- Mobile -->
+      <div class="flex flex-col gap-6 md:hidden text-center">
+        <div class="flex gap-2 items-center justify-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+        <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+        </ul>
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved
+        </p>
+      </div>
+
+      <!-- Desktop -->
+      <div class="hidden md:flex w-full items-center justify-between">
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved |
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
+        </p>
+        <div class="flex gap-2 items-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+      </div>
+
+    </div>
+  </footer>>
+</body>
+<script  src="header.js"></script>
+<script  src="footer.js"></script>
+</html>

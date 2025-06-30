@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Track Order</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  
+  <style>
+    body {
+      font-family: 'Rubik', sans-serif;
+    }
+     .header-fixed {
+      top: 2.5rem; /* top-10 */
+    }
+  </style>
+</head>
+<body class="w-full pt-26 mx-auto max-w-[1500px]">
+    <!-- notification -->
+    <div class="fixed top-0 left-0 w-full z-50">
+      <div class="bg-[#E0B654] w-full text-black h-10 flex items-center justify-center relative">
+        <div class="noti flex justify-center items-center gap-x-2 w-full text-[12px] sm:text-[14px] font-semibold">
+           <i class="fa-solid fa-server"></i>
+         <h2 class="flex items-center justify-center flex gap-x-2">30% off storewide — Limited time!
+          <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
+            Shop Now <ArrowRightIcon class="font-light" size={18} />
+          </span>
+          </h2> 
+        </div>
+        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 h-3.5 cursor-pointer"></i>
+      </div>
+    </div>
+    <!-- header -->
+<!-- header -->
+      <div class="fixed header-fixed left-0 w-full z-50">
+    <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
+
+      <!-- Logo -->
+      <img src="assets/logo.jpg" alt="logo" class="h-16" />
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
+        <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
+        <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+        <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></a>
+</li>
+<li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></a>
+</li>
+      </ul>
+
+      <!-- Icons Section -->
+      <div class="flex gap-x-3 items-center">
+        <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
+        <button id="signupBtn" class="signupBtn">
+          <a href="signup.html" title="signup">
+          <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i> </a>
+        </button>
+        <button id="cartBtn" class="relative">
+          <a href="cart.html" title="cart">
+          <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i> 
+          <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div> </a>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
+        <i class="fas fa-bars text-[#141718] text-xl"></i>
+      </button>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
+        <ul class="flex flex-col items-center py-4 space-y-2">
+          <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
+          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+          <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="w-full md:py-10 py-5 ">
+  <div class="w-full md:pb-10 pb-5 font-rubik">
+    <!-- Breadcrumb -->
+    <div
+      class="text-sm text-gray-500 py-3 px-5 sm:px-10 lg:px-20 bg-[#F2F4F5] flex items-center gap-2 mb-6"
+    >
+      <i class="fa-solid fa-house w-4 h-4"></i>
+      <span>Home</span>
+      <span>
+        <i class="fa-solid fa-chevron-right"></i>
+      </span>
+      <span>Pages</span>
+      <span>
+        <i class="fa-solid fa-chevron-right"></i>
+      </span>
+      <span class="text-amber-400 font-medium">Track Order</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="px-5 sm:px-10 lg:px-20">
+      <div class="lg:flex lg:gap-0 grid gap-6 w-full items-stretch">
+        <!-- Left - Timeline + Info -->
+        <div class="bg-white shadow-sm p-6 space-y-6 flex-1">
+          <!-- Shipment Header -->
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-xl font-semibold cab text-[#484A58]">Shipment number</p>
+              <h2 class="text-2xl poppins font-bold text-black">EV-2017002346</h2>
+              <p class="text-lg poppins font-normal text-[#484A58] mt-1">Food Items</p>
+            </div>
+            <img
+              src="/assets/track.png"
+              alt="Truck"
+              class="md:max-w-50 w-20 h-auto"
+              loading="lazy"
+              decoding="async"
+              width="80"
+              height="auto"
+            />
+          </div>
+
+          <!-- Timeline -->
+          <div class="space-y-6">
+            <!-- Event 1 -->
+            <div class="flex items-start gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-4 h-4 rounded-full bg-gray-400"></div>
+                <div class="h-16 w-0.5 bg-gray-300 mt-1"></div>
+              </div>
+              <div>
+                <p class="text-base font-light text-[#232323] poppins">15 May 2025, 9:13am</p>
+                <p class="font-semibold text-lg poppins text-[#333333]">The Package has been picked Up</p>
+                <p class="text-base poppins font-normal text-[#232323]">Ajao Estate, Lagos</p>
+              </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="flex items-start gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-4 h-4 rounded-full bg-gray-400"></div>
+                <div class="h-16 w-0.5 bg-gray-300 mt-1"></div>
+              </div>
+              <div>
+                <p class="text-base font-light text-[#232323] poppins">15 May 2025, 12:13pm</p>
+                <p class="font-semibold text-lg poppins text-[#333333]">Package arrived FFN</p>
+                <p class="text-base poppins font-normal text-[#232323]">Ajao Estate, Lagos</p>
+              </div>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="flex items-start gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-4 h-4 rounded-full bg-gray-400"></div>
+                <div class="h-16 w-0.5 bg-gray-300 mt-1"></div>
+              </div>
+              <div>
+                <p class="text-base font-light text-[#232323] poppins">20 May 2025, 9:13am</p>
+                <p class="font-semibold text-lg poppins text-[#333333]">Package departs FFN</p>
+                <p class="text-base poppins font-normal text-[#232323]">Ajao Estate, Lagos</p>
+              </div>
+            </div>
+
+            <!-- Event 4 (current) -->
+            <div class="flex items-start gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-4 h-4 rounded-full bg-green-500 border-2 border-white"></div>
+                <!-- No line after last event -->
+              </div>
+              <div>
+                <p class="text-base font-light text-[#232323] poppins">20 May 2025, 9:13am</p>
+                <p class="font-semibold text-lg poppins text-[#333333]">Package is in transit</p>
+                <p class="text-base poppins font-normal text-[#232323]">Ajao Estate, Lagos</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dispatcher Info -->
+          <div class="pt-4 border-t border-gray-200 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Dispatcher"
+                class="w-14 h-14 rounded-full"
+                loading="lazy"
+                decoding="async"
+                width="56"
+                height="56"
+              />
+              <div>
+                <p class="font-semibold poppins text-xl text-[#B0B0B0]">Dispatch</p>
+                <p class="font-semibold poppins text-2xl text-[#232323]">Dare Benjamin</p>
+                <p class="text-xl poppins font-normal text-[#484A58]">GIG Logistics</p>
+              </div>
+            </div>
+            <div class="flex gap-3 text-green-600">
+              <a href="tel:+1234567890" aria-label="Call Dispatcher" title="Call Dispatcher">
+                <i class="fa-solid fa-phone w-5 h-5 cursor-pointer"></i>
+              </a>
+              <a href="sms:+1234567890" aria-label="Message Dispatcher" title="Message Dispatcher">
+                <i class="fa-solid fa-message w-5 h-5 cursor-pointer"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right - Map -->
+        <div class="flex-1 overflow-hidden shadow-sm h-auto">
+          <iframe
+            title="Map"
+            class="w-full h-full min-h-full"
+            src="https://www.google.com/maps?q=lagos+nigeria&output=embed"
+            allowfullscreen
+            loading="lazy"
+            style="border:0;"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+ <!-- Seventh Section: Newsletter (Secondletter Component) -->
+    <div class="my-20 px-5 sm:px-10 lg:px-20">
+      <div class="bg-black w-full text-white md:p-8 py-5 my-8 rounded-xl flex items-center justify-between">
+        <div class="flex w-full flex-col md:flex-row items-center justify-between gap-4 px-4">
+          <div class="text-2xl md:text-[40px] font-bold max-w-[551px] text-center md:text-left">
+            STAY UPTO DATE ABOUT OUR LATEST OFFERS
+          </div>
+          <form class="flex flex-col gap-2 max-w-[350px] w-full">
+            <div class="relative">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                class="px-4 pl-8 py-3 rounded-3xl bg-white max-w-[350px] w-full outline-none text-black flex-1"
+              >
+              <i class="fas fa-envelope absolute left-2 text-black opacity-80 w-[20px] top-3"></i>
+            </div>
+            <button class="bg-white text-black max-w-[350px] w-full px-4 py-3 rounded-3xl font-semibold hover:bg-gray-200 transition">
+              Subscribe to Newsletter
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+ <!-- Footer -->
+  <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
+    <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
+      
+      <!-- Logo & Socials -->
+      <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+        <img src="assets/logo.png" alt="logo" class="h-20 mb-4" />
+        <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6">
+          More than just a game.<br>It’s a lifestyle.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Link Sections -->
+      <div class="flex flex-wrap justify-between md:justify-start gap-10" id="footer-sections">
+        
+        <!-- Page -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
+            <button data-section="page" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+            <li><a href="product.html" class="hover:text-white transition">Product</a></li>
+            <li><a href="#article" class="hover:text-white transition">Articles</a></li>
+            <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Info</h3>
+            <button data-section="info" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="info" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="#" class="hover:text-white transition">Shipping Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">Return & Refund</a></li>
+            <li><a href="term.html" class="hover:text-white transition">Terms and Condition</a></li>
+            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Office -->
+        <div class="md:w-[160px] w-full">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
+            <button data-section="office" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
+            <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
+            <li>Abuja</li>
+            <li class="mt-3">+234 80234545061</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Area -->
+    <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      
+      <!-- Mobile -->
+      <div class="flex flex-col gap-6 md:hidden text-center">
+        <div class="flex gap-2 items-center justify-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+        <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+        </ul>
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved
+        </p>
+      </div>
+
+      <!-- Desktop -->
+      <div class="hidden md:flex w-full items-center justify-between">
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved |
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
+        </p>
+        <div class="flex gap-2 items-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  </div>
+</body>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Track Order</title>
+  <!-- Font Awesome CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  
+  <style>
+    body {
+      font-family: 'Rubik', sans-serif;
+    }
+     .header-fixed {
+      top: 2.5rem; /* top-10 */
+    }
+  </style>
+</head>
+<body class="w-full pt-26 mx-auto max-w-[1500px]">
+    <!-- notification -->
+    <div class="fixed top-0 left-0 w-full z-50">
+      <div class="bg-[#E0B654] w-full text-black h-10 flex items-center justify-center relative">
+        <div class="noti flex justify-center items-center gap-x-2 w-full text-[12px] sm:text-[14px] font-semibold">
+           <i class="fa-solid fa-server"></i>
+         <h2 class="flex items-center justify-center flex gap-x-2">30% off storewide — Limited time!
+          <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
+            Shop Now <ArrowRightIcon class="font-light" size={18} />
+          </span>
+          </h2> 
+        </div>
+        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 h-3.5 cursor-pointer"></i>
+      </div>
+    </div>
+<!-- header -->
+      <div class="fixed header-fixed left-0 w-full z-50">
+    <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
+
+      <!-- Logo -->
+      <img src="assets/logo.jpg" alt="logo" class="h-16" />
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
+        <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
+        <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+        <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></a>
+</li>
+<li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></a>
+</li>
+      </ul>
+
+      <!-- Icons Section -->
+      <div class="flex gap-x-3 items-center">
+        <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
+        <button id="signupBtn" class="signupBtn">
+          <a href="signup.html" title="signup">
+          <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i> </a>
+        </button>
+        <button id="cartBtn" class="relative">
+          <a href="cart.html" title="cart">
+          <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i> 
+          <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div> </a>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
+        <i class="fas fa-bars text-[#141718] text-xl"></i>
+      </button>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
+        <ul class="flex flex-col items-center py-4 space-y-2">
+          <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
+          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+          <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="w-full md:py-10 py-5 ">
+
+    <!-- Breadcrumb -->
+    <div
+      class="text-sm text-gray-500 py-3 px-5 sm:px-10 lg:px-20 bg-[#F2F4F5] flex items-center gap-2 mb-6"
+    >
+      <i class="fa-solid fa-house w-4 h-4"></i>
+      <span>Home</span>
+      <span>
+        <i class="fa-solid fa-chevron-right"></i>
+      </span>
+      <span>Pages</span>
+      <span>
+        <i class="fa-solid fa-chevron-right"></i>
+      </span>
+      <span class="text-amber-400 font-medium">Track Order</span>
+    </div>
+
+    <!-- Heading -->
+    <div class="px-5 sm:px-10 lg:px-20">
+      <h1 class="text-xl md:text-3xl font-semibold text-[#191C1F] poppins my-3">
+        Track Order
+      </h1>
+      <p class="text-[15px] md:text-[18px] text-[#5F6C72] mb-6 max-w-xl">
+        To track your order please enter your order ID in the input field below
+        and press the "Track Order" button. This was given to you on your
+        receipt and in the confirmation email you should have received.
+      </p>
+
+      <!-- Form -->
+      <form id="trackForm" class="space-y-4 max-w-xl" onsubmit="return false;">
+        <div>
+          <label
+            for="order-id"
+            class="block text-sm font-medium text-gray-700 mb-1"
+            >Order ID</label
+          >
+          <input
+            id="order-id"
+            type="text"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="ID..."
+            required
+          />
+        </div>
+
+        <div class="flex items-start text-sm text-gray-600 gap-2">
+          <i class="fa-solid fa-circle-info w-4 h-4 text-green-500 mt-1"></i>
+          <span>Order ID that we sent to you in your email address.</span>
+        </div>
+
+        <button
+          type="submit"
+          class="bg-[#E0B654] hover:bg-amber-300 duration-300 transition ease-in-out cursor-pointer text-white font-medium text-sm px-6 py-2 rounded flex items-center gap-2"
+        >
+          TRACK ORDER
+          <i class="fa-solid fa-arrow-right w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+
+     <!-- Seventh Section: Newsletter (Secondletter Component) -->
+    <div class="mb-25 px-5 sm:px-10 lg:px-20">
+      <div class="bg-black w-full text-white md:p-8 py-5 my-8 rounded-xl flex items-center justify-between">
+        <div class="flex w-full flex-col md:flex-row items-center justify-between gap-4 px-4">
+          <div class="text-2xl md:text-[40px] font-bold max-w-[551px] text-center md:text-left">
+            STAY UPTO DATE ABOUT OUR LATEST OFFERS
+          </div>
+          <form class="flex flex-col gap-2 max-w-[350px] w-full">
+            <div class="relative">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                class="px-4 pl-8 py-3 rounded-3xl bg-white max-w-[350px] w-full outline-none text-black flex-1"
+              >
+              <i class="fas fa-envelope absolute left-2 text-black opacity-80 w-[20px] top-3"></i>
+            </div>
+            <button class="bg-white text-black max-w-[350px] w-full px-4 py-3 rounded-3xl font-semibold hover:bg-gray-200 transition">
+              Subscribe to Newsletter
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+ <!-- Footer -->
+  <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
+    <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
+      
+      <!-- Logo & Socials -->
+      <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+        <img src="assets/logo.png" alt="logo" class="h-20 mb-4" />
+        <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6">
+          More than just a game.<br>It’s a lifestyle.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Link Sections -->
+      <div class="flex flex-wrap justify-between md:justify-start gap-10" id="footer-sections">
+        
+        <!-- Page -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
+            <button data-section="page" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+            <li><a href="product.html" class="hover:text-white transition">Product</a></li>
+            <li><a href="#article" class="hover:text-white transition">Articles</a></li>
+            <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div class="md:w-[160px] w-full border-b-1 border-b-gray-700 md:border-b-0 pb-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Info</h3>
+            <button data-section="info" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="info" class="space-y-3 text-[14px] text-[#fefefe]">
+            <li><a href="#" class="hover:text-white transition">Shipping Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">Return & Refund</a></li>
+            <li><a href="term.html" class="hover:text-white transition">Terms and Condition</a></li>
+            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Office -->
+        <div class="md:w-[160px] w-full">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
+            <button data-section="office" class="md:hidden">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
+            <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
+            <li>Abuja</li>
+            <li class="mt-3">+234 80234545061</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Area -->
+    <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      
+      <!-- Mobile -->
+      <div class="flex flex-col gap-6 md:hidden text-center">
+        <div class="flex gap-2 items-center justify-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+        <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+        </ul>
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved
+        </p>
+      </div>
+
+      <!-- Desktop -->
+      <div class="hidden md:flex w-full items-center justify-between">
+        <p class="text-[#E8ECEF] poppins text-[12px]">
+          © 2025 Idowucouture. All rights reserved |
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+          <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
+        </p>
+        <div class="flex gap-2 items-center flex-wrap">
+          <img src="assets/visa.png" class="h-6" alt="Visa" />
+          <img src="assets/express.png" class="h-6" alt="Amex" />
+          <img src="assets/card.png" class="h-6" alt="Mastercard" />
+          <img src="assets/stripe.png" class="h-6" alt="Stripe" />
+          <img src="assets/pay.png" class="h-6" alt="PayPal" />
+          <img src="assets/paypal.png" class="h-6" alt="Apple Pay" />
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  </div>
+
+  <script>
+    // JavaScript to handle the order ID input and form submission
+    const form = document.getElementById('trackForm');
+    const orderInput = document.getElementById('order-id');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const orderId = orderInput.value.trim();
+      if (!orderId) {
+        alert('Please enter your Order ID.');
+        return;
+      }
+      // Redirect to tracking order page with orderId as query param (optional)
+      // window.location.href = `/trackingorder?orderId=${encodeURIComponent(orderId)}`;
+      // Or just navigate to /trackingorder as in original React Link
+      window.location.href = '/trackingorder.html';
+    });
+  </script>
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+</body>
+</html>
