@@ -45,7 +45,7 @@
                                 <h3 class="font-semibold mb-2">{{ $product->title }}</h3>
                                 <h3 class="text-sm">{!! Str::limit($product->description ?? '', 50) !!}</h3>
                                 <div class="flex items-center gap-2 mb-3 pt-2">
-                                    <span class="text-md font-bold">NGN{{ $product->price }}</span>
+                                    <span class="text-md font-bold">NGN{{ number_format($product->price) }}</span>
                                     {{-- <span class="text-sm text-gray-500 line-through">₦200.00</span> --}}
                                 </div>
                             </div>
