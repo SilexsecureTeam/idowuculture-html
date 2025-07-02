@@ -23,12 +23,12 @@
                     <!-- Product Template (repeated 5 times) -->
                     @forelse($products as $product)
                         <div
-                            class="product-card bg-white rounded-lg shadow-lg min-w-64 w-64 h-135 flex-shrink-0 overflow-hidden">
+                            class="product-card bg-white rounded-lg shadow-lg min-w-64 w-64 h-full min-h-[25rem] flex-shrink-0 overflow-hidden">
                             <div class="relative">
 
                                 @if (($product->images ?? []) && count($product->images ?? []) > 0)
                                     <img src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->title }}"
-                                        class="w-64 h-24 object-cover">
+                                        class="w-64 h-52 object-cover">
                                 @endif
 
                                 <div class="hover-overlay">
