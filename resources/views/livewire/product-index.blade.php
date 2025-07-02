@@ -35,17 +35,17 @@
                                     <button wire:click="addToCart('{{ $product->sku }}')"
                                         class="bg-blue-600 text-white py-2 px-4 rounded text-sm hover:bg-blue-700 mb-2">Add
                                         to Cart</button>
-                                    <button
+                                    <a href="{{ route('product.single.page', $product->sku) }}"
                                         class="bg-white text-gray-800 py-2 px-4 rounded text-sm hover:bg-gray-100">View
-                                        Product</button>
+                                        Product</a>
                                 </div>
                             </div>
                             <div class="p-4">
                                 <div class="text-yellow-400 text-sm mb-1">★★★★★</div>
                                 <h3 class="font-semibold mb-2">{{ $product->title }}</h3>
-                                <h3 class="font-semibold text-sm">{!! Str::limit($product->description ?? '', 80) !!}</h3>
-                                <div class="flex items-center gap-2 mb-3">
-                                    <span class="text-lg font-bold">{{ $product->price }}</span>
+                                <h3 class="text-sm">{!! Str::limit($product->description ?? '', 50) !!}</h3>
+                                <div class="flex items-center gap-2 mb-3 pt-2">
+                                    <span class="text-md font-bold">NGN{{ $product->price }}</span>
                                     {{-- <span class="text-sm text-gray-500 line-through">₦200.00</span> --}}
                                 </div>
                             </div>

@@ -143,6 +143,9 @@
         @include('partials.navbar')
         <main>
             @yield('content')
+            @isset($slot)
+                {{ $slot }}
+            @endisset
         </main>
         @include('partials.footer')
     </div>
