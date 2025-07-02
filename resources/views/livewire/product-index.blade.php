@@ -28,7 +28,7 @@
 
                                 @if (($product->images ?? []) && count($product->images ?? []) > 0)
                                     <img src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->title }}"
-                                        class="w-64 h-25 object-cover">
+                                        class="w-64 h-24 object-cover">
                                 @endif
 
                                 <div class="hover-overlay">
