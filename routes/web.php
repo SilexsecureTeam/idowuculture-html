@@ -17,6 +17,7 @@ Route::get('/checkout', [PagesController::class, 'checkoutpage'])->name('checkou
 Route::get('/contact', [PagesController::class, 'contactus'])->name('contact-page');
 Route::get('/privacy', [PagesController::class, 'privacy'])->name('privacy-page');
 
+// products
 Route::get('/product', [PagesController::class, 'products'])->name('products-page');
 Route::get('product/{sku}', SingleProduct::class)->name('product.single.page');
 
