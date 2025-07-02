@@ -1,4 +1,4 @@
-// import './bootstrap';
+import './bootstrap';
 
 // import Alpine from 'alpinejs';
 
@@ -6,6 +6,10 @@
 
 // Alpine.start();
 // Initialize cart from localStorage
+import Swal from 'sweetalert2'
+
+window.Swal = Swal
+
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Save cart to localStorage

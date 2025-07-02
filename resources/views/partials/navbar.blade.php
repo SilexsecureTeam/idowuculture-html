@@ -33,14 +33,7 @@
                     <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i>
                 </a>
             </button>
-            <button id="cartBtn" class="relative">
-                <a href="{{ route('cart-page') }}" title="cart">
-                    <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i>
-                    <div id="cartCount"
-                        class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">
-                        0</div>
-                </a>
-            </button>
+            @livewire('cart.cart-icon')
         </div>
         <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
             <i class="fas fa-bars text-[#141718] text-xl"></i>

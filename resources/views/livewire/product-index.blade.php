@@ -37,7 +37,7 @@
                                     <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">-50%</span>
                                 </div> --}}
                                 <div class="hover-overlay">
-                                    <button
+                                    <button wire:click="addToCart('{{ $product->sku }}')"
                                         class="bg-blue-600 text-white py-2 px-4 rounded text-sm hover:bg-blue-700 mb-2">Add
                                         to Cart</button>
                                     <button
