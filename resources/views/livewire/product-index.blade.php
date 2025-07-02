@@ -22,20 +22,15 @@
                 <div id="productContainer" class="flex gap-4 overflow-x-auto scrollbar-hide pb-4">
                     <!-- Product Template (repeated 5 times) -->
                     @forelse($products as $product)
-                        <div class="product-card bg-white rounded-lg shadow-lg min-w-64 w-64 h-140 flex-shrink-0 overflow-hidden">
+                        <div
+                            class="product-card bg-white rounded-lg shadow-lg min-w-64 w-64 h-135 flex-shrink-0 overflow-hidden">
                             <div class="relative">
 
-                                {{-- <img src="{{ Storage::url($product->image[0]) }}" alt = "{{ $product->title }}"
-                                    class="w-full h-48 object-cover"> --}}
                                 @if (($product->images ?? []) && count($product->images ?? []) > 0)
                                     <img src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->title }}"
-                                        class="w-64 h-30 object-cover">
+                                        class="w-64 h-25 object-cover">
                                 @endif
 
-                                {{-- <div class="absolute top-2 left-2 flex gap-1">
-                                    <span class="bg-red-500 text-white text-xs px-2 py-1 rounded">HOT</span>
-                                    <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">-50%</span>
-                                </div> --}}
                                 <div class="hover-overlay">
                                     <button wire:click="addToCart('{{ $product->sku }}')"
                                         class="bg-blue-600 text-white py-2 px-4 rounded text-sm hover:bg-blue-700 mb-2">Add
