@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Product\SingleProduct;
@@ -14,7 +15,10 @@ Route::get('/', [PagesController::class, 'index'])->name('index-page');
 Route::get('/about', [PagesController::class, 'aboutus'])->name('about-page');
 Route::get('/cart', [PagesController::class, 'cartpage'])->name('cart-page');
 Route::get('/checkout', [PagesController::class, 'checkoutpage'])->name('checkout-page');
+
 Route::get('/contact', [PagesController::class, 'contactus'])->name('contact-page');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
 Route::get('/privacy', [PagesController::class, 'privacy'])->name('privacy-page');
 
 // products
