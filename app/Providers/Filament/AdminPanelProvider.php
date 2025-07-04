@@ -71,6 +71,8 @@ class AdminPanelProvider extends PanelProvider
                 ->label('Settings')
                 ->icon('heroicon-o-cog-6-tooth')
                 ->collapsed(),
+                NavigationGroup::make('Content Mgmt')
+                    ->icon('heroicon-o-document-text'),
             ]);
             
 
