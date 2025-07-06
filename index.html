@@ -41,14 +41,18 @@
           cursor: pointer;
         }
       }
-      .swiper-pagination {
-        position: absolute;
-        top: -45px;
-        right: 30px;
-        display: flex;
-        justify-content: flex-end;
-        gap: 6px;
-      }
+       .swiper-pagination {
+  position: absolute !important; 
+   top: 25px !important;
+ bottom: auto !important;
+  right: 30px !important;
+  left: auto !important;
+  width: auto !important;
+  display: flex !important; 
+   justify-content: flex-end !important;
+  gap: 6px;
+}
+
       .swiper-pagination-bullet {
         width: 8px;
         height: 8px;
@@ -131,7 +135,7 @@
         <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
           <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
           <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
-          <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+          <li><a href="products.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
           <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
         </ul>
         <div class="flex gap-x-3 items-center">
@@ -144,7 +148,7 @@
           <button id="cartBtn" class="relative">
             <a href="cart.html" title="cart">
               <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i>
-              <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div>
+              <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2"></div>
             </a>
           </button>
         </div>
@@ -155,7 +159,7 @@
           <ul class="flex flex-col items-center py-4 space-y-2">
             <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
             <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
-            <li><a href="product.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+            <li><a href="products.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
             <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
           </ul>
         </div>
@@ -182,7 +186,7 @@
       </button>
     </div>
     <!-- Feature Section -->
-    <section class="w-full mx-auto py-8 px-5 sm:px-10 lg:px-20">
+    <section class="relative w-full mx-auto py-8 px-5 sm:px-10 lg:px-20">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl md:text-[40px] poppins text-black font-semibold">Featured</h2>
         <div class="swiper-pagination"></div>

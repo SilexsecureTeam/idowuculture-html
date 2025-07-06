@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Idowu Couture</title>
+    <!-- Tailwind CSS (keeping browser build for development, despite warning) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .header-fixed {
+        top: 2.5rem;
+      }
+      .feature-wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 4 per row for large screens */
+        gap: 1rem;
+        padding: 0 1rem;
+      }
+
+      @media (max-width: 1024px) {
+        .feature-wrapper {
+          grid-template-columns: repeat(2, 1fr); /* 2 per row for smaller screens */
+        }
+      }
+
+      @media (max-width: 640px) {
+        .feature-wrapper {
+          grid-template-columns: 1fr; /* 1 per row for mobile */
+        }
+      }
+
+      /* Custom feature section layout */
+      .feature-section-custom {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        width: 100%;
+      }
+
+      /* Filter on the left, product on the right (desktop) */
+      .filter-dropdown-container-custom {
+        max-width: 260px;
+        background: #f9f9f9;
+        padding: 1rem;
+        border-radius: 0.375rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+        margin-bottom: 0;
+        display: block;
+      }
+      .feature-container-custom {
+        flex: 1;
+        overflow-x: hidden;
+        max-height: calc(100vh - 12rem);
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        scrollbar-color: #E0B654 #f0f0f0;
+      }
+
+      /* Responsive: stack vertically on small screens */
+      @media (max-width: 1024px) {
+        .feature-section-custom {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        .filter-dropdown-container-custom {
+          width: 100%;
+          margin-bottom: 1rem;
+          display: block !important;
+        }
+        .feature-container-custom {
+          max-height: calc(100vh - 16rem);
+        }
+      }
+
+      /* Hide filter toggle button (not needed anymore) */
+      .filter-toggle {
+        display: none !important;
+      }
+
+      /* Overlay for buttons */
+      .overlay {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 0.375rem 0.375rem 0 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .overlay.active {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body class="w-full pt-26 mx-auto max-w-[1500px]">
+    <!-- Notification -->
+    <div class="fixed top-0 left-0 w-full z-50">
+      <div class="bg-[#E0B654] w-full text-black h-10 flex items-center justify-center relative">
+        <div class="noti flex justify-center items-center gap-x-2 w-full text-[12px] sm:text-[14px] font-semibold">
+          <i class="fa-solid fa-server"></i>
+          <h2 class="flex items-center justify-center gap-x-2">
+            30% off storewide — Limited time!
+            <span class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
+              Shop Now <i class="fas fa-arrow-right w-4 h-4"></i>
+            </span>
+          </h2>
+        </div>
+        <i class="fa-solid fa-xmark absolute right-2 sm:right-4 top-3 w-3.5 h-3.5 cursor-pointer"></i>
+      </div>
+    </div>
+    <!-- Header -->
+    <div class="fixed header-fixed left-0 w-full z-50">
+      <div class="flex px-5 sm:px-10 lg:px-20 items-center justify-between h-16 bg-white relative">
+        <img src="/assets/logo.png" alt="logo" class="h-16" />
+        <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
+          <li><a href="index.html" class="cursor-pointer font-semibold">Home</a></li>
+          <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+          <li><a href="products.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+          <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+        </ul>
+        <div class="flex gap-x-3 items-center">
+          <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
+          <button id="signupBtn">
+            <a href="signup.html" title="signup">
+              <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i>
+            </a>
+          </button>
+          <button id="cartBtn" class="relative">
+            <a href="cart.html" title="cart">
+              <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i>
+              <div id="cartCount" class="hidden absolute bg-black text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center top-0 -right-2">0</div>
+            </a>
+          </button>
+        </div>
+        <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">
+          <i class="fas fa-bars text-[#141718] text-xl"></i>
+        </button>
+        <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50 md:hidden">
+          <ul class="flex flex-col items-center py-4 space-y-2">
+            <li><a href="index.html" class="cursor-pointer font-medium">Home</a></li>
+            <li><a href="about.html" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
+            <li><a href="products.html" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+            <li><a href="contact.html" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Feature Section with Dropdown Filter -->
+    <section class="w-full mx-auto py-8 px-5 sm:px-10 lg:px-20">
+      <!-- Feature Title -->
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl md:text-[40px] poppins text-black font-semibold">Browse all our products</h2>
+        <div class="swiper-pagination"></div>
+      </div>
+      <!-- Responsive Grid: Filter | Products -->
+      <div class="feature-section-custom w-full">
+        <!-- Filter (always visible on small, left on large) -->
+        <div class="filter-dropdown-container-custom mx-auto" id="filterDropdown">
+          <h3 class="poppins font-semibold mb-3">Categories</h3>
+          <select
+            class="filter-dropdown border-2 border-[#E0B654] rounded-2xl p-2 focus:outline-none focus:ring-1 focus:ring-[#E0B654] focus:border-[#E0B654] transition"
+            onchange="filterProducts()"
+          >
+            <option value="All" selected>All</option>
+            <option value="Women’s Wear">Women’s Wear</option>
+            <option value="Men’s Wear">Men’s Wear</option>
+            <option value="Children Female Wear">Children Female Wear</option>
+            <option value="Children Male Wear">Children Male Wear</option>
+            <option value="Accessories">Accessories</option>
+          </select>
+        </div>
+        <!-- Products -->
+        <div class="feature-container-custom">
+          <div class="swiper-wrapper feature-wrapper">
+            <!-- Products will be dynamically inserted here -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-black text-white px-5 sm:px-10 lg:px-20 py-10">
+      <div class="w-full mx-auto flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
+        <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b border-b-gray-700 md:border-b-0 pb-4">
+          <img src="/assets/logo.png" alt="logo" class="h-20 mb-4" />
+          <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6 text-center md:text-left">
+            More than just a game.<br>It’s a lifestyle.
+          </p>
+          <div class="flex gap-4 justify-center md:justify-start">
+            <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i class="fab fa-instagram fa-lg"></i></a>
+            <a href="#" aria-label="Facebook" class="text-[#fefefe]"><i class="fab fa-facebook fa-lg"></i></a>
+            <a href="#" aria-label="YouTube" class="text-[#fefefe]"><i class="fab fa-youtube fa-lg"></i></a>
+          </div>
+        </div>
+        <div class="flex flex-wrap justify-between md:justify-start gap-10">
+          <div class="md:w-[160px] w-full border-b border-b-gray-700 md:border-b-0 pb-4">
+            <div class="flex justify-between items-center">
+              <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Page</h3>
+              <button data-section="page" class="md:hidden">
+                <i class="fas fa-chevron-up"></i>
+              </button>
+            </div>
+            <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
+              <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+              <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+              <li><a href="product.html" class="hover:text-white transition">Product</a></li>
+              <li><a href="#article" class="hover:text-white transition">Articles</a></li>
+              <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+            </ul>
+          </div>
+          <div class="md:w-[160px] w-full border-b border-b-gray-700 md:border-b-0 pb-4">
+            <div class="flex justify-between items-center">
+              <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Info</h3>
+              <button data-section="info" class="md:hidden">
+                <i class="fas fa-chevron-up"></i>
+              </button>
+            </div>
+            <ul data-list="info" class="space-y-3 text-[14px] text-[#fefefe]">
+              <li><a href="#" class="hover:text-white transition">Shipping Policy</a></li>
+              <li><a href="#" class="hover:text-white transition">Return & Refund</a></li>
+              <li><a href="term.html" class="hover:text-white transition">Terms and Conditions</a></li>
+              <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+              <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+            </ul>
+          </div>
+          <div class="md:w-[160px] w-full">
+            <div class="flex justify-between items-center">
+              <h3 class="font-medium mb-4 poppins text-[16px] text-[#fefefe]">Office</h3>
+              <button data-section="office" class="md:hidden">
+                <i class="fas fa-chevron-up"></i>
+              </button>
+            </div>
+            <ul data-list="office" class="space-y-1.5 text-[14px] text-[#fefefe]">
+              <li>Idowu Couture, Hse 120, adjacent TASTIA Restaurant 35Road junction, 3rd Avenue Gwarinpa</li>
+              <li>Abuja</li>
+              <li class="mt-3">+234 8023454506</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div class="flex flex-col gap-6 md:hidden text-center">
+          <div class="flex gap-2 items-center justify-center flex-wrap">
+            <img src="/assets/visa.png" class="h-6" alt="Visa" />
+            <img src="/assets/express.png" class="h-6" alt="Amex" />
+            <img src="/assets/card.png" class="h-6" alt="Mastercard" />
+            <img src="/assets/stripe.png" class="h-6" alt="Stripe" />
+            <img src="/assets/pay.png" class="h-6" alt="PayPal" />
+            <img src="/assets/paypal.png" class="h-6" alt="Apple Pay" />
+          </div>
+          <ul class="flex gap-4 text-[#6C7275] text-[12px] justify-center poppins">
+            <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+          </ul>
+          <p class="text-[#E8ECEF] poppins text-[12px]">
+            © 2025 Idowucouture. All rights reserved
+          </p>
+        </div>
+        <div class="hidden md:flex w-full items-center justify-between">
+          <p class="text-[#E8ECEF] poppins text-[12px]">
+            © 2025 Idowucouture. All rights reserved |
+            <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+            <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
+          </p>
+          <div class="flex gap-2 items-center flex-wrap">
+            <img src="/assets/visa.png" class="h-6" alt="Visa" />
+            <img src="/assets/express.png" class="h-6" alt="Amex" />
+            <img src="/assets/card.png" class="h-6" alt="Mastercard" />
+            <img src="/assets/stripe.png" class="h-6" alt="Stripe" />
+            <img src="/assets/pay.png" class="h-6" alt="PayPal" />
+            <img src="/assets/paypal.png" class="h-6" alt="Apple Pay" />
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Scripts -->
+    <script>
+      // Sample products data with categories
+      const products = [
+        {
+          id: 1,
+          name: "Men's Cabretta Golf Glove",
+          price: 19.0,
+          image: "/assets/fimage1.jpg",
+          rating: 5,
+          hot: true,
+          discount: null,
+          category: "Accessories"
+        },
+        {
+          id: 2,
+          name: "Greg Norman - Men's Shirt",
+          price: 24.99,
+          originalPrice: 40.0,
+          image: "/assets/fimage2.jpg",
+          rating: 5,
+          hot: true,
+          discount: 50,
+          category: "Men’s Wear"
+        },
+        {
+          id: 3,
+          name: "G/FORE - Mens 2023",
+          price: 30.0,
+          image: "/assets/fimage3.jpg",
+          rating: 5,
+          hot: true,
+          discount: null,
+          category: "Men’s Wear"
+        },
+        {
+          id: 4,
+          name: "Utility Rover-R Double - 2023",
+          price: 209.99,
+          image: "/assets/fimage4.jpg",
+          rating: 5,
+          hot: true,
+          discount: null,
+          category: "Accessories"
+        },
+        {
+          id: 5,
+          name: "Air Jordan 1 - SS23",
+          price: 111.99,
+          originalPrice: 200.0,
+          image: "/assets/fimage5.jpg",
+          rating: 5,
+          hot: true,
+          discount: 50,
+          category: "Women’s Wear"
+        },
+        {
+          id: 6,
+          name: "Children's Floral Dress",
+          price: 29.99,
+          originalPrice: 50.0,
+          image: "/assets/fimage6.jpg",
+          rating: 4,
+          hot: false,
+          discount: 40,
+          category: "Children Female Wear"
+        },
+        {
+          id: 7,
+          name: "Boys' Casual Jacket",
+          price: 34.99,
+          image: "/assets/fimage7.jpg",
+          rating: 5,
+          hot: true,
+          discount: null,
+          category: "Children Male Wear"
+        }
+      ];
+
+      // Filter products function
+      function filterProducts() {
+        const dropdown = document.querySelector('.filter-dropdown');
+        const selectedCategory = dropdown.value;
+
+        // Filter products based on selected category
+        let filteredProducts = products;
+        if (selectedCategory !== 'All') {
+          filteredProducts = products.filter(product => product.category === selectedCategory);
+        }
+
+        renderFilteredProducts(filteredProducts);
+      }
+
+      // Modified renderProducts to handle filtered products
+      function renderFilteredProducts(filteredProducts) {
+        const swiperWrapper = document.querySelector('.swiper-wrapper');
+        swiperWrapper.innerHTML = '';
+        filteredProducts.forEach((product) => {
+          const slide = document.createElement('div');
+          slide.className = 'swiper-slide pl-5 sm:pl-10';
+          slide.setAttribute('data-product-id', product.id);
+
+          const cartItem = cart.find((item) => item.id === product.id && item.color === 'default');
+          const qty = cartItem ? cartItem.qty : 0;
+          const buttonText = qty > 0 ? `Add to cart (${qty})` : 'Add to cart';
+
+          slide.innerHTML = `
+            <div class="bg-white rounded-md relative clickable-product">
+              ${product.hot ? `<span class="absolute top-3 left-3 bg-white text-black text-xs font-semibold px-2 py-0.5 rounded z-20">HOT</span>` : ''}
+              ${product.discount ? `<span class="absolute top-3 left-16 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded z-20">-${product.discount}%</span>` : ''}
+              <div class="image-container h-56"
+                   onmouseenter="if (window.innerWidth >= 768) toggleButtons(${product.id}, true)"
+                   onmouseleave="if (window.innerWidth >= 768) toggleButtons(${product.id}, false)"
+                   onclick="if (window.innerWidth < 768) toggleButtons(${product.id}, !document.querySelector('[data-product-id=${product.id}] .overlay').classList.contains('active'))">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover bg-black rounded-t-md" style="display: none;" />
+                <div class="absolute inset-0 bg-gray-200 rounded-t-md animate-pulse"></div>
+                <div class="overlay flex flex-col gap-2 items-center justify-center absolute inset-0 bg-black bg-opacity-50 rounded-t-md">
+                  <button class="add-to-cart ${window.innerWidth >= 768 ? 'bg-black text-white text-sm py-2 px-6 rounded' : 'bg-black text-white p-2 rounded-full'} hover:bg-gray-800 transition-all duration-300"
+                          aria-label="Add ${product.name} to cart"
+                          onclick="event.stopPropagation(); handleAddToCart(${product.id})">
+                    ${window.innerWidth >= 768 ? buttonText : '<i class="fas fa-shopping-cart w-5 h-5"></i>'}
+                  </button>
+                  <button class="${window.innerWidth >= 768 ? 'bg-gray-900 text-white text-sm py-2 px-6 rounded' : 'bg-gray-900 text-white p-2 rounded-full'} hover:bg-green-500 transition-all duration-300"
+                          onclick="event.stopPropagation(); window.location.href = 'product.html?id=${product.id}'">
+                    ${window.innerWidth >= 768 ? 'View Details' : '<i class="fas fa-eye w-5 h-5"></i>'}
+                  </button>
+                </div>
+              </div>
+              <div class="px-3 pt-3">
+                <div class="flex text-yellow-400 mb-1">
+                  ${Array(5).fill().map((_, i) => `
+                    <svg class="w-4 h-4 fill-current ${i < product.rating ? 'text-yellow-400' : 'text-gray-300'}" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.974a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.46a1 1 0 00-.364 1.118l1.287 3.974c.3.921-.755 1.688-1.54 1.118l-3.388-2.46a1 1 0 00-1.175 0l-3.388 2.46c-.784.57-1.838-.197-1.539-1.118l1.287-3.974a1 1 0 00-.364-1.118L2.045 9.4c-.783-.57-.38-1.81.588-.181h4.18a1 1 0 00.95-.69l1.286-3.974z" />
+                    </svg>
+                  `).join('')}
+                </div>
+              </div>
+              <h3 class="text-sm font-semibold px-3">${product.name}</h3>
+              <div class="px-3 pb-3 mt-1 flex flex-col gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="font-semibold">₦${product.price.toFixed(2)}</span>
+                  ${product.originalPrice ? `<span class="line-through text-gray-400 text-xs">₦${product.originalPrice.toFixed(2)}</span>` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+          swiperWrapper.appendChild(slide);
+        });
+
+        // Simulate image loading
+        setTimeout(() => {
+          document.querySelectorAll('.image-container img').forEach(img => {
+            img.style.display = 'block';
+          });
+          document.querySelectorAll('.image-container .animate-pulse').forEach(skeleton => {
+            skeleton.style.display = 'none';
+          });
+        }, 2000);
+
+        // Update button texts after rendering
+        filteredProducts.forEach(product => {
+          updateButtonText(product.id);
+        });
+      }
+
+      // Toggle buttons visibility
+      function toggleButtons(productId, show) {
+        const overlay = document.querySelector(`[data-product-id="${productId}"] .overlay`);
+        if (overlay) {
+          overlay.classList.toggle('active', show);
+        }
+      }
+
+      // Handle add to cart
+      function handleAddToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+        addToCart({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          color: 'default',
+          qty: 1
+        });
+      }
+
+      // Initialize on page load
+      document.addEventListener('DOMContentLoaded', () => {
+        filterProducts(); // Initial render with all products
+        updateCartIcon(); // Update cart icon on load
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer src="app.js"></script>
+    <script defer src="feature.js"></script>
+    <script defer src="product.js"></script>
+    <script defer src="header.js"></script>
+    <script defer src="footer.js"></script>
+  </body>
+</html>

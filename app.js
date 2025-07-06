@@ -1,5 +1,6 @@
 // Initialize cart from localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+console.log('Initial cart on page load:', cart);
 
 // Save cart to localStorage
 function saveCart() {
@@ -8,6 +9,7 @@ function saveCart() {
 
 // Add item to cart
 function addToCart(product) {
+  console.log('addToCart called with:', product, 'Current cart:', cart); // Debug
   const productToAdd = {
     id: product.id,
     name: product.name,
@@ -28,7 +30,7 @@ function addToCart(product) {
   }
   saveCart();
   updateCartIcon();
-  updateButtonText(product.id); // Update button text in feature section
+  updateButtonText(product.id);
 }
 
 // Remove item from cart
@@ -37,7 +39,7 @@ function removeFromCart(id) {
   saveCart();
   updateCartIcon();
   if (window.location.pathname.includes('cart.html')) {
-    renderCart(); // Update cart page if on it
+    renderCart();
   }
 }
 
@@ -58,6 +60,7 @@ function updateCartIcon() {
   const cartCount = document.querySelector('#cartCount');
   if (cartCount) {
     const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    console.log('updateCartIcon called - Cart:', cart, 'Total items:', totalItems); // Debug
     cartCount.textContent = totalItems;
     cartCount.classList.toggle('hidden', totalItems === 0);
   }
@@ -76,3 +79,10 @@ function updateButtonText(productId) {
     }
   }
 }
+
+// Initialize cart on page load
+document.addEventListener('DOMContentLoaded', () => {
+  cart = JSON.parse(localStorage.getItem('cart')) || [];
+  console.log('Cart after initialization:', cart);
+  updateCartIcon();
+});
