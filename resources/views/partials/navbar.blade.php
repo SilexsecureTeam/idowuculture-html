@@ -23,7 +23,7 @@
         <ul class="hidden md:flex justify-between items-center w-full max-w-[330px]">
             <li><a href="/" class="cursor-pointer font-semibold">Home</a></li>
             <li><a href="{{ route('about-page') }}" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
-            <li><a href="{{ route('products-page') }}" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+            <li><a href="{{ route('all-products-page') }}" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
             <li><a href="{{ route('contact-page') }}" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
         </ul>
         <div class="flex gap-x-3 items-center">
@@ -42,7 +42,7 @@
             <ul class="flex flex-col items-center py-4 space-y-2">
                 <li><a href="/" class="cursor-pointer font-medium">Home</a></li>
                 <li><a href="{{ route('about-page') }}" class="text-[#6C7275] cursor-pointer font-medium">About Us</a></li>
-                <li><a href="{{ route('products-page') }}" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
+                <li><a href="{{ route('all-products-page') }}" class="text-[#6C7275] cursor-pointer font-medium">Product</a></li>
                 <li><a href="{{ route('contact-page') }}" class="text-[#6C7275] cursor-pointer font-medium">Contact Us</a></li>
             </ul>
         </div>

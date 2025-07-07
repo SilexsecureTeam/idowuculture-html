@@ -42,6 +42,11 @@ class PagesController extends Controller
         return view('/product');
     }
 
+    public function allProducts()
+    {
+        return view('/products');
+    }
+
     public function term()
     {
         return view('/term');

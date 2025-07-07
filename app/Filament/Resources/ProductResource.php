@@ -20,6 +20,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Infolists;
 use Filament\Infolists\Components\ColorEntry;
@@ -120,14 +121,22 @@ class ProductResource extends Resource
                                         'xl' => 'Extra Large',
                                         'xxl' => 'Extra Extra Large',
                                     ])->required(),
-                                    TextInput::make('quantity')->numeric()->required()->default(0)
+                                    TextInput::make('quantity')->numeric()->required()->default(0),
+                                    TextInput::make('price')->numeric()->step('any')->nullable()->default(0)
                                 ])->columns()
                         ])
                             ->columnSpan(1),
 
                         Section::make([
                             Checkbox::make('has_fabric')
-                                ->helperText('When checked, it means this product can be sold as fabric and full attire'),
+                            ->reactive()
+                            ->helperText('When checked, it means this product can be sold as fabric and full attire'),
+                            TextInput::make('fabric_price')
+                            ->numeric()
+                            ->required()
+                            ->default(0)
+                            ->step('any')
+                            ->hidden(fn(Get $get) => !$get('has_fabric')),
                             FileUpload::make('images')
                                 ->multiple()
                                 ->required()
@@ -139,9 +148,11 @@ class ProductResource extends Resource
                                 ->maxFiles(10)
                                 ->maxSize(5120)
                                 ->panelLayout('grid')
+                                ->columnSpanFull()
 
                         ])
-                            ->columnSpanFull(),
+                        ->columns()
+                        ->columnSpanFull(),
                     ])->columns()
             ]);
     }

@@ -1,4 +1,4 @@
-    <button id="cartBtn" class="relative">
+    <div id="cartBtn" class="relative">
         <a href="{{ route('cart-page') }}" title="cart">
             <i class="fas fa-shopping-bag text-[#141718] text-lg cursor-pointer"></i>
             @if ($cartCount > 0)
@@ -8,4 +8,4 @@
                 </div>
             @endif
         </a>
-    </button>
+    </div>

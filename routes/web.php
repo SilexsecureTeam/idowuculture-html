@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Product\ProductList;
 use App\Livewire\Product\SingleProduct;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/privacy', [PagesController::class, 'privacy'])->name('privacy-page');
 
 // products
+Route::get('/products', ProductList::class)->name('all-products-page');
 Route::get('/product', [PagesController::class, 'products'])->name('products-page');
 Route::get('product/{sku}', SingleProduct::class)->name('product.single.page');
 
