@@ -31,7 +31,7 @@
 
       @media (max-width: 640px) {
         .feature-wrapper {
-          grid-template-columns: 1fr; /* 1 per row for mobile */
+          grid-template-columns: repeat(2, 1fr); /* 1 per row for mobile */
         }
       }
 
@@ -99,6 +99,11 @@
       .overlay.active {
         opacity: 1;
       }
+      @media (max-width: 768px) {
+  .swiper-slide {
+    padding-left: 0 !important;
+  }
+}
     </style>
   </head>
   <body class="w-full pt-26 mx-auto max-w-[1500px]">
@@ -380,7 +385,7 @@
         swiperWrapper.innerHTML = '';
         filteredProducts.forEach((product) => {
           const slide = document.createElement('div');
-          slide.className = 'swiper-slide pl-5 sm:pl-10';
+          slide.className = 'swiper-slide '; 
           slide.setAttribute('data-product-id', product.id);
 
           const cartItem = cart.find((item) => item.id === product.id && item.color === 'default');
