@@ -1,45 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
+  console.log(`header.js loaded on ${window.location.pathname}`);
   const menuToggle = document.getElementById("menuToggle");
   const mobileMenu = document.getElementById("mobileMenu");
   const cartBtn = document.getElementById("cartBtn");
-  const cartCount = document.getElementById("cartCount");
   const signupBtn = document.getElementById("signupBtn");
 
   let menuOpen = false;
-  let cartItemCount = 3; // Simulated cart count for example
-
-  // Update cart count display
-  if (cartItemCount > 0) {
-    cartCount.textContent = cartItemCount;
-    cartCount.classList.remove("hidden");
-  }
 
   // Toggle mobile menu
-  menuToggle.addEventListener("click", () => {
-    menuOpen = !menuOpen;
-    mobileMenu.classList.toggle("hidden");
-
-    // Swap icon
-    menuToggle.innerHTML = menuOpen
-      ? '<i class="fas fa-times text-[#141718] text-xl"></i>'
-      : '<i class="fas fa-bars text-[#141718] text-xl"></i>';
-  });
-
-  // Optional: Close menu when a menu item is clicked
-  mobileMenu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      menuOpen = false;
-      mobileMenu.classList.add("hidden");
-      menuToggle.innerHTML = '<i class="fas fa-bars text-[#141718] text-xl"></i>';
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle("hidden");
+      menuToggle.innerHTML = menuOpen
+        ? '<i class="fas fa-times text-[#141718] text-xl"></i>'
+        : '<i class="fas fa-bars text-[#141718] text-xl"></i>';
     });
-  });
 
-  // Simulate navigation
-  signupBtn.addEventListener("click", () => {
-    window.location.href = "/signup.html";
-  });
+    // Close menu when a menu item is clicked
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menuOpen = false;
+        mobileMenu.classList.add("hidden");
+        menuToggle.innerHTML = '<i class="fas fa-bars text-[#141718] text-xl"></i>';
+      });
+    });
+  } else {
+    console.log(`header.js: menuToggle or mobileMenu not found on ${window.location.pathname}`);
+  }
 
-  cartBtn.addEventListener("click", () => {
-    window.location.href = "/cart.html";
-  });
+  // Navigate to signup page
+  if (signupBtn) {
+    signupBtn.addEventListener("click", () => {
+      window.location.href = "/signup.html";
+    });
+  }
+
+  // Navigate to cart page
+  if (cartBtn) {
+    cartBtn.addEventListener("click", () => {
+      window.location.href = "/cart.html";
+    });
+  }
+
+  // Call updateCartIcon from app.js
+  if (typeof updateCartIcon === 'function') {
+    console.log(`header.js: Calling updateCartIcon on ${window.location.pathname}`);
+    updateCartIcon();
+  } else {
+    console.log(`header.js: updateCartIcon not found on ${window.location.pathname}; ensure app.js is loaded`);
+  }
 });
