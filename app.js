@@ -1,6 +1,6 @@
 // Initialize cart from localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-console.log('app.js loaded - Initial cart:', cart);
+console.log('Initial cart on page load:', cart);
 
 // Save cart to localStorage
 function saveCart() {
