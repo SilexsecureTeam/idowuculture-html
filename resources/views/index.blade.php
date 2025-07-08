@@ -153,26 +153,38 @@
     <!-- Hero -->
     <div class="relative px-5 sm:px-10 lg:px-20 w-full pt-26 md:h-[90vh] h-[50vh] pb-14 bg-black overflow-hidden">
         <div id="carousel" class="absolute inset-0 flex transition-transform duration-500 ease-in-out" style="width: 300%;">
-            <div class="w-full h-full relative">
-                <div id="skeleton-0" class="w-full h-full skeleton absolute inset-0" style="z-index: 10;"></div>
-                <img src="/assets/hero-bg.png" alt="Hero background 1" loading="eager"
-                    class="w-full h-full object-cover absolute inset-0" style="z-index: 9;" onload="handleImageLoad(0)" />
-            </div>
-            <div class="w-full h-full relative">
-                <div id="skeleton-1" class="w-full h-full skeleton absolute inset-0" style="z-index: 10;"></div>
-                <img src="/assets/hero-bg1.png" alt="Hero background 2" loading="eager"
-                    class="w-full h-full object-cover absolute inset-0" style="z-index: 9;" onload="handleImageLoad(1)" />
-            </div>
-            <div class="w-full h-full relative">
-                <div id="skeleton-2" class="w-full h-full skeleton absolute inset-0" style="z-index: 10;"></div>
-                <img src="/assets/hero-bg2.png" alt="Hero background 3" loading="eager"
-                    class="w-full h-full object-cover absolute inset-0" style="z-index: 9;" onload="handleImageLoad(2)" />
-            </div>
+            @if (count($slider->sliders) > 0)
+                <div class="w-full h-full relative">
+                    <div id="skeleton-0" class="w-full h-full skeleton absolute inset-0" style="z-index: 10;"></div>
+                    <img src="{{ asset('storage/' . $slider->sliders[0]) }}" alt="Hero background 1" loading="eager"
+                        class="w-full h-full object-cover absolute inset-0 " style="z-index: 9;"
+                        onload="handleImageLoad(0)" />
+                </div>
+                <div class="w-full h-full relative">
+                    <div id="skeleton-1" class="w-full h-full skeleton absolute inset-0" style="z-index: 10;"></div>
+                    <img src="{{ asset('storage/' . $slider->sliders[1]) }}" alt="Hero background 2" loading="eager"
+                        class="w-full h-full object-cover absolute inset-0 " style="z-index: 9;"
+                        onload="handleImageLoad(1)" />
+                </div>
+                <div class="w-full h-full relative">
+                    <div id="skeleton-2" class="w-full h-full skeleton absolute inset-0" style="z-index: 10;"></div>
+                    <img src="{{ asset('storage/' . $slider->sliders[2]) }}" alt="Hero background 3" loading="eager"
+                        class="w-full h-full object-cover absolute inset-0" style="z-index: 9;"
+                        onload="handleImageLoad(2)" />
+                </div>
+            @else
+                <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                    <span class="text-gray-500">No image available</span>
+                </div>
+            @endif
+
         </div>
-        <button
-            class="bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-105 absolute bottom-16 md:bottom-16 left-1/2 -translate-x-1/2 cursor-pointer mx-auto md:mx-0 block text-black font-medium py-3 px-8 rounded-md">
-            Shop Now
-        </button>
+        <div class="absolute bottom-16 left-0 right-0 flex justify-center">
+            <a href="{{ route('all-products-page') }}"
+                class="bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer text-black font-medium py-3 px-8 rounded-md">
+                Shop Now
+            </a>
+        </div>
     </div>
 
     <!-- Feature Section -->
@@ -243,14 +255,20 @@
                 <span id="seconds" class="bg-white text-black p-2 text-center text-[20px]">00</span>
             </div>
             <div class="flex justify-center sm:justify-start">
-                <button
+                <a href="{{ route('all-products-page') }}"
                     class="rounded-xl text-white mx-auto sm:mx-0 font-medium cursor-pointer text-base px-6 py-2 bg-black">
                     Shop now
-                </button>
+                </a>
             </div>
         </div>
         <div class="w-full sm:w-1/2">
-            <img src="/assets/hurray.jpg" alt="img" class="h-full w-full bg-gray-300 object-cover" />
+            @if (count($hurray->hurray_image) > 0)
+                <img src="{{ asset('storage/' . $hurray->hurray_image[0]) }}" alt="hurray Image 3"
+                    class="h-full w-full bg-gray-300 object-cover" data-loading="true" loading="lazy">
+            @else
+                <img src="/assets/hurray.jpg" alt="img" class="h-full w-full bg-gray-300 object-cover" />
+            @endif
+
         </div>
     </div>
 
@@ -258,14 +276,41 @@
     <section class="px-5 sm:px-10 lg:px-20 py-8" id="article">
         <div class="flex justify-between items-center mb-6">
             <h1 class="poppins text-[20px] md:text-[40px] font-medium">Latest Articles</h1>
-            <a href="#"
+            <a href="{{ route('all-products-page') }}"
                 class="text-base text-[#121212] h-fit pb-1 font-medium flex items-center gap-1 border-b border-black hover:border-[#E0B654] transition-colors">
                 View More <span>→</span>
             </a>
         </div>
-        <div id="article-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Articles will be dynamically inserted here -->
-        </div>
+        <div id="" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            @forelse ($articles as $item)
+                <div
+                    class = "card article-card flex flex-col bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
+
+                    <div class="overflow-hidden">
+                        <img src="{{ asset('storage/' . $item->images[0]) }}" alt="no"
+                            class="article-image w-full h-60 md:h-64 object-cover"
+                            style="opacity: 0; transition: opacity 0.3s ease;" />
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-[20px] poppins text-[#23262F] font-medium mb-3 line-clamp-2 flex-1">
+                           {{ $item->heading }}
+                        </h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                                {!! $item->content !!}
+                            </p>
+                        
+                        <a href="${article.link}"
+                            class="read-more-link text-base text-[#141718] font-medium flex items-center gap-1 border-b border-black pb-1 w-fit mt-auto hover:text-[#E0B654] transition-colors">
+                            Read More <span class="transition-transform group-hover:translate-x-1">→</span>
+                        </a>
+                    </div>
+                </div>
+            @empty
+            <h2>
+                NO ARTICLE
+            </h2>
+            @endforelse
+
     </section>
 
     <!-- Newsletter Section -->

@@ -57,7 +57,7 @@
                     @endforelse
                 </div>
                 <div class="allproduct float-right bg-black p-2 round text-white rounded-xl">
-                    <button>All Products</button>
+                    <a href="{{ route('all-products-page') }} ">All Products</a>
                 </div>
             </div>
     </section>

@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutPage;
+use App\Models\Article;
 use App\Models\ClothCollection;
+use App\Models\HomePage;
+use App\Models\Hurray;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
     public function index()
     {
+        $articles = Article::orderBy('created_at', 'desc')->get();
+        $hurray = Hurray::first();
+        $slider = HomePage::first();
         $collections = ClothCollection::orderBy('position', 'asc')->get();
-        return view('index', compact('collections'));
+        return view('index', compact('collections', 'slider', 'hurray', 'articles'));
     }
     public function aboutus()
     {
-        return view('about');
+        $about_details = AboutPage::first();
+        return view('about', compact('about_details'));
     }
 
     public function cartpage()

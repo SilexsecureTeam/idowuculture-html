@@ -8,7 +8,7 @@ class AboutPage extends Model
 {
     protected $fillable = [
         'images',
-        'our-story',
+        'our_story',
         'delivery',
         'statement'
     ];

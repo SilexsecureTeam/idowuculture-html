@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('about_pages', function (Blueprint $table) {
             $table->id();
             $table->string('images');
-            $table->string('our-story')->nullable();
+            $table->string('our_story')->nullable();
             $table->string('delivery')->nullable();
             $table->string('statement')->nullable();
             $table->timestamps();

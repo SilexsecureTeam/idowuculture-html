@@ -1,18 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menuToggle");
   const mobileMenu = document.getElementById("mobileMenu");
-  const cartBtn = document.getElementById("cartBtn");
-  const cartCount = document.getElementById("cartCount");
   const signupBtn = document.getElementById("signupBtn");
 
   let menuOpen = false;
-  let cartItemCount = 3; // Simulated cart count for example
-
-  // Update cart count display
-  if (cartItemCount > 0) {
-    cartCount.textContent = cartItemCount;
-    cartCount.classList.remove("hidden");
-  }
 
   // Toggle mobile menu
   menuToggle.addEventListener("click", () => {
@@ -34,12 +25,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Simulate navigation
-  signupBtn.addEventListener("click", () => {
-    window.location.href = "/signup.html";
-  });
-
-  cartBtn.addEventListener("click", () => {
-    window.location.href = "/cart.html";
-  });
 });

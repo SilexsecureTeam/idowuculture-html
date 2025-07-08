@@ -46,7 +46,7 @@ class AboutPageResource extends Resource
                     ->columnSpanFull(),
 
                 Section::make([
-                    RichEditor::make('our-story')
+                    RichEditor::make('our_story')
                         ->required()
                 ])
                     ->columnSpan(1)->heading('Our Story'),
@@ -69,7 +69,7 @@ class AboutPageResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('our-story')
+                TextColumn::make('our_story')
                     ->label('Our Story')
                     ->formatStateUsing(fn($state) => strip_tags($state))
                     ->wrap(),

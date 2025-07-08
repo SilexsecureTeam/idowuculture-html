@@ -30,6 +30,7 @@ class HomePageResource extends Resource
             ->schema([
                  Section::make([
                     FileUpload::make('sliders')
+->label('Sliders - Accepted Dimension: 1440 x 679')
                         ->multiple()
                         ->required()
                         ->image()

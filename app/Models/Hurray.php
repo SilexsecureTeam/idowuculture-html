@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Hurray extends Model
 {
     protected $fillable = [
-        'hurray-image'
+        'hurray_image'
     ];
 
     protected $casts = [
-        'hurray-image' => 'array',
+        'hurray_image' => 'array',
     ];
 }

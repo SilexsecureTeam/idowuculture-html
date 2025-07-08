@@ -28,7 +28,7 @@ class HurrayResource extends Resource
         return $form
             ->schema([
                 Section::make([
-                    FileUpload::make('hurray-image')
+                    FileUpload::make('hurray_image')
                         ->multiple()
                         ->required()
                         ->image()
@@ -49,7 +49,7 @@ class HurrayResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('hurray-image')
+                ImageColumn::make('hurray_image')
                     ->label('Hurray Image')
                     ->square()
                     ->size(100),
