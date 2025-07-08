@@ -155,7 +155,7 @@
         <div id="carousel" class="absolute inset-0 flex transition-transform duration-500 ease-in-out" style="width: 300%;">
 
             @if (isset($slider) && $slider && isset($slider->sliders) && is_array($slider->sliders) && count($slider->sliders) > 0)
-                 <div class="w-full h-full relative">
+                <div class="w-full h-full relative">
                     <div id="skeleton-0" class="w-full h-full skeleton absolute inset-0" style="z-index: 10;"></div>
                     <img src="{{ asset('storage/' . $slider->sliders[0]) }}" alt="Hero background 1" loading="eager"
                         class="w-full h-full object-cover absolute inset-0 " style="z-index: 9;"
@@ -264,14 +264,12 @@
             </div>
         </div>
         <div class="w-full sm:w-1/2">
-            @if (count($hurray->hurray_image) > 0)
-                <img src="{{ asset('storage/' . $hurray->hurray_image[0]) }}" alt="hurray Image 3"
-                    class="h-full w-full bg-gray-300 object-cover" data-loading="true" loading="lazy">
-            @else
-                <img src="/assets/hurray.jpg" alt="img" class="h-full w-full bg-gray-300 object-cover" />
-            @endif
-
-        </div>
+         @if ($hurray && $hurray->hurray_image && count($hurray->hurray_image) > 0)
+    <img src="{{ asset('storage/' . $hurray->hurray_image[0]) }}" alt="hurray Image 3"
+        class="h-full w-full bg-gray-300 object-cover" data-loading="true" loading="lazy">
+@else
+    <img src="/assets/hurray.jpg" alt="img" class="h-full w-full bg-gray-300 object-cover" />
+@endif
     </div>
 
     <!-- Article Section -->
