@@ -153,8 +153,9 @@
     <!-- Hero -->
     <div class="relative px-5 sm:px-10 lg:px-20 w-full pt-26 md:h-[90vh] h-[50vh] pb-14 bg-black overflow-hidden">
         <div id="carousel" class="absolute inset-0 flex transition-transform duration-500 ease-in-out" style="width: 300%;">
-            @if (count($slider->sliders) > 0)
-                <div class="w-full h-full relative">
+
+            @if (isset($slider) && $slider && isset($slider->sliders) && is_array($slider->sliders) && count($slider->sliders) > 0)
+                 <div class="w-full h-full relative">
                     <div id="skeleton-0" class="w-full h-full skeleton absolute inset-0" style="z-index: 10;"></div>
                     <img src="{{ asset('storage/' . $slider->sliders[0]) }}" alt="Hero background 1" loading="eager"
                         class="w-full h-full object-cover absolute inset-0 " style="z-index: 9;"
@@ -174,9 +175,10 @@
                 </div>
             @else
                 <div class="w-full h-full bg-gray-300 flex items-center justify-center">
-                    <span class="text-gray-500">No image available</span>
+                    <span class="text-gray-500">No slides available</span>
                 </div>
             @endif
+
 
         </div>
         <div class="absolute bottom-16 left-0 right-0 flex justify-center">
@@ -293,12 +295,12 @@
                     </div>
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-[20px] poppins text-[#23262F] font-medium mb-3 line-clamp-2 flex-1">
-                           {{ $item->heading }}
+                            {{ $item->heading }}
                         </h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {!! $item->content !!}
-                            </p>
-                        
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                            {!! $item->content !!}
+                        </p>
+
                         <a href="${article.link}"
                             class="read-more-link text-base text-[#141718] font-medium flex items-center gap-1 border-b border-black pb-1 w-fit mt-auto hover:text-[#E0B654] transition-colors">
                             Read More <span class="transition-transform group-hover:translate-x-1">→</span>
@@ -306,9 +308,9 @@
                     </div>
                 </div>
             @empty
-            <h2>
-                NO ARTICLE
-            </h2>
+                <h2>
+                    NO ARTICLE
+                </h2>
             @endforelse
 
     </section>
