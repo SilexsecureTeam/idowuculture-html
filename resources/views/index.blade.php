@@ -264,124 +264,125 @@
             </div>
         </div>
         <div class="w-full sm:w-1/2">
-         @if ($hurray && $hurray->hurray_image && count($hurray->hurray_image) > 0)
-    <img src="{{ asset('storage/' . $hurray->hurray_image[0]) }}" alt="hurray Image 3"
-        class="h-full w-full bg-gray-300 object-cover" data-loading="true" loading="lazy">
-@else
-    <img src="/assets/hurray.jpg" alt="img" class="h-full w-full bg-gray-300 object-cover" />
-@endif
-    </div>
-
-    <!-- Article Section -->
-    <section class="px-5 sm:px-10 lg:px-20 py-8" id="article">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="poppins text-[20px] md:text-[40px] font-medium">Latest Articles</h1>
-            <a href="{{ route('all-products-page') }}"
-                class="text-base text-[#121212] h-fit pb-1 font-medium flex items-center gap-1 border-b border-black hover:border-[#E0B654] transition-colors">
-                View More <span>→</span>
-            </a>
+            @if ($hurray && $hurray->hurray_image && count($hurray->hurray_image) > 0)
+                <img src="{{ asset('storage/' . $hurray->hurray_image[0]) }}" alt="hurray Image 3"
+                    class="h-full w-full bg-gray-300 object-cover" data-loading="true" loading="lazy">
+            @else
+                <img src="/assets/hurray.jpg" alt="img" class="h-full w-full bg-gray-300 object-cover" />
+            @endif
         </div>
-        <div id="" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            @forelse ($articles as $item)
-                <div
-                    class = "card article-card flex flex-col bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
 
-                    <div class="overflow-hidden">
-                        <img src="{{ asset('storage/' . $item->images[0]) }}" alt="no"
-                            class="article-image w-full h-60 md:h-64 object-cover"
-                            style="opacity: 0; transition: opacity 0.3s ease;" />
+        <!-- Article Section -->
+        <section class="px-5 sm:px-10 lg:px-20 py-8" id="article">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="poppins text-[20px] md:text-[40px] font-medium">Latest Articles</h1>
+                <a href="{{ route('all-products-page') }}"
+                    class="text-base text-[#121212] h-fit pb-1 font-medium flex items-center gap-1 border-b border-black hover:border-[#E0B654] transition-colors">
+                    View More <span>→</span>
+                </a>
+            </div>
+            <div id="" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                @forelse ($articles as $item)
+                    <div
+                        class = "card article-card flex flex-col bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
+
+                        <div class="overflow-hidden">
+                            <img src="{{ asset('storage/' . $item->images[0]) }}" alt="no"
+                                class="article-image w-full h-60 md:h-64 object-cover"
+                                style="opacity: 0; transition: opacity 0.3s ease;" />
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-[20px] poppins text-[#23262F] font-medium mb-3 line-clamp-2 flex-1">
+                                {{ $item->heading }}
+                            </h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                                {!! $item->content !!}
+                            </p>
+
+                            <a href="${article.link}"
+                                class="read-more-link text-base text-[#141718] font-medium flex items-center gap-1 border-b border-black pb-1 w-fit mt-auto hover:text-[#E0B654] transition-colors">
+                                Read More <span class="transition-transform group-hover:translate-x-1">→</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-[20px] poppins text-[#23262F] font-medium mb-3 line-clamp-2 flex-1">
-                            {{ $item->heading }}
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                            {!! $item->content !!}
-                        </p>
+                @empty
+                    <h2>
+                        NO ARTICLE
+                    </h2>
+                @endforelse
 
-                        <a href="${article.link}"
-                            class="read-more-link text-base text-[#141718] font-medium flex items-center gap-1 border-b border-black pb-1 w-fit mt-auto hover:text-[#E0B654] transition-colors">
-                            Read More <span class="transition-transform group-hover:translate-x-1">→</span>
-                        </a>
+        </section>
+
+        <!-- Newsletter Section -->
+        <div class="bg-[#E0B654] py-18 px-5 bg-no-repeat bg-center h-fit w-full">
+            <div class="max-w-[520px] w-full mx-auto">
+                <h1 class="poppins text-white text-[20px] md:text-[40px] font-medium text-center mb-0">
+                    Join Our Newsletter
+                </h1>
+                <p class="text-center text-normal mt-0 mb:text-[18px] text-sm text-[#fefefe] mb-6">
+                    Sign up for deals, new products and promotions
+                </p>
+                <form id="newsletter-form"
+                    class="flex items-center pb-2 border-b border-b-[#fefefe] justify-between gap-4"
+                    onsubmit="handleSubmit(event)">
+                    <div class="flex gap-x-2 items-center flex-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="text-white w-5 h-5 flex-shrink-0" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m0 8H3a2 2 0 01-2-2V6a2 2 0 012-2h18a2 2 0 012 2v8a2 2 0 01-2 2z" />
+                        </svg>
+                        <input type="email" id="email-input" placeholder="Email address"
+                            class="border-0 placeholder-white text-white outline-none flex-1 py-2 bg-transparent" required
+                            aria-label="Email address" />
                     </div>
-                </div>
-            @empty
-                <h2>
-                    NO ARTICLE
-                </h2>
-            @endforelse
-
-    </section>
-
-    <!-- Newsletter Section -->
-    <div class="bg-[#E0B654] py-18 px-5 bg-no-repeat bg-center h-fit w-full">
-        <div class="max-w-[520px] w-full mx-auto">
-            <h1 class="poppins text-white text-[20px] md:text-[40px] font-medium text-center mb-0">
-                Join Our Newsletter
-            </h1>
-            <p class="text-center text-normal mt-0 mb:text-[18px] text-sm text-[#fefefe] mb-6">
-                Sign up for deals, new products and promotions
-            </p>
-            <form id="newsletter-form" class="flex items-center pb-2 border-b border-b-[#fefefe] justify-between gap-4"
-                onsubmit="handleSubmit(event)">
-                <div class="flex gap-x-2 items-center flex-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="text-white w-5 h-5 flex-shrink-0" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m0 8H3a2 2 0 01-2-2V6a2 2 0 012-2h18a2 2 0 012 2v8a2 2 0 01-2 2z" />
-                    </svg>
-                    <input type="email" id="email-input" placeholder="Email address"
-                        class="border-0 placeholder-white text-white outline-none flex-1 py-2 bg-transparent" required
-                        aria-label="Email address" />
-                </div>
-                <button type="submit" class="text-white cursor-pointer">Signup</button>
-            </form>
-            <p id="message" class="text-white mt-3 text-center hidden"></p>
+                    <button type="submit" class="text-white cursor-pointer">Signup</button>
+                </form>
+                <p id="message" class="text-white mt-3 text-center hidden"></p>
+            </div>
         </div>
-    </div>
 
-    <!-- Newsfeed Section -->
-    <div class="py-8 text-center px-5 sm:px-10 lg:px-20">
-        <h1 class="text-[#6C7275] font-semibold text-base mb-2">NEWSFEED</h1>
-        <h2 class="poppins text-[#141718] font-medium text-[24px] md:text-[40px] mb-2">Instagram</h2>
-        <h3 class="text-[#141718] font-normal text-[20px] mb-2">Follow us on social media for more discount &
-            promotions
-        </h3>
-        <h4 class="text-[#6C7275] poppins font-medium text-[20px]">@Idowu_Couture</h4>
-    </div>
+        <!-- Newsfeed Section -->
+        <div class="py-8 text-center px-5 sm:px-10 lg:px-20">
+            <h1 class="text-[#6C7275] font-semibold text-base mb-2">NEWSFEED</h1>
+            <h2 class="poppins text-[#141718] font-medium text-[24px] md:text-[40px] mb-2">Instagram</h2>
+            <h3 class="text-[#141718] font-normal text-[20px] mb-2">Follow us on social media for more discount &
+                promotions
+            </h3>
+            <h4 class="text-[#6C7275] poppins font-medium text-[20px]">@Idowu_Couture</h4>
+        </div>
 
-    <!-- Image Section -->
-    <div class="w-full">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6" id="image-grid"></div>
-    </div>
+        <!-- Image Section -->
+        <div class="w-full">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6" id="image-grid"></div>
+        </div>
 
-    <script>
-        const container = document.getElementById('productContainer');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
+        <script>
+            const container = document.getElementById('productContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
 
-        nextBtn.addEventListener('click', () => {
-            container.scrollBy({
-                left: 280,
-                behavior: 'smooth'
+            nextBtn.addEventListener('click', () => {
+                container.scrollBy({
+                    left: 280,
+                    behavior: 'smooth'
+                });
             });
-        });
 
-        prevBtn.addEventListener('click', () => {
-            container.scrollBy({
-                left: -280,
-                behavior: 'smooth'
+            prevBtn.addEventListener('click', () => {
+                container.scrollBy({
+                    left: -280,
+                    behavior: 'smooth'
+                });
             });
-        });
 
-        // Hide/show buttons based on scroll position
-        function updateButtons() {
-            prevBtn.style.opacity = container.scrollLeft > 0 ? '1' : '0.5';
-            nextBtn.style.opacity =
-                container.scrollLeft < container.scrollWidth - container.clientWidth ? '1' : '0.5';
-        }
+            // Hide/show buttons based on scroll position
+            function updateButtons() {
+                prevBtn.style.opacity = container.scrollLeft > 0 ? '1' : '0.5';
+                nextBtn.style.opacity =
+                    container.scrollLeft < container.scrollWidth - container.clientWidth ? '1' : '0.5';
+            }
 
-        container.addEventListener('scroll', updateButtons);
-        updateButtons();
-    </script>
-@endsection
+            container.addEventListener('scroll', updateButtons);
+            updateButtons();
+        </script>
+    @endsection

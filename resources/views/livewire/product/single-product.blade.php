@@ -10,7 +10,8 @@
         <div id="product-content" class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="space-y-4">
                 <div class="relative">
-                    <img src="{{ asset('storage/' . $product->images[0]) }}" alt="Air Jordan 1 - SS23" class="w-full h-96 object-cover rounded">
+                    <img src="{{ asset('storage/' . $product->images[0]) }}" alt="Air Jordan 1 - SS23"
+                        class="w-full h-96 object-cover rounded">
                     <span
                         class="absolute top-4 left-4 bg-white text-black px-2 py-1 text-xs font-semibold uppercase">New</span>
                     <span
@@ -32,29 +33,147 @@
                 <p class="text-[#6C7275] text-base font-normal mb-4">{!! Str::limit($product->description ?? '', 50) !!}</p>
                 <div class="flex items-center mb-4">
                     <span class="text-[24px] font-bold text-[#121212] mr-4">NGN
-                        {{ number_format($product->price) }}</span>
+                        {{ number_format($currentPrice) }}</span>
                     <span class="text-[24px] font-normal text-[#6C7275] line-through">₦200.00</span>
                 </div>
                 <div class="mb-6">
                     <h3 class="font-medium text-base text-[#6C7275] mb-2">Choose Color</h3>
-                    <p class="mt-2 text-sm text-[#6C7275] mb-2">Selected: <span id="selected-color-text">Black</span>
-                    </p>
                     <div class="flex space-x-4">
-                        <img src="/assets/fimage6.jpg" alt="Black"
-                            class="w-8 h-8 rounded-md border cursor-pointer ring-2 ring-offset-1 ring-black"
-                            data-color="black" onclick="selectColor('black')">
-                        <img src="/assets/fimage6.jpg" alt="Gray"
-                            class="w-8 h-8 rounded-md border cursor-pointer ring-1 ring-gray-200" data-color="gray"
-                            onclick="selectColor('gray')">
-                        <img src="/assets/fimage6.jpg" alt="Red"
-                            class="w-8 h-8 rounded-md border cursor-pointer ring-1 ring-gray-200" data-color="red"
-                            onclick="selectColor('red')">
-                        <img src="/assets/fimage6.jpg" alt="White"
-                            class="w-8 h-8 rounded-md border cursor-pointer ring-1 ring-gray-200" data-color="white"
-                            onclick="selectColor('white')">
+                        @foreach ($colors as $col)
+                            <button wire:click="$set('color', '{{ $col['color'] }}')"
+                                class="inline-block w-8 h-8 rounded-full border border-gray-300 relative"
+                                style="background-color: {{ $col['color'] }};">
+                                @if ($color == $col['color'])
+                                    <span
+                                        class="inline-flex justify-center items-center w-4 h-4 p-1 rounded-full bg-black absolute -top-1 -right-0">
+                                        <i class="fa-solid fa-check text-white text-xs"></i>
+                                    </span>
+                                @endif
+                                {{-- 
+                                TODO: Disable color if quantity is less than 1
+                                @if ($col['quantity'] < 1)
+                                    <div class="absolute w-full h-full bg-gray-400/50 top-0 left-0 px-5 rounded">
+                                    </div>
+                                @endif --}}
+                            </button>
+                        @endforeach
                     </div>
                 </div>
-                <div class="flex gap-x-3 items-center w-full mb-5">
+
+                {{-- If user is buying fabric hide the size --}}
+                @if (!$buyFabric)
+
+                    <div class="mb-6">
+                        <h3 class="font-medium text-base text-[#6C7275] mb-2">Choose Size</h3>
+                        <div class="flex space-x-4">
+                            @foreach ($sizes as $s)
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <div class="flex items-center gap-1 relative">
+                                        {{-- @if ($s['quantity'] < 1)
+                                            <div
+                                                class="absolute w-full h-full bg-gray-400/50 top-0 left-0 px-5 rounded">
+                                            </div>
+                                        @endif --}}
+                                        <input type="radio" name="size" wire:model.live="size"
+                                            id="size-{{ $s['size'] }}" value="{{ $s['size'] }}">
+                                        <label for="size-{{ $s['size'] }}"
+                                            class="text-sm font-light">{{ $s['size'] }}</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <button class="font-bold text-sm" onclick="toggleSizeModal(true)">
+                        Check out our <span class="underline text-lg ">Size Chart</span>
+                    </button>
+
+                    {{-- Size Chart Modal --}}
+                    <div id="size-modal"
+                        class="fixed top-0 left-0 w-full h-full z-50 hidden grid place-content-center transition-opacity duration-300 opacity-0">
+                        <div class="bg-slate-900 py-5 px-3 w-full max-w-4xl rounded-lg relative">
+                            <!-- Close Button -->
+                            <button onclick="toggleSizeModal(false)"
+                                class="absolute top-2 right-4 text-white text-xl">&times;</button>
+
+                            <!-- Header -->
+                            <div class="heading flex justify-center items-center gap-2">
+                                <img src="{{ asset('assets/logo.png') }}" alt="Logo"
+                                    class="w-20 h-20 object-contain">
+                                <p class="text-lg font-bold text-white">Idowucouture Size Chart</p>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="content py-3">
+                                @php
+                                    $sizeChart = [
+                                        'SIZES' => [6, 8, 10, 12, 14, 16, 18, 20, 22],
+                                        'BUST' => [32, 34, 36, 38, 40, 42, 44, 46, 48],
+                                        'UNDER BUST' => [12.5, 13, 13.5, 14.5, 15.5, 16, 17.5, 18, 18.5],
+                                        'HALF LENGTH' => [15, 15.75, 16.5, 17.25, 18, 18.75, 19.75, 20.5, 21.25],
+                                        'WAIST' => [24, 26, 28, 30, 32, 34, 36, 38, 40],
+                                        'HIP' => [36, 38, 40, 42, 44, 46, 48, 50, 52],
+                                    ];
+                                @endphp
+
+                                <div class="w-full overflow-x-auto">
+                                    <table
+                                        class="min-w-[650px] border border-gray-300 border-collapse text-white text-xs lg:text-base w-full">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    class="font-bold border border-gray-400 text-left p-3 text-xs lg:text-base">
+                                                    SIZES
+                                                </th>
+                                                @foreach ($sizeChart['SIZES'] as $value)
+                                                    <td
+                                                        class="border border-gray-400 text-center p-3 text-xs lg:text-base">
+                                                        {{ $value }}
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($sizeChart as $label => $values)
+                                                @if ($label !== 'SIZES')
+                                                    <tr>
+                                                        <th
+                                                            class="font-bold border border-gray-400 text-left p-3 text-xs lg:text-base">
+                                                            {{ $label }}
+                                                        </th>
+                                                        @foreach ($values as $value)
+                                                            <td
+                                                                class="border border-gray-400 text-center p-3 text-xs lg:text-base">
+                                                                {{ is_float($value) ? number_format($value, 2) : $value }}
+                                                            </td>
+                                                        @endforeach
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                @endif
+
+                @if ($product->has_fabric)
+                    <div class="mb-6">
+                        <h3 class="font-medium text-base text-[#6C7275] mb-2">Fabric</h3>
+                        <div class="flex space-x-4">
+                            <div class="flex items-center gap-1 relative">
+                                <input type="checkbox" wire:model.live="buyFabric" id="buy-fabric"
+                                    value="{{ $buyFabric }}">
+                                <label for="buy-fabric" class="text-sm font-light">Buy Fabric <span
+                                        class="text-lg font-bold">NGN
+                                        {{ number_format($product->fabric_price) }}</span></label>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                {{-- <div class="flex gap-x-3 items-center w-full mb-5">
                     <div class="flex rounded-lg p-1 bg-[#F5F5F5] w-fit items-center space-x-4">
                         <button onclick="updateQuantity(-1)" class="p-2"><i class="fas fa-minus"
                                 style="font-size: 16px;"></i></button>
@@ -62,10 +181,28 @@
                         <button onclick="updateQuantity(1)" class="p-2"><i class="fas fa-plus"
                                 style="font-size: 16px;"></i></button>
                     </div>
-                </div>
-                <button wire:click="addToCart('{{ $product->sku }}')"
-                    class="md:col-4 py-3 mb-2 bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer w-full text-center text-white rounded-md">Add
-                    to Cart</button>
+                </div> --}}
+                @php
+                    $disabled = false;
+                    $sizeAvailable = false;
+                    $colorAvailable = false;
+
+                    if (count($sizes) > 0) {
+                        $sizeAvailable = true;
+                    }
+                    if (count($colors) > 0) {
+                        $colorAvailable = true;
+                    }
+
+                    if (($sizeAvailable && !$size && !$buyFabric) || ($colorAvailable && !$color)) {
+                        $disabled = true;
+                    }
+                @endphp
+                <button @disabled($disabled) wire:click="addToCart('{{ $product->sku }}')"
+                    class="md:col-4 py-3 mb-2 bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform {{ !$disabled ? 'hover:scale-100' : 'hover:animate-bounce' }} cursor-pointer w-full text-center text-white rounded-md">
+                    <span wire:loading wire:target="addToCart" class="fa-solid fa-refresh animate-spin mr-1"></span>
+                    Add to Cart
+                </button>
             </div>
         </div>
     </div>
@@ -88,6 +225,34 @@
             document.querySelector('#quantity').textContent = quantity;
         }
 
+        function toggleSizeModal(show) {
+            const modal = document.getElementById('size-modal');
+
+            if (show) {
+                // Create and append backdrop
+                const backdrop = document.createElement('div');
+                backdrop.id = 'size-modal-backdrop';
+                backdrop.className = 'fixed inset-0 bg-black/40 z-40';
+                document.body.appendChild(backdrop);
+
+                // Show modal with fade in
+                modal.classList.remove('hidden', 'opacity-0');
+                modal.classList.add('opacity-100');
+            } else {
+                // Remove backdrop if it exists
+                const backdrop = document.getElementById('size-modal-backdrop');
+                if (backdrop) backdrop.remove();
+
+                // Fade out modal
+                modal.classList.remove('opacity-100');
+                modal.classList.add('opacity-0');
+
+                // Hide modal after animation completes
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300); // must match transition duration
+            }
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             renderProduct();

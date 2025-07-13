@@ -1,16 +1,9 @@
-@extends('layouts.app')
-@section('content')
-
-<style>
-    .poppins {
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .header-fixed {
-        top: 2.5rem;
-        /* top-10 */
-    }
-</style>
+<main>
+    <style>
+        .poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 
     <div class="px-5 sm:px-10 lg:px-20">
         <!-- Breadcrumb -->
@@ -25,16 +18,67 @@
         <div class="mx-auto w-full pb-6 pt-3 flex-grow">
             <h1 class="md:text-[40px] text-xl font-bold mb-5">Your cart</h1>
 
-            <div id="cart-empty-message" class="text-center text-gray-500 hidden">
-                Your cart is empty.
-            </div>
+
 
             <div id="cart-content" class="flex flex-col lg:flex-row gap-5 gap-x-5">
 
                 <!-- Cart Items -->
                 <div id="cart-items"
                     class="flex-1 bg-white h-[385px] overflow-y-auto cartshadow px-4 py-1 rounded-xl border border-gray-100">
-                    <!-- Cart items will be dynamically inserted here -->
+                    @forelse ($cartItems as $cart)
+                        <div class="border-b border-b-gray-200 flex items-center gap-x-2 py-3">
+                            {{-- @dump($cart->product) --}}
+                            <a href="{{ route('product.single.page', ['sku' => $cart->product->sku]) }}">
+                                <img src="{{ asset('storage/' . $cart->product->images[0]) }}" alt="G/FORE - Mens 2023"
+                                    class="w-20 h-22 rounded-sm object-cover" loading="lazy">
+                            </a>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between w-full">
+                                    <a href="{{ route('product.single.page', ['sku' => $cart->product->sku]) }}"
+                                        class="font-bold text-sm md:text-[20px] text-black hover:text-yellow-500">
+                                        {{ $cart->product->title }}
+                                    </a>
+                                    <button wire:click="removeItem('{{ $cart->id }}')" class="text-red-500 cursor-pointer hover:text-red-700" title="Remove">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="text-sm text-black font-normal flex flex-col gap-y-2 mt-3">
+                                    @if ($cart->size)
+                                        <p class="flex items-center gap-x-2 m-0">
+                                            <span>Size:</span>
+                                            <span class="opacity-60">{{ $cart->size }}</span>
+                                        </p>
+                                    @endif
+
+                                    @if ($cart->color)
+                                        <p class="flex items-center gap-x-2">
+                                            <span>Color:</span>
+                                            <span
+                                                class="inline-block w-4 h-4 rounded-full border border-gray-300 relative"
+                                                style="background-color: {{ $cart->color }};">
+                                            </span>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="flex items-center justify-between w-full">
+                                    <div class="font-bold mt-1">₦{{ number_format($cart->total, 2) }}</div>
+                                    <div class="flex items-center p-1 px-1.5 bg-[#F0F0F0] rounded-2xl gap-x-3">
+                                        <button class="w-[20px] cursor-pointer" wire:click="decreaseQty('{{ $cart->id }}')">-</button>
+                                        <span class="text-[15px]"> {{ $cart->quantity }} </span>
+                                        <button class="w-[20px] cursor-pointer" wire:click="increaseQty('{{ $cart->id }}')">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center text-gray-500 py-10 px-5">
+                            <i class="fa-solid fa-shopping-cart text-2xl text-gray-400"></i>
+                           <p>
+                             Your cart is empty.
+                           </p>
+                           <a href="{{ route('all-products-page') }}" class=" flex justify-center gap-x-2 cursor-pointer bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-100 text-white py-3 rounded-lg mt-4 font-semibold"> Continue Shopping </a>
+                        </div>
+                    @endforelse
                 </div>
 
                 <!-- Order Summary -->
@@ -43,7 +87,12 @@
 
                     <div class="flex justify-between py-1">
                         <span class="text-[20px] opacity-60 font-medium">Subtotal</span>
-                        <span id="subtotal" class="text-[20px] font-bold">₦0.00</span>
+                        <span id="subtotal" class="text-[20px] font-bold">
+                            <i class="fa-solid fa-refresh animate-spin" wire:loading></i>
+                            <span wire:loading.remove>
+                                ₦ {{ number_format($subTotal) }}
+                            </span>
+                        </span>
                     </div>
 
                     <div class="flex justify-between py-1">
@@ -60,7 +109,7 @@
 
                     <div class="flex justify-between font-bold text-lg py-1">
                         <span class="text-[20px] font-medium">Total</span>
-                        <span id="total">₦0.00</span>
+                        <span id="total">₦{{ number_format($total, 2) }}</span>
                     </div>
 
                     <div class="flex w-full px-4 justify-center mt-4 gap-2">
@@ -104,7 +153,7 @@
             </div>
         </div>
     </div>
-    <script>
+    {{-- <script>
         const deliveryFee = 15;
         const discountPercent = 0.2; // 20% discount
 
@@ -233,7 +282,5 @@
             renderCart();
             updateCartIcon();
         });
-    </script>
-@endsection
-
-
+    </script> --}}
+</main>

@@ -60,7 +60,7 @@
         }
 
         /* Responsive: stack vertically on small screens */
-        @media (max-width: 1024px) {
+        @media (max-width: 800px) {
             .feature-section-custom {
                 flex-direction: column;
                 gap: 1.5rem;
@@ -103,7 +103,6 @@
         .product-card:hover .overlay {
             opacity: 1;
         }
-
     </style>
 
     <!-- Feature Section with Dropdown Filter -->
@@ -125,7 +124,7 @@
 
                 <div class="flex flex-col gap-y-5">
                     <button wire:click="$set('category', 'all')"
-                        class="px-5 py-2 rounded-lg inline-flex items-center gap-5 {{ $category == 'all' ? $activeClass : $inactiveClass }}">
+                        class="px-5 py-2 rounded-lg inline-flex justify-between items-center gap-5 {{ $category == 'all' ? $activeClass : $inactiveClass }}">
                         <span>All Products</span>
                         <span
                             class="{{ $category == 'all' ? 'bg-gray-200 text-gray-900' : 'bg-gray-900 text-gray-200' }} w-5 h-5 rounded-full text-sm inline-flex items-center justify-center">
@@ -133,7 +132,7 @@
                         </span>
                     </button>
                     @foreach ($categories as $cat)
-                        <button wire:click="$set('category', {{ $cat->slug }})"
+                        <button wire:click="$set('category', '{{ $cat->slug }}')"
                             class="px-5 py-2 rounded-lg inline-flex justify-between items-center gap-5 {{ $category == $cat->slug ? $activeClass : $inactiveClass }}">
                             <span>{{ $cat->title }}</span>
                             <span
@@ -142,6 +141,16 @@
                             </span>
                         </button>
                     @endforeach
+
+                    <hr class="my-2">
+                    {{-- <div>
+                        Min: {{ $minPrice }}
+                        <input type="range" min="0" wire:model.live="minPrice" name="" id="">
+                    </div>
+                    <div>
+                        Max: {{ $maxPrice }}
+                        <input type="range" min="0" wire:model.live="maxPrice" name="" id="">
+                    </div> --}}
                 </div>
 
             </div>
@@ -158,10 +167,6 @@
                                 @endif
 
                                 <div class="overlay">
-                                    <button wire:click="addToCart('{{ $product->sku }}')"
-                                        class="bg-transparent text-white py-2 px-4 rounded text-sm hover:bg-gray-700 mb-2">
-                                        Add to Cart
-                                    </button>
                                     <a href="{{ route('product.single.page', $product->sku) }}"
                                         class="bg-gray-500 text-white py-2 px-4 rounded text-sm hover:bg-green-500 hover:text-white">
                                         View Product

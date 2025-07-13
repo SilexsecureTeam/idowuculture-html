@@ -120,7 +120,8 @@
             <div class="md:h-[80vh] h-fit flex space-x-5">
                 <div class="md:w-2/3 w-full h-[80%] relative">
                     <div class="skeleton absolute inset-0"></div>
-                    @if (count($about_details->images) > 0)
+                    
+                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
                         <img src="{{ asset('storage/' . $about_details->images[0]) }}" alt="About Image 1"
                             class="w-full h-80 object-cover" data-loading="true" loading="lazy">
                     @else
@@ -132,7 +133,7 @@
                 </div>
                 <div class="w-1/3 mt-[4%] h-[80%] relative hidden md:block">
                     <div class="skeleton absolute inset-0"></div>
-                    @if (count($about_details->images) > 0)
+                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
                         <img src="{{ asset('storage/' . $about_details->images[1]) }}" alt="About Image 2"
                             class="w-full bg-gray-300  h-full hidden md:block object-cover" data-loading="true"
                             loading="lazy">
@@ -148,7 +149,7 @@
             <div class="flex space-x-5 md:mt-7 md:space-x-10">
                 <div class="md:h-60 md:w-60 relative hidden md:block rounded-lg">
                     <div class="skeleton absolute inset-0 rounded-lg"></div>
-                    @if (count($about_details->images) > 0)
+                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
                         <img src="{{ asset('storage/' . $about_details->images[2]) }}" alt="About Image 3"
                             class="md:h-60 bg-gray-300 md:w-60 md:block hidden rounded-lg" data-loading="true"
                             loading="lazy">
@@ -181,7 +182,7 @@
                 class="flex h-full w-full flex-col md:mt-10 md:flex-row gap-4 justify-center md:justify-between items-center md:space-x-10">
                 <div class="md:w-1/2 w-full h-60 md:h-90 relative">
                     <div class="skeleton absolute inset-0"></div>
-                    @if (count($about_details->images) > 0)
+                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
                         <img src="{{ asset('storage/' . $about_details->images[3]) }}" alt="About Image 4"
                             class="bg-gray-300 w-full h-64 object-cover md:h-90" data-loading="true" loading="lazy">
                     @else
@@ -203,7 +204,7 @@
             <div class="relative pt-6">
                 <div class="relative h-[60vh] w-full mt-10 md:mt-17 overflow-hidden">
                     <div class="skeleton absolute top-0 left-0 w-full h-[90vh]"></div>
-                    @if (count($about_details->images) > 0)
+                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
                         <div class="absolute top-0 left-0 w-full h-[90vh] flex items-center justify-center bg-gray-300">
                             <img src="{{ asset('storage/' . $about_details->images[4]) }}" alt="About Image 5"
                                 class="absolute bg-gray-300 top-0 left-0 w-full h-[90vh] object-cover object-top"

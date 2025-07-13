@@ -17,6 +17,7 @@ class Product extends Model
         'description',
         'images',
         'has_fabric',
+        'fabric_price',
         'stock',
         'is_featured',
         'cloth_collection_id'

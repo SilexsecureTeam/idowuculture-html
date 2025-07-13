@@ -6,9 +6,9 @@ import './bootstrap';
 
 // Alpine.start();
 // Initialize cart from localStorage
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 
-// window.Swal = Swal
+window.Swal = Swal
 
 // let cart = JSON.parse(localStorage.getItem('cart')) || [];
 

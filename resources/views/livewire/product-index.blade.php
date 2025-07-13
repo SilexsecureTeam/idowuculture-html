@@ -32,9 +32,6 @@
                                 @endif
 
                                 <div class="hover-overlay">
-                                    <button wire:click="addToCart('{{ $product->sku }}')"
-                                        class="bg-blue-600 text-white py-2 px-4 rounded text-sm hover:bg-blue-700 mb-2">Add
-                                        to Cart</button>
                                     <a href="{{ route('product.single.page', $product->sku) }}"
                                         class="bg-white text-gray-800 py-2 px-4 rounded text-sm hover:bg-gray-100">View
                                         Product</a>
