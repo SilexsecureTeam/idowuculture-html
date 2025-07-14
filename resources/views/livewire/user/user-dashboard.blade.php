@@ -4,8 +4,8 @@
         <div class="bg-black text-white py-6 px-6 flex justify-between items-center shadow-md">
             <h1 class="text-2xl font-bold">User Dashboard</h1>
             <div class="flex items-center space-x-4">
-                <span class="text-white">Hello, {{ $user->name }}</span>
-                <a href="{{ route('logout') }}" class="text-[#E0B654] hover:underline">Logout</a>
+                <span class="text-white">Hello, {{ $user->firstname }}</span>
+                {{-- <a href="{{ route('logout') }}" class="text-[#E0B654] hover:underline">Logout</a> --}}
             </div>
         </div>
 
@@ -74,26 +74,6 @@
                         </table>
                     </div>
 
-                    <!-- Update Profile Form -->
-                    <div class="mt-10">
-                        <h3 class="text-lg font-bold mb-4">Update Profile</h3>
-                        <form wire:submit.prevent="updateProfile" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block mb-1 text-sm">Full Name</label>
-                                <input type="text" wire:model="user.name"
-                                    class="w-full border border-gray-300 px-3 py-2" />
-                            </div>
-                            <div>
-                                <label class="block mb-1 text-sm">Email</label>
-                                <input type="email" wire:model="user.email"
-                                    class="w-full border border-gray-300 px-3 py-2" />
-                            </div>
-                            <div class="col-span-2">
-                                <button
-                                    class="bg-black text-white px-6 py-2 mt-2 rounded hover:bg-[#E0B654] transition">Update</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </main>
         </div>
