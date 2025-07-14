@@ -28,11 +28,7 @@
         </ul>
         <div class="flex gap-x-3 items-center">
             <i class="fas fa-search text-[#141718] text-lg cursor-pointer"></i>
-            <button id="signupBtn">
-                <a href="{{ route('register') }}" title="signup">
-                    <i class="fas fa-user text-[#141718] text-lg cursor-pointer"></i>
-                </a>
-            </button>
+            @livewire('user-dropdown')
             @livewire('cart.cart-icon')
         </div>
         <button id="menuToggle" class="md:hidden ml-2 cursor-pointer" aria-label="Toggle menu">

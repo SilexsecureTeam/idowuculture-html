@@ -39,7 +39,7 @@ class CheckoutPage extends Component
         $this->total = $this->subTotal + $this->deliveryFee;
 
         if (Auth::check()) {
-            $this->name = Auth::user()->firstname;
+            $this->name = Auth::user()->firstname. ' ' . Auth::user()->lastname;
             // dd($this->name);
             $this->email = Auth::user()->email;
             $this->phone = Auth::user()->phone;
@@ -49,7 +49,7 @@ class CheckoutPage extends Component
     public function placeOrder()
     {
         $user = Auth::user();
-        // dd($user);
+        
         // Ensure user is authenticated
         if (!$user) {
             session()->flash('error', 'You must be logged in to place an order.');
@@ -71,7 +71,7 @@ class CheckoutPage extends Component
                 'amount' => $amountInKobo,
                 'callback_url' => config('services.paystack.callback_url'),
                 'metadata' => [
-                    'name' => $user->name,
+                    'name' => $user->firstname. ' ' . $user->lastname,
                     'phone' => $user->phone ?? 'N/A',
                     'address' => $this->address,
                     'user_id' => $user->id,

@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('about-page')->with('success', 'Login successful!');
+        return redirect()->route('cart-page')->with('success', 'Login successful!');
     }
 
     /**

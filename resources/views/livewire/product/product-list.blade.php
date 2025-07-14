@@ -97,12 +97,16 @@
             background: rgba(0, 0, 0, 0.7);
             border-radius: 0.5rem 0.5rem 0 0;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
+
 
         .product-card:hover .overlay {
             opacity: 1;
         }
+
+        
     </style>
 
     <!-- Feature Section with Dropdown Filter -->
@@ -113,7 +117,7 @@
             <div class="swiper-pagination"></div>
         </div>
         <!-- Responsive Grid: Filter | Products -->
-        <div class="feature-section-custom w-full">
+        <div class="feature-section-custom w-full ">
             <!-- Filter (always visible on small, left on large) -->
             <div class="filter-dropdown-container-custom mx-auto" id="filterDropdown">
                 <h3 class="poppins font-semibold mb-3">Categories</h3>

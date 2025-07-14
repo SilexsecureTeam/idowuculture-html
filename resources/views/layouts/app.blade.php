@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/about.js', 'resources/js/article.js', 'resources/js/category.js', 'resources/js/collection.js', 'resources/js/footer.js', 'resources/js/header.js', 'resources/js/hero.js', 'resources/js/hurray.js', 'resources/js/image.js', 'resources/js/newsletter.js', 'resources/js/product.js'])
     <style>
@@ -154,4 +156,5 @@
 
    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
 </html>
