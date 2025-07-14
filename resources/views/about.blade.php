@@ -202,7 +202,14 @@
                 <div class="w-full md:w-1/2">
                     <h2 class="font-bold mb-2 mon text-xl md:text-[30px]">WORLDWIDE DELIVERY</h2>
                     <h2 class="text-normal text-base md:text-xl mon">
+                        
+                         @if (isset($about_details) && $about_details && isset($about_details->delivery) && is_array($about_details->delivery) && count($about_details->delivery) > 0)
                         {!! $about_details->delivery !!}
+                    @else
+                        <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                            <span class="text-gray-500">Loading...</span>
+                        </div>
+                    @endif
                     </h2>
                 </div>
             </div>
@@ -232,7 +239,14 @@
 
             <!-- Fifth Section: Centered Text -->
             <h2 class="mon text-base w-[80%] text-center md:text-start mx-auto mt-20 font-normal md:text-2xl">
-                {!! $about_details->statement !!}
+                
+                  @if (isset($about_details) && $about_details && isset($about_details->statement) && is_array($about_details->statement) && count($about_details->statement) > 0)
+                       {!! $about_details->statement !!}
+                    @else
+                        <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                            <span class="text-gray-500">Loading...</span>
+                        </div>
+                    @endif
             </h2>
 
             <!-- Sixth Section: Call to Action -->
