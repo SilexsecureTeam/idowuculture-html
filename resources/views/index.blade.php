@@ -287,9 +287,10 @@
                         class = "card article-card flex flex-col bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
 
                         <div class="overflow-hidden">
-                            <img src="{{ asset('storage/' . $item->images[0]) }}" alt="no"
-                                class="article-image w-full h-60 md:h-64 object-cover"
-                                style="opacity: 0; transition: opacity 0.3s ease;" />
+                            <img src="{{ asset('storage/' . $item->images[0]) }}" alt=""
+                            class="article-image w-full h-60 md:h-64 object-cover"
+                            style="opacity: 1; transition: opacity 0.3s ease;"
+                            >
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <h3 class="text-[20px] poppins text-[#23262F] font-medium mb-3 line-clamp-2 flex-1">
@@ -299,7 +300,7 @@
                                 {!! $item->content !!}
                             </p>
 
-                            <a href="${article.link}"
+                            <a href="#"
                                 class="read-more-link text-base text-[#141718] font-medium flex items-center gap-1 border-b border-black pb-1 w-fit mt-auto hover:text-[#E0B654] transition-colors">
                                 Read More <span class="transition-transform group-hover:translate-x-1">→</span>
                             </a>
