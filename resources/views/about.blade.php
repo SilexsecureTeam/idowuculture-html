@@ -163,7 +163,14 @@
                 <div class="mt-8 mb-10 flex-1">
                     <h2 class="mon font-bold text-2xl md:text-[40px] text-black">Our Story</h2>
                     <h2 class="mon text-black font-normal md:text-[23px] mt-2 text-base">
-                        {!! $about_details->our_story !!}
+                       
+                        @if (isset($about_details) && $about_details && isset($about_details->our_story) && is_array($about_details->our_story) && count($about_details->our_story) > 0)
+                         {!! $about_details->our_story !!}
+                    @else
+                        <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                            <span class="text-gray-500">Loading...</span>
+                        </div>
+                    @endif
                     </h2>
                     {{-- <h2 class="mon text-black font-normal md:text-[23px] mt-2 text-base">
                         Appropriately develop high-quality interfaces vis-a-vis granular e-markets. Globally integrate
