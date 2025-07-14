@@ -62,13 +62,13 @@ class CheckoutPage extends Component
         ]);
 
         // Total amount in Kobo
-        $amountInKobo = $this->total * 100;
+        $amount = $this->total * 100;
 
         // Initialize Paystack transaction
         $response = Http::withToken(config('services.paystack.secret_key'))
             ->post(config('services.paystack.payment_url') . '/transaction/initialize', [
                 'email' => $user->email,
-                'amount' => $amountInKobo,
+                'amount' => $amount,
                 'callback_url' => config('services.paystack.callback_url'),
                 'metadata' => [
                     'name' => $user->firstname. ' ' . $user->lastname,
