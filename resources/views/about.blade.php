@@ -120,8 +120,12 @@
             <div class="md:h-[80vh] h-fit flex space-x-5">
                 <div class="md:w-2/3 w-full h-[80%] relative">
                     <div class="skeleton absolute inset-0"></div>
-                    
-                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
+
+                    @if (isset($about_details) &&
+                            $about_details &&
+                            isset($about_details->images) &&
+                            is_array($about_details->images) &&
+                            count($about_details->images) > 0)
                         <img src="{{ asset('storage/' . $about_details->images[0]) }}" alt="About Image 1"
                             class="w-full h-80 object-cover" data-loading="true" loading="lazy">
                     @else
@@ -133,7 +137,11 @@
                 </div>
                 <div class="w-1/3 mt-[4%] h-[80%] relative hidden md:block">
                     <div class="skeleton absolute inset-0"></div>
-                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
+                    @if (isset($about_details) &&
+                            $about_details &&
+                            isset($about_details->images) &&
+                            is_array($about_details->images) &&
+                            count($about_details->images) > 0)
                         <img src="{{ asset('storage/' . $about_details->images[1]) }}" alt="About Image 2"
                             class="w-full bg-gray-300  h-full hidden md:block object-cover" data-loading="true"
                             loading="lazy">
@@ -149,7 +157,11 @@
             <div class="flex space-x-5 md:mt-7 md:space-x-10">
                 <div class="md:h-60 md:w-60 relative hidden md:block rounded-lg">
                     <div class="skeleton absolute inset-0 rounded-lg"></div>
-                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
+                    @if (isset($about_details) &&
+                            $about_details &&
+                            isset($about_details->images) &&
+                            is_array($about_details->images) &&
+                            count($about_details->images) > 0)
                         <img src="{{ asset('storage/' . $about_details->images[2]) }}" alt="About Image 3"
                             class="md:h-60 bg-gray-300 md:w-60 md:block hidden rounded-lg" data-loading="true"
                             loading="lazy">
@@ -163,14 +175,14 @@
                 <div class="mt-8 mb-10 flex-1">
                     <h2 class="mon font-bold text-2xl md:text-[40px] text-black">Our Story</h2>
                     <h2 class="mon text-black font-normal md:text-[23px] mt-2 text-base">
-                       
-                        @if (isset($about_details) && $about_details && isset($about_details->our_story) && is_array($about_details->our_story) && count($about_details->our_story) > 0)
-                         {!! $about_details->our_story !!}
-                    @else
-                        <div class="w-full h-full bg-gray-300 flex items-center justify-center">
-                            <span class="text-gray-500">Loading...</span>
-                        </div>
-                    @endif
+                        @if (!empty($about_details?->our_story))
+                            {!! $about_details->our_story !!}
+                        @else
+                            <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                <span class="text-gray-500">Loading...</span>
+                            </div>
+                        @endif
+
                     </h2>
                     {{-- <h2 class="mon text-black font-normal md:text-[23px] mt-2 text-base">
                         Appropriately develop high-quality interfaces vis-a-vis granular e-markets. Globally integrate
@@ -189,7 +201,11 @@
                 class="flex h-full w-full flex-col md:mt-10 md:flex-row gap-4 justify-center md:justify-between items-center md:space-x-10">
                 <div class="md:w-1/2 w-full h-60 md:h-90 relative">
                     <div class="skeleton absolute inset-0"></div>
-                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
+                    @if (isset($about_details) &&
+                            $about_details &&
+                            isset($about_details->images) &&
+                            is_array($about_details->images) &&
+                            count($about_details->images) > 0)
                         <img src="{{ asset('storage/' . $about_details->images[3]) }}" alt="About Image 4"
                             class="bg-gray-300 w-full h-64 object-cover md:h-90" data-loading="true" loading="lazy">
                     @else
@@ -202,14 +218,14 @@
                 <div class="w-full md:w-1/2">
                     <h2 class="font-bold mb-2 mon text-xl md:text-[30px]">WORLDWIDE DELIVERY</h2>
                     <h2 class="text-normal text-base md:text-xl mon">
-                        
-                         @if (isset($about_details) && $about_details && isset($about_details->delivery) && is_array($about_details->delivery) && count($about_details->delivery) > 0)
-                        {!! $about_details->delivery !!}
-                    @else
-                        <div class="w-full h-full bg-gray-300 flex items-center justify-center">
-                            <span class="text-gray-500">Loading...</span>
-                        </div>
-                    @endif
+                        @if (!empty($about_details?->delivery))
+                            {!! $about_details->delivery !!}
+                        @else
+                            <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                <span class="text-gray-500">Loading...</span>
+                            </div>
+                        @endif
+
                     </h2>
                 </div>
             </div>
@@ -218,7 +234,11 @@
             <div class="relative pt-6">
                 <div class="relative h-[60vh] w-full mt-10 md:mt-17 overflow-hidden">
                     <div class="skeleton absolute top-0 left-0 w-full h-[90vh]"></div>
-                    @if (isset($about_details) && $about_details && isset($about_details->images) && is_array($about_details->images) && count($about_details->images) > 0)
+                    @if (isset($about_details) &&
+                            $about_details &&
+                            isset($about_details->images) &&
+                            is_array($about_details->images) &&
+                            count($about_details->images) > 0)
                         <div class="absolute top-0 left-0 w-full h-[90vh] flex items-center justify-center bg-gray-300">
                             <img src="{{ asset('storage/' . $about_details->images[4]) }}" alt="About Image 5"
                                 class="absolute bg-gray-300 top-0 left-0 w-full h-[90vh] object-cover object-top"
@@ -239,14 +259,14 @@
 
             <!-- Fifth Section: Centered Text -->
             <h2 class="mon text-base w-[80%] text-center md:text-start mx-auto mt-20 font-normal md:text-2xl">
-                
-                  @if (isset($about_details) && $about_details && isset($about_details->statement) && is_array($about_details->statement) && count($about_details->statement) > 0)
-                       {!! $about_details->statement !!}
-                    @else
-                        <div class="w-full h-full bg-gray-300 flex items-center justify-center">
-                            <span class="text-gray-500">Loading...</span>
-                        </div>
-                    @endif
+
+                @if (!empty($about_details?->statement))
+                    {!! $about_details->statement !!}
+                @else
+                    <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                        <span class="text-gray-500">Loading...</span>
+                    </div>
+                @endif
             </h2>
 
             <!-- Sixth Section: Call to Action -->
