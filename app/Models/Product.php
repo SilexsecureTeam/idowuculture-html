@@ -17,7 +17,7 @@ class Product extends Model
         'description',
         'images',
         'has_fabric',
-        'fabric_price',
+        'fabrics',
         'stock',
         'is_featured',
         'cloth_collection_id'
@@ -31,6 +31,7 @@ class Product extends Model
         'sizes' => 'array',
         'images' => 'array',
         'has_fabric' => 'boolean',
+        'fabrics' => 'array',
         'is_featured' => 'boolean',
         'price' => 'decimal:2',
         

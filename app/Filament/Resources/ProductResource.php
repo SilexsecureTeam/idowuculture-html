@@ -77,7 +77,7 @@ class ProductResource extends Resource
                             Select::make('cloth_collection_id')
                                 ->label('Collection')
                                 ->options(ClothCollection::all()->pluck('title', 'id')),
-                                
+
                             Select::make('category_id')
                                 ->label('Category')
                                 ->options(Category::all()->pluck('title', 'id')),
@@ -114,29 +114,50 @@ class ProductResource extends Resource
                             Repeater::make('sizes')
                                 ->schema([
                                     Select::make('size')->options([
-                                        'xs' => 'Extra Small',
-                                        'sm' => 'Small',
-                                        'md' => 'Medium',
-                                        'lg' => 'Large',
-                                        'xl' => 'Extra Large',
-                                        'xxl' => 'Extra Extra Large',
+                                        '6' => 'Size 6',
+                                        '8' => 'Size 8',
+                                        '10' => 'Size 10',
+                                        '12' => 'Size 12',
+                                        '14' => 'Size 14',
+                                        '16' => 'Size 16',
+                                        '18' => 'Size 18',
+                                        '20' => 'Size 20',
+                                        '22' => 'Size 22',
                                     ])->required(),
-                                    TextInput::make('quantity')->numeric()->required()->default(0),
-                                    TextInput::make('price')->numeric()->step('any')->nullable()->default(0)
                                 ])->columns()
                         ])
                             ->columnSpan(1),
 
                         Section::make([
                             Checkbox::make('has_fabric')
-                            ->reactive()
-                            ->helperText('When checked, it means this product can be sold as fabric and full attire'),
-                            TextInput::make('fabric_price')
-                            ->numeric()
-                            ->required()
-                            ->default(0)
-                            ->step('any')
-                            ->hidden(fn(Get $get) => !$get('has_fabric')),
+                                ->reactive()
+                                ->helperText('When checked, it means this product can be sold as fabric and full attire'),
+                        ]),
+
+                        // fabric information
+                        Section::make([
+                            Repeater::make('fabrics')
+                                ->label('Fabric Details')
+                                ->hidden(fn(Get $get) => !$get('has_fabric'))
+                                ->schema([
+                                    TextInput::make('fabric_price')
+                                        ->numeric()
+                                        ->required()
+                                        ->default(0),
+                                    FileUpload::make('fabrics_image')
+                                        ->multiple()
+                                        ->required()
+                                        ->image()
+                                        ->imageEditor()
+                                        ->directory('images/fabrics')
+                                        ->reorderable()
+                                        ->openable()
+                                        ->maxFiles(1)
+                                        ->maxSize(5120)
+                                        ->panelLayout('grid')
+                                        ->columnSpanFull(),
+                                ]),
+
                             FileUpload::make('images')
                                 ->multiple()
                                 ->required()
@@ -149,10 +170,12 @@ class ProductResource extends Resource
                                 ->maxSize(5120)
                                 ->panelLayout('grid')
                                 ->columnSpanFull()
-
                         ])
-                        ->columns()
-                        ->columnSpanFull(),
+
+                            ->columns()
+                            ->columnSpanFull(),
+
+
                     ])->columns()
             ]);
     }
@@ -164,7 +187,7 @@ class ProductResource extends Resource
                 TextColumn::make('sku')
                     ->searchable(),
                 IconColumn::make('is_featured')
-                ->sortable(),
+                    ->sortable(),
                 TextColumn::make('title')
                     ->searchable(),
                 TextColumn::make('price')
