@@ -46,26 +46,46 @@ class CartPage extends Component
     }
 
     public function increaseQty(Cart $cart)
-    {
-        if (!$cart) return;
+{
+    if (!$cart) return;
 
-        $cart->quantity += 1;
-        $cart->total = $cart->product->price * $cart->quantity;
-        $cart->save();
+    $cart->quantity += 1;
 
-        $this->refreshCart();
+    $fabricPrice = 0;
+
+    if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
+        $index = $cart->selected_fabric_index;
+        if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
+            $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
+        }
     }
 
-    public function decreaseQty(Cart $cart)
-    {
-        if (!$cart || $cart->quantity <= 1) return;
+    $cart->total = ($cart->product->price + $fabricPrice) * $cart->quantity;
+    $cart->save();
 
-        $cart->quantity -= 1;
-        $cart->total = $cart->product->price * $cart->quantity;
-        $cart->save();
+    $this->refreshCart();
+}
 
-        $this->refreshCart();
+public function decreaseQty(Cart $cart)
+{
+    if (!$cart || $cart->quantity <= 1) return;
+
+    $cart->quantity -= 1;
+
+    $fabricPrice = 0;
+
+    if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
+        $index = $cart->selected_fabric_index;
+        if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
+            $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
+        }
     }
+
+    $cart->total = ($cart->product->price + $fabricPrice) * $cart->quantity;
+    $cart->save();
+
+    $this->refreshCart();
+}
 
 
     public function removeItem(Cart $cart)

@@ -159,17 +159,67 @@
 
                 @endif
 
-                @if ($product->has_fabric)
+                @if ($product->has_fabric && !empty($product->fabrics))
                     <div class="mb-6">
                         <h3 class="font-medium text-base text-[#6C7275] mb-2">Fabric</h3>
-                        <div class="flex space-x-4">
+                        <div class="block space-x-4">
                             <div class="flex items-center gap-1 relative">
                                 <input type="checkbox" wire:model.live="buyFabric" id="buy-fabric"
                                     value="{{ $buyFabric }}">
-                                <label for="buy-fabric" class="text-sm font-light">Buy Fabric <span
-                                        class="text-lg font-bold">NGN
-                                        {{ number_format($product->fabric_price) }}</span></label>
+                                <label for="buy-fabric" class="text-sm font-light">Buy Fabric </label>
                             </div>
+
+                            @if ($buyFabric)
+                                <div class="mb-4">
+                                    <label for="selectedFabric" class="text-sm font-semibold mb-1 block">Choose
+                                        Fabric</label>
+                                    <select wire:model.live="selectedFabricIndex" id="selectedFabric"
+                                        class="border p-2 w-full rounded">
+                                        @foreach ($product->fabrics as $index => $fabric)
+                                            <option value="{{ $index }}">
+                                                Fabric {{ $index + 1 }} - NGN
+                                                {{ number_format($fabric['fabric_price']) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!-- Show fabric image preview -->
+                                @php
+                                    $fabric = $product->fabrics[$selectedFabricIndex] ?? null;
+                                    $imagePath = $fabric['fabrics_image'][0] ?? null;
+                                @endphp
+
+                                @if ($fabric && $imagePath)
+                                    <div x-data="{ showModal: false }" class="mt-4 relative">
+                                        <h4 class="text-sm font-medium mb-1">Preview</h4>
+
+                                        <!-- Thumbnail Image -->
+                                        <img src="{{ asset('storage/' . $imagePath) }}" alt="Fabric Image"
+                                            class="w-20 h-20 object-cover border rounded shadow cursor-pointer hover:scale-105 transition"
+                                            @click="showModal = true">
+                                            <p class="text-gray-400 italic">click on the fabric to have a full view</p>
+
+                                        <!-- Fullscreen Modal -->
+                                        <div x-show="showModal" x-transition x-cloak
+                                            @keydown.escape.window="showModal = false"
+                                            class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm">
+                                            <div class="relative max-w-3xl w-full px-4">
+                                                <!-- Full Image -->
+                                                <img src="{{ asset('storage/' . $imagePath) }}"
+                                                    class="w-full max-h-[90vh] object-contain rounded-lg shadow-xl"
+                                                    alt="Full Fabric Image">
+
+                                                <!-- Close Button -->
+                                                <button @click="showModal = false"
+                                                    class="absolute top-4 right-4 text-white text-3xl font-bold hover:text-red-400">
+                                                    &times;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                            @endif
                         </div>
                     </div>
                 @endif

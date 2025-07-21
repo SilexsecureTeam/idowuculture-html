@@ -42,5 +42,9 @@ return [
         'callback_url' => env('PAYSTACK_CALLBACK_URL'),
     ],
 
+'google_maps' => [
+    'key' => env('LOCATION_API_KEY'),
+],
+
 
 ];

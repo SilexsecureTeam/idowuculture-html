@@ -23,6 +23,9 @@ class SingleProduct extends Component
     public $colors = [];
     public $currentPrice;
     public $availableSizeQuantity = 1;
+    public $selectedFabricIndex = 0;
+    public $mainImageIndex = 0;
+    // public $showModal = false;
 
     public function mount($sku)
     {
@@ -56,35 +59,48 @@ class SingleProduct extends Component
     public function addToCart($sku)
     {
         $product = Product::whereSku($sku)->first();
+
         if (!$product) {
-            LivewireAlert::title('Opps!')
+            LivewireAlert::title('Oops!')
                 ->text('Invalid Product Selected.')
                 ->warning()
                 ->toast()
                 ->position('top-end')
                 ->show();
-
             return;
         }
 
-        $sessionId = mt_rand() . time();
-        if (!Session::get('cart-session')) {
-            Session::put('cart-session', $sessionId);
-        } else {
-            $sessionId = Session::get('cart-session');
+        $sessionId = Session::get('cart-session') ?? mt_rand() . time();
+        Session::put('cart-session', $sessionId);
+
+        // Get fabric details if selected
+        $fabricData = null;
+        $fabricPrice = 0;
+
+        if ($this->buyFabric && is_numeric($this->selectedFabricIndex ?? null)) {
+            $index = $this->selectedFabricIndex;
+
+            if (isset($product->fabrics[$index])) {
+                $fabricData = $product->fabrics[$index];
+                $fabricPrice = (float)($fabricData['fabric_price'] ?? 0);
+            }
         }
 
+        // Check for duplicates
         $checkExist = Cart::where('product_id', $product->id)
             ->where('session_id', $sessionId)
             ->when(Auth::check(), fn($q) => $q->orWhere('user_id', Auth::id()))
             ->where('size', $this->size)
             ->where('color', $this->color)
-            ->where('buy_fabric', $this->buyFabric);
+            ->where('buy_fabric', $this->buyFabric)
+            ->when($this->buyFabric, function ($query) {
+                return $query->where('selected_fabric_index', $this->selectedFabricIndex);
+            });
 
         if ($checkExist->exists()) {
             $checkExist->increment('quantity');
             return LivewireAlert::title('Success!')
-                ->text('Item added to cart.')
+                ->text('Item quantity increased in cart.')
                 ->success()
                 ->toast()
                 ->position('top-end')
@@ -97,11 +113,15 @@ class SingleProduct extends Component
             $cart->user_id = Auth::check() ? Auth::id() : null;
             $cart->product_id = $product->id;
             $cart->color = $this->color;
-            $cart->size = (bool)$this->buyFabric ? null : $this->size;
-            $cart->buy_fabric = (bool)$this->buyFabric;
-            $cart->total = (bool)$this->buyFabric ? $product->fabric_price :$product->price;
+            $cart->size = $this->buyFabric ? null : $this->size;
+            $cart->buy_fabric = $this->buyFabric;
+            $cart->selected_fabric_index = $this->selectedFabricIndex ?? null;
+            $cart->selected_fabric = $fabricData; // Cast to array in Cart model
+            $cart->quantity = 1;
+            $cart->total = ($product->price + $fabricPrice);
 
             $cart->save();
+
             $this->dispatch('increaseCount')->to(CartIcon::class);
 
             LivewireAlert::title('Success!')
@@ -112,13 +132,19 @@ class SingleProduct extends Component
                 ->show();
         } catch (\Throwable $th) {
             Log::error('Failed to add to cart: ' . $th->getMessage());
-            LivewireAlert::title('Opps!')
+            LivewireAlert::title('Oops!')
                 ->text('Failed to add item to cart.')
                 ->error()
                 ->toast()
                 ->position('top-end')
                 ->show();
         }
+    }
+
+
+    public function updatedSelectedFabricIndex()
+    {
+        $this->mainImageIndex = 0;
     }
 
     #[Layout('layouts.app')]

@@ -24,6 +24,21 @@ function saveCart() {
 // Add item to cart
 function addToCart(product) {
   console.log('addToCart called with:', product, 'Current cart:', cart); // Debug
+
+  const selectedFabricIndex = product.selected_fabric_index ?? null;
+
+  let fabricPrice = 0;
+  let fabricData = null;
+
+  if (
+    selectedFabricIndex !== null &&
+    Array.isArray(product.fabrics) &&
+    product.fabrics[selectedFabricIndex]
+  ) {
+    fabricData = product.fabrics[selectedFabricIndex];
+    fabricPrice = parseFloat(fabricData.fabric_price || 0);
+  }
+
   const productToAdd = {
     id: product.id,
     name: product.name,
@@ -31,10 +46,16 @@ function addToCart(product) {
     image: product.image,
     color: product.color || 'default',
     qty: product.qty || 1,
+    selected_fabric_index: selectedFabricIndex,
+    fabric_price: fabricPrice,
+    fabric: fabricData, // optional, store full selected fabric data
   };
 
   const existingItemIndex = cart.findIndex(
-    (item) => item.id === productToAdd.id && item.color === productToAdd.color
+    (item) =>
+      item.id === productToAdd.id &&
+      item.color === productToAdd.color &&
+      item.selected_fabric_index === productToAdd.selected_fabric_index
   );
 
   if (existingItemIndex >= 0) {
@@ -42,10 +63,12 @@ function addToCart(product) {
   } else {
     cart.push(productToAdd);
   }
+
   saveCart();
   updateCartIcon();
   updateButtonText(product.id);
 }
+
 
 // Remove item from cart
 function removeFromCart(id) {

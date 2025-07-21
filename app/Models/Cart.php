@@ -10,6 +10,9 @@ class Cart extends Model
         'session_id',
         'user_id',
         'product_id',
+        'selectedFabricIndex',
+        'selected_fabric',
+        'fabrics',
         'color',
         'size',
         'buy_fabric',
@@ -17,14 +20,16 @@ class Cart extends Model
         'quantity',
         'total'
     ];
-    
+
     protected $casts = [
+        'selected_fabric' => 'array',
         'buy_fabric' => 'boolean',
         'checked_out' => 'boolean',
+        'fabrics' => 'array'
     ];
 
     protected $with = ['user', 'product'];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
