@@ -23,7 +23,7 @@ class SingleProduct extends Component
     public $colors = [];
     public $currentPrice;
     public $availableSizeQuantity = 1;
-    public $selectedFabricIndex = 0;
+    public $fabric_id = 0;
     public $mainImageIndex = 0;
     // public $showModal = false;
 
@@ -37,6 +37,9 @@ class SingleProduct extends Component
 
         if ($this->product->has_fabric) {
             $this->fabricPrice = $this->product->fabric_price;
+            if ($this->product->fabrics) {
+                $this->fabric_id = collect($this->product->fabrics)->first()['id'];
+            }
         }
     }
 
@@ -77,12 +80,19 @@ class SingleProduct extends Component
         $fabricData = null;
         $fabricPrice = 0;
 
-        if ($this->buyFabric && is_numeric($this->selectedFabricIndex ?? null)) {
-            $index = $this->selectedFabricIndex;
+        if ($this->buyFabric && $this->fabric_id ?? null) {
+            // $index = $this->fabric_id;
 
-            if (isset($product->fabrics[$index])) {
-                $fabricData = $product->fabrics[$index];
-                $fabricPrice = (float)($fabricData['fabric_price'] ?? 0);
+            // if (isset($product->fabrics[$index])) {
+            //     $fabricData = $product->fabrics[$index];
+            //     $fabricPrice = (float)($fabricData['fabric_price'] ?? 0);
+            // }
+
+            $fabric = collect($product->fabrics)->firstWhere('id', $this->fabric_id);
+
+            if ($fabric) {
+                $fabricData = $fabric;
+                $fabricPrice = (float)($fabric['fabric_price'] ?? 0);
             }
         }
 
@@ -94,7 +104,7 @@ class SingleProduct extends Component
             ->where('color', $this->color)
             ->where('buy_fabric', $this->buyFabric)
             ->when($this->buyFabric, function ($query) {
-                return $query->where('selected_fabric_index', $this->selectedFabricIndex);
+                return $query->where('fabric_id', $this->fabric_id);
             });
 
         if ($checkExist->exists()) {
@@ -115,7 +125,7 @@ class SingleProduct extends Component
             $cart->color = $this->color;
             $cart->size = $this->buyFabric ? null : $this->size;
             $cart->buy_fabric = $this->buyFabric;
-            $cart->selected_fabric_index = $this->selectedFabricIndex ?? null;
+            $cart->fabric_id = $this->fabric_id ?? null;
             $cart->selected_fabric = $fabricData; // Cast to array in Cart model
             $cart->quantity = 1;
             $cart->total = ($product->price + $fabricPrice);

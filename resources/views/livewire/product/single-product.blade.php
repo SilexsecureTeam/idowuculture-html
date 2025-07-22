@@ -173,10 +173,10 @@
                                 <div class="mb-4">
                                     <label for="selectedFabric" class="text-sm font-semibold mb-1 block">Choose
                                         Fabric</label>
-                                    <select wire:model.live="selectedFabricIndex" id="selectedFabric"
+                                    <select wire:model.live="fabric_id" id="selectedFabric"
                                         class="border p-2 w-full rounded">
                                         @foreach ($product->fabrics as $index => $fabric)
-                                            <option value="{{ $index }}">
+                                            <option value="{{ $fabric['id'] }}">
                                                 Fabric {{ $index + 1 }} - NGN
                                                 {{ number_format($fabric['fabric_price']) }}
                                             </option>
@@ -185,7 +185,7 @@
                                 </div>
                                 <!-- Show fabric image preview -->
                                 @php
-                                    $fabric = $product->fabrics[$selectedFabricIndex] ?? null;
+                                    $fabric = collect($product->fabrics)->first(fn($item) => $item['id'] == $fabric_id);
                                     $imagePath = $fabric['fabrics_image'][0] ?? null;
                                 @endphp
 

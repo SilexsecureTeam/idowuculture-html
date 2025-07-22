@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaystackWebhookController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Cart\CartPage;
 use App\Livewire\Checkout\CheckoutPage;
@@ -24,7 +25,7 @@ Route::get('/about', [PagesController::class, 'aboutus'])->name('about-page');
 Route::get('/cart', CartPage::class)->name('cart-page');
 
 Route::middleware(['auth'])->group(function () {
-   Route::get('/checkout', CheckoutPage::class)->name('checkout-page');
+    Route::get('/checkout', CheckoutPage::class)->name('checkout-page');
 });
 
 
@@ -44,8 +45,6 @@ Route::get('product/{sku}', SingleProduct::class)->name('product.single.page');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', UserDashboard::class)->name('user.dashboard');
     Route::get('/profile', UserProfile::class)->name('profile');
-    
-
 });
 
 // Route::middleware('auth')->group(function () {
@@ -55,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
 // });
 
 // paystack 
-Route::get('/payment/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
+Route::get('/payment/{id}/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
+Route::middleware('api')->post('/api/paystack/webhook', [PaystackWebhookController::class, 'handleWebhook']);
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

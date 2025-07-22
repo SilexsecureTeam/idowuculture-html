@@ -59,7 +59,7 @@ class User extends Authenticatable implements FilamentUser, HasName
     public function canAccessPanel(Panel $panel): bool
     {
         if ($this->role === UserRole::USER) {
-            return false; 
+            return false;
         }
 
         return true;
@@ -70,8 +70,13 @@ class User extends Authenticatable implements FilamentUser, HasName
         return "{$this->firstname} {$this->lastname}";
     }
 
-    public function branch(){
+    public function branch()
+    {
         return $this->belongsTo(Branch::class);
     }
-}
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+}

@@ -138,8 +138,11 @@ class ProductResource extends Resource
                         Section::make([
                             Repeater::make('fabrics')
                                 ->label('Fabric Details')
+                                ->columns()
                                 ->hidden(fn(Get $get) => !$get('has_fabric'))
                                 ->schema([
+                                    Hidden::make('id')
+                                        ->default(Str::random(16)),
                                     TextInput::make('fabric_price')
                                         ->numeric()
                                         ->required()
@@ -154,9 +157,8 @@ class ProductResource extends Resource
                                         ->openable()
                                         ->maxFiles(1)
                                         ->maxSize(5120)
-                                        ->panelLayout('grid')
                                         ->columnSpanFull(),
-                                ]),
+                                ])->columns(), 
 
                             FileUpload::make('images')
                                 ->multiple()

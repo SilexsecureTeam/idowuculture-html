@@ -10,9 +10,8 @@ class Cart extends Model
         'session_id',
         'user_id',
         'product_id',
-        'selectedFabricIndex',
+        'Fabric_id',
         'selected_fabric',
-        'fabrics',
         'color',
         'size',
         'buy_fabric',
@@ -25,7 +24,6 @@ class Cart extends Model
         'selected_fabric' => 'array',
         'buy_fabric' => 'boolean',
         'checked_out' => 'boolean',
-        'fabrics' => 'array'
     ];
 
     protected $with = ['user', 'product'];

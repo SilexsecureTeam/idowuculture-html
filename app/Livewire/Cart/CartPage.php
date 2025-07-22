@@ -54,7 +54,7 @@ class CartPage extends Component
     $fabricPrice = 0;
 
     if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
-        $index = $cart->selected_fabric_index;
+        $index = $cart->fabric_id;
         if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
             $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
         }
@@ -75,7 +75,7 @@ public function decreaseQty(Cart $cart)
     $fabricPrice = 0;
 
     if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
-        $index = $cart->selected_fabric_index;
+        $index = $cart->fabric_id;
         if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
             $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
         }

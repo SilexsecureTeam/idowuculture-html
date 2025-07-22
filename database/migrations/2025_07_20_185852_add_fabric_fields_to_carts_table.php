@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('carts', function (Blueprint $table) {
-            $table->integer('selected_fabric_index')->nullable();
+            $table->string('fabric_id')->nullable();
             $table->json('selected_fabric')->nullable();
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('carts', function (Blueprint $table) {
-            $table->dropColumn('selected_fabric_index');
+            $table->dropColumn('fabric_id');
             $table->dropColumn('selected_fabric');
         });
     }

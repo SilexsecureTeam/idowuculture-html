@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User;
 
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -13,7 +14,8 @@ class UserDashboard extends Component
 
     public function mount()
     {
-        $this->user = Auth::user();
+        $user = Auth::user();
+
     }
 
 
@@ -21,6 +23,13 @@ class UserDashboard extends Component
     #[Title('Dashboard')]
     public function render()
     {
-        return view('livewire.user.user-dashboard');
+        $cartCount = 0;
+
+        if (auth()->check()) {
+            $cartCount = Cart::where('user_id', auth()->id())->count();
+        }
+        return view('livewire.user.user-dashboard', [
+        'cartCount' => $cartCount
+    ]);
     }
 }
