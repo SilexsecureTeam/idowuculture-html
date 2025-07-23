@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Mail\OrderPlaced;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class PaymentController extends Controller
@@ -78,6 +80,9 @@ class PaymentController extends Controller
             ]);
 
             DB::commit();
+
+            Mail::to($user->email)->send(new OrderPlaced($order));
+
             return redirect()->route('user.dashboard')->with('success', 'Payment successful!');
         }
 
