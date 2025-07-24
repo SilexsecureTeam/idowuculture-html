@@ -23,11 +23,11 @@
                       </button>
                   </div>
                   <ul data-list="page" class="space-y-3 text-[14px] text-[#fefefe]">
-                      <li><a href="index.html" class="hover:text-white transition">Home</a></li>
-                      <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
-                      <li><a href="product.html" class="hover:text-white transition">Product</a></li>
-                      <li><a href="#article" class="hover:text-white transition">Articles</a></li>
-                      <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+                      <li><a href="{{ '/' }}" class="hover:text-white transition">Home</a></li>
+                      <li><a href="{{ route('about-page') }}" class="hover:text-white transition">About Us</a></li>
+                      <li><a href="{{ route('all-products-page') }}" class="hover:text-white transition">Product</a></li>
+                      <li><a href="#" class="hover:text-white transition">Articles</a></li>
+                      <li><a href="{{ route('contact-page') }}" class="hover:text-white transition">Contact Us</a></li>
                   </ul>
               </div>
               <div class="md:w-[160px] w-full border-b border-b-gray-700 md:border-b-0 pb-4">

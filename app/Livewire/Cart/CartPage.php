@@ -3,6 +3,7 @@
 namespace App\Livewire\Cart;
 
 use App\Models\Cart;
+use App\Models\Discount;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
@@ -17,7 +18,7 @@ class CartPage extends Component
     #[Locked]
     private $cartQuery;
 
-    public $subTotal = 0;
+    public $subTotal;
     public $discount = 0;
     public $deliveryFee = 0;
     public $total = 0;
@@ -26,6 +27,7 @@ class CartPage extends Component
     {
         $sessionId = Session::get('cart-session');
         $userId = Auth::check() ? Auth::id() : null;
+        $this->discount = Discount::where('is_active', true)->first();
 
         if ($userId && $sessionId) {
             Cart::where('session_id', $sessionId)
@@ -46,46 +48,65 @@ class CartPage extends Component
     }
 
     public function increaseQty(Cart $cart)
-{
-    if (!$cart) return;
+    {
+        if (!$cart) return;
 
-    $cart->quantity += 1;
+        $cart->quantity += 1;
 
-    $fabricPrice = 0;
+        $fabricPrice = 0;
 
-    if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
-        $index = $cart->fabric_id;
-        if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
-            $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
+        if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
+            $index = $cart->fabric_id;
+            if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
+                $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
+            }
         }
+
+        $originalPrice = $cart->product->price;
+
+        if ($this->discount && isset($this->discount->percentage)) {
+
+            $productDiscount = $this->discount->percentage;
+            $discountRate = $productDiscount / 100;
+            $finalPrice = ($originalPrice * $discountRate);
+        }
+
+        $cart->total = ($finalPrice + $fabricPrice) * $cart->quantity;
+        $cart->save();
+
+        $this->refreshCart();
     }
 
-    $cart->total = ($cart->product->price + $fabricPrice) * $cart->quantity;
-    $cart->save();
 
-    $this->refreshCart();
-}
+    public function decreaseQty(Cart $cart)
+    {
+        if (!$cart || $cart->quantity <= 1) return;
 
-public function decreaseQty(Cart $cart)
-{
-    if (!$cart || $cart->quantity <= 1) return;
+        $cart->quantity -= 1;
 
-    $cart->quantity -= 1;
+        $fabricPrice = 0;
 
-    $fabricPrice = 0;
-
-    if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
-        $index = $cart->fabric_id;
-        if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
-            $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
+        if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
+            $index = $cart->fabric_id;
+            if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
+                $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
+            }
         }
+
+        $originalPrice = $cart->product->price;
+
+        // Apply discount if available
+        if ($this->discount && isset($this->discount->percentage)) {
+            $productDiscount = $this->discount->percentage;
+            $discountRate = $productDiscount / 100;
+            $finalPrice = ($originalPrice * $discountRate);
+        }
+
+        $cart->total = ($finalPrice + $fabricPrice) * $cart->quantity;
+        $cart->save();
+
+        $this->refreshCart();
     }
-
-    $cart->total = ($cart->product->price + $fabricPrice) * $cart->quantity;
-    $cart->save();
-
-    $this->refreshCart();
-}
 
 
     public function removeItem(Cart $cart)
@@ -108,7 +129,7 @@ public function decreaseQty(Cart $cart)
 
     private function calculateTotal()
     {
-        $this->total = max(0, $this->subTotal - $this->discount + $this->deliveryFee);
+        $this->total = max(0, $this->subTotal + $this->deliveryFee);
     }
 
 
@@ -138,14 +159,14 @@ public function decreaseQty(Cart $cart)
                 if ($userId) {
                     $query->orWhere('user_id', $userId);
                 }
-            });
+            })
+            ->orderByDesc('created_at');
     }
 
     #[Layout('layouts.app')]
     #[Title('My Cart')]
     public function render()
     {
-
         return view('livewire.cart.cart-page');
     }
 }

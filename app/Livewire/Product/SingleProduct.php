@@ -4,6 +4,7 @@ namespace App\Livewire\Product;
 
 use App\Livewire\Cart\CartIcon;
 use App\Models\Cart;
+use App\Models\Discount;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -25,23 +26,38 @@ class SingleProduct extends Component
     public $availableSizeQuantity = 1;
     public $fabric_id = 0;
     public $mainImageIndex = 0;
-    // public $showModal = false;
+    // discount price
+    public $originalPrice;
+    public $discountedPrice;
 
     public function mount($sku)
-    {
-        $this->product = Product::whereSku($sku)->firstOrFail();
-        // Default current price is product price
-        $this->currentPrice = $this->product->price;
-        $this->sizes = $this->product->sizes; // [['size', 'quantity', 'price']]
-        $this->colors = $this->product->colors; // [['color', 'quantity']]
+{
+    $this->product = Product::whereSku($sku)->firstOrFail();
 
-        if ($this->product->has_fabric) {
-            $this->fabricPrice = $this->product->fabric_price;
-            if ($this->product->fabrics) {
-                $this->fabric_id = collect($this->product->fabrics)->first()['id'];
-            }
+    $this->sizes = $this->product->sizes;
+    $this->colors = $this->product->colors;
+
+    $this->originalPrice = $this->product->price;
+    $price = $this->originalPrice;
+
+    $discount = Discount::where('is_active', true)->first();
+    // dd($discount);
+    if ($discount) {
+        $discountAmount = $this->product->price * $discount->percentage / 100;
+        $this->discountedPrice = $discountAmount;
+    }else{
+        $this->discountedPrice = 0;
+    }
+    
+    $this->currentPrice = $price;
+
+    if ($this->product->has_fabric) {
+        $this->fabricPrice = $this->product->fabric_price;
+        if ($this->product->fabrics) {
+            $this->fabric_id = collect($this->product->fabrics)->first()['id'];
         }
     }
+}
 
     public function updated($property, $value)
     {
@@ -62,6 +78,13 @@ class SingleProduct extends Component
     public function addToCart($sku)
     {
         $product = Product::whereSku($sku)->first();
+        $pPrice = $product->price;
+
+        $discount = Discount::where('is_active', true)->first();
+        if ($discount) {
+            $pPrice = ($product->price * $discount->percentage / 100);
+            // dd($pPrice);
+        }
 
         if (!$product) {
             LivewireAlert::title('Oops!')
@@ -128,7 +151,8 @@ class SingleProduct extends Component
             $cart->fabric_id = $this->fabric_id ?? null;
             $cart->selected_fabric = $fabricData; // Cast to array in Cart model
             $cart->quantity = 1;
-            $cart->total = ($product->price + $fabricPrice);
+            $cart->total = ($pPrice + $fabricPrice);
+            // dd($cart->total);
 
             $cart->save();
 
@@ -160,7 +184,6 @@ class SingleProduct extends Component
     #[Layout('layouts.app')]
     public function render()
     {
-
         return view('livewire.product.single-product');
     }
 }

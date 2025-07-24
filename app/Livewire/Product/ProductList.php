@@ -3,6 +3,7 @@
 namespace App\Livewire\Product;
 
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Product;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Attributes\Layout;
@@ -14,7 +15,7 @@ use Livewire\WithPagination;
 class ProductList extends Component
 {
     use WithPagination;
-
+    
     #[Url(except: 'all')]
     public string $category = 'all';
 
@@ -43,8 +44,6 @@ class ProductList extends Component
                 ->position('top-end')
                 ->show();
         }
-
-
     }
     #[Layout('layouts.app')]
     #[Title('View Products')]

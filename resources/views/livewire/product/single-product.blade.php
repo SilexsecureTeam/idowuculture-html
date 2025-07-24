@@ -14,8 +14,11 @@
                         class="w-full h-96 object-cover rounded">
                     <span
                         class="absolute top-4 left-4 bg-white text-black px-2 py-1 text-xs font-semibold uppercase">New</span>
-                    <span
-                        class="absolute top-4 right-4 bg-green-500 text-black px-2 py-1 text-xs font-semibold uppercase">-50%</span>
+                    {{-- @if (isset($discount))
+                        <span
+                            class="absolute top-4 right-4 bg-green-500 text-black px-2 py-1 text-xs font-semibold uppercase">{{ $percent }}</span>
+                    @endif --}}
+
                 </div>
             </div>
             <div>
@@ -32,9 +35,20 @@
                 <h1 class="text-2xl md:text-[40px] font-normal poppins text-[#141718] mb-3">{{ $product->title }}</h1>
                 <p class="text-[#6C7275] text-base font-normal mb-4">{!! Str::limit($product->description ?? '', 50) !!}</p>
                 <div class="flex items-center mb-4">
-                    <span class="text-[24px] font-bold text-[#121212] mr-4">NGN
-                        {{ number_format($currentPrice) }}</span>
-                    <span class="text-[24px] font-normal text-[#6C7275] line-through">₦200.00</span>
+                    @if ($discount)
+                        <span class="text-[24px] font-normal text-[#6C7275] line-through mr-2">
+                            NGN {{ number_format($originalPrice, 2) }}
+                        </span>
+                        <span class="text-[24px] font-bold text-[#121212]">
+                            NGN {{ number_format($discountedPrice, 2) }}
+                        </span>
+                    @else
+                        <span class="text-[24px] font-bold text-[#121212]">
+                            NGN {{ number_format($originalPrice, 2) }}
+                        </span>
+                    @endif
+
+                    
                 </div>
                 <div class="mb-6">
                     <h3 class="font-medium text-base text-[#6C7275] mb-2">Choose Color</h3>
@@ -197,7 +211,7 @@
                                         <img src="{{ asset('storage/' . $imagePath) }}" alt="Fabric Image"
                                             class="w-20 h-20 object-cover border rounded shadow cursor-pointer hover:scale-105 transition"
                                             @click="showModal = true">
-                                            <p class="text-gray-400 italic">click on the fabric to have a full view</p>
+                                        <p class="text-gray-400 italic">click on the fabric to have a full view</p>
 
                                         <!-- Fullscreen Modal -->
                                         <div x-show="showModal" x-transition x-cloak

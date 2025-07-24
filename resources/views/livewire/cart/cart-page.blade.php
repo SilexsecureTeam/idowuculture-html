@@ -38,7 +38,8 @@
                                         class="font-bold text-sm md:text-[20px] text-black hover:text-yellow-500">
                                         {{ $cart->product->title }}
                                     </a>
-                                    <button wire:click="removeItem('{{ $cart->id }}')" class="text-red-500 cursor-pointer hover:text-red-700" title="Remove">
+                                    <button wire:click="removeItem('{{ $cart->id }}')"
+                                        class="text-red-500 cursor-pointer hover:text-red-700" title="Remove">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
@@ -63,9 +64,11 @@
                                 <div class="flex items-center justify-between w-full">
                                     <div class="font-bold mt-1">₦{{ number_format($cart->total, 2) }}</div>
                                     <div class="flex items-center p-1 px-1.5 bg-[#F0F0F0] rounded-2xl gap-x-3">
-                                        <button class="w-[20px] cursor-pointer" wire:click="decreaseQty('{{ $cart->id }}')">-</button>
+                                        <button class="w-[20px] cursor-pointer"
+                                            wire:click="decreaseQty('{{ $cart->id }}')">-</button>
                                         <span class="text-[15px]"> {{ $cart->quantity }} </span>
-                                        <button class="w-[20px] cursor-pointer" wire:click="increaseQty('{{ $cart->id }}')">+</button>
+                                        <button class="w-[20px] cursor-pointer"
+                                            wire:click="increaseQty('{{ $cart->id }}')">+</button>
                                     </div>
                                 </div>
                             </div>
@@ -73,10 +76,12 @@
                     @empty
                         <div class="text-center text-gray-500 py-10 px-5">
                             <i class="fa-solid fa-shopping-cart text-2xl text-gray-400"></i>
-                           <p>
-                             Your cart is empty.
-                           </p>
-                           <a href="{{ route('all-products-page') }}" class=" flex justify-center gap-x-2 cursor-pointer bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-100 text-white py-3 rounded-lg mt-4 font-semibold"> Continue Shopping </a>
+                            <p>
+                                Your cart is empty.
+                            </p>
+                            <a href="{{ route('all-products-page') }}"
+                                class=" flex justify-center gap-x-2 cursor-pointer bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-100 text-white py-3 rounded-lg mt-4 font-semibold">
+                                Continue Shopping </a>
                         </div>
                     @endforelse
                 </div>
@@ -85,20 +90,26 @@
                 <div class="w-full lg:min-w-1/3 lg:w-fit bg-white cartshadow rounded-xl p-6 border border-gray-100">
                     <h2 class="font-bold text-2xl mb-4">Order Summary</h2>
 
+
+
+                    @if ($discount && isset($discount->percentage))
+                        <div class="flex justify-between py-1">
+                            <span class="text-[20px] opacity-60 font-medium">Discount
+                                (-{{ $discount->percentage }}%)</span>
+                            {{-- <span id="discount" class="text-[#FF3333] text-[20px] font-bold">-₦0.00</span> --}}
+                        </div>
+                    @endif
+
                     <div class="flex justify-between py-1">
                         <span class="text-[20px] opacity-60 font-medium">Subtotal</span>
                         <span id="subtotal" class="text-[20px] font-bold">
                             <i class="fa-solid fa-refresh animate-spin" wire:loading></i>
                             <span wire:loading.remove>
-                                ₦ {{ number_format($subTotal) }}
+                                ₦ {{($subTotal) }}
                             </span>
                         </span>
                     </div>
 
-                    <div class="flex justify-between py-1">
-                        <span class="text-[20px] opacity-60 font-medium">Discount (-20%)</span>
-                        <span id="discount" class="text-[#FF3333] text-[20px] font-bold">-₦0.00</span>
-                    </div>
 
                     <div class="flex justify-between py-1">
                         <span class="text-[20px] opacity-60 font-medium">Delivery Fee</span>
@@ -112,14 +123,14 @@
                         <span id="total">₦{{ number_format($total, 2) }}</span>
                     </div>
 
-                    <div class="flex w-full px-4 justify-center mt-4 gap-2">
+                    {{-- <div class="flex w-full px-4 justify-center mt-4 gap-2">
                         <input id="promo-code" type="text" placeholder="Add promo code"
                             class="md:flex-1 w-full px-3 py-2 bg-[#F0F0F0] rounded-4xl text-black outline-none placeholder:text-[#6C7275]" />
                         <button id="apply-promo"
                             class="bg-[#E0B654] hover:bg-amber-300 transition duration-300 ease-in-out transform hover:scale-105 text-16 rounded-4xl cursor-pointer text-white px-4 md:px-6 py-2">
                             Apply
                         </button>
-                    </div>
+                    </div> --}}
 
                     <a href="/checkout">
                         <button

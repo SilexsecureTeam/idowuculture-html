@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AboutPage;
 use App\Models\Article;
 use App\Models\ClothCollection;
+use App\Models\Discount;
 use App\Models\HomePage;
 use App\Models\Hurray;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class PagesController extends Controller
 
     public function cartpage()
     {
+
         return view('/cart');
     }
 
@@ -62,6 +64,8 @@ class PagesController extends Controller
 
     public function work()
     {
-        return view('/work');
+
+        $discount = Discount::where('is_active', true)->first();
+        return view('/work', compact('discount'));
     }
 }
