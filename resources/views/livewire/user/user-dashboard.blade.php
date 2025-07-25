@@ -1,360 +1,389 @@
 <main>
-
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .sidebar-transition {
+            transition: all 0.3s ease-in-out;
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(10px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .status-pending {
+            @apply bg-yellow-100 text-yellow-800;
         }
 
-        @keyframes shimmer {
-            0% {
-                background-position: -468px 0;
-            }
+        .status-processing {
+            @apply bg-blue-100 text-blue-800;
+        }
 
-            100% {
-                background-position: 468px 0;
+        .status-shipped {
+            @apply bg-green-100 text-green-800;
+        }
+
+        .status-delivered {
+            @apply bg-green-200 text-green-900;
+        }
+
+        .status-cancelled {
+            @apply bg-red-100 text-red-800;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-overlay {
+                background-color: rgba(0, 0, 0, 0.5);
             }
         }
 
-        .glassmorphism {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .glassmorphism-light {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #FFD700, #FFA500, #FF8C00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .gold-shimmer {
-            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
-            background-size: 400% 400%;
-            animation: shimmer 3s ease-in-out infinite;
+        .chart-bar {
+            transition: height 0.3s ease;
         }
     </style>
-    <div class="bg-gradient-to-br from-white via-gray-300 to-white min-h-screen font-sans text-white">
 
-        <!-- Header -->
-        {{-- <header class="glassmorphism shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <h1 class="text-2xl font-bold gradient-text">StyleHub</h1>
-                    <div class="relative hidden md:block">
-                        <i class="fas fa-search absolute left-3 top-3 text-gold-400"></i>
-                        <input type="text" placeholder="Search products..." 
-                               class="pl-10 pr-4 py-2 w-64 rounded-full border border-gold-400 focus:border-gold-300 focus:ring-2 focus:ring-gold-300 transition-all duration-300 bg-black/50 text-white placeholder-gold-300">
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <i class="fas fa-bell text-gold-400 hover:text-gold-300 cursor-pointer transition-colors text-lg"></i>
-                        <span class="absolute -top-1 -right-1 bg-gold-500 text-black text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse font-bold">3</span>
-                    </div>
-                    <div class="flex items-center space-x-2 bg-gradient-to-r from-gold-600 to-gold-400 rounded-full p-3 text-black shadow-lg">
-                        <i class="fas fa-user"></i>
-                        <span class="font-bold hidden sm:inline">{{ Auth::user()->name ?? 'Sarah Johnson' }}</span>
-                    </div>
-                </div>
+    <body class="min-h-screen overflow-x-hidden">
+        <!-- Sidebar -->
+        <div id="sidebar"
+            class="fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 transform transition-all z-50 md:translate-x-0 -translate-x-full">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h1 class="text-lg font-bold">Dashboard</h1>
+                <button id="close-sidebar" class="md:hidden">✕</button>
             </div>
+            <nav class="p-4 space-y-2 text-sm font-medium">
+                <a href="#" class="block p-3 rounded-lg bg-black text-white">🛒 Orders</a>
+                <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">❤️ Wishlist</a>
+                <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">👤 Profile</a>
+                <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">🏠 Addresses</a>
+                <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">💳 Payment</a>
+                <a href="#" class="block p-3 rounded-lg hover:bg-gray-100">⚙️ Settings</a>
+            </nav>
         </div>
-    </header> --}}
 
-        <div class="max-w-8xl mx-auto px-6 py-8" x-data="{ activeTab: 'overview' }">
-            <div class="flex flex-col lg:flex-row gap-8">
-                <!-- Sidebar -->
-                <div class="lg:w-64">
-                    <div class="glassmorphism rounded-2xl shadow-xl p-6 sticky top-24">
-                        <nav class="space-y-2">
-                            <button @click="activeTab = 'overview'"
-                                :class="activeTab === 'overview' ?
-                                    'bg-gradient-to-r from-gold-600 to-gold-400 text-black shadow-xl transform scale-105' :
-                                    'text-white hover:bg-gold-600/20 hover:text-gold-300'"
-                                class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300">
-                                <i class="fas fa-chart-line w-5 h-5"></i>
-                                <span class="font-medium">Overview</span>
-                            </button>
-                            <button @click="activeTab = 'orders'"
-                                :class="activeTab === 'orders' ?
-                                    'bg-gradient-to-r from-gold-600 to-gold-400 text-black shadow-xl transform scale-105' :
-                                    'text-gold-200 hover:bg-gold-600/20 hover:text-gold-300'"
-                                class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300">
-                                <i class="fas fa-box w-5 h-5"></i>
-                                <span class="font-medium">My Orders</span>
-                            </button>
-                            <button @click="activeTab = 'profile'"
-                                :class="activeTab === 'profile' ?
-                                    'bg-gradient-to-r from-gold-600 to-gold-400 text-black shadow-xl transform scale-105' :
-                                    'text-gold-200 hover:bg-gold-600/20 hover:text-gold-300'"
-                                class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300">
-                                <i class="fas fa-user w-5 h-5"></i>
-                                <span class="font-medium">Profile</span>
-                            </button>
-                            <button @click="activeTab = 'addresses'"
-                                :class="activeTab === 'addresses' ?
-                                    'bg-gradient-to-r from-gold-600 to-gold-400 text-black shadow-xl transform scale-105' :
-                                    'text-gold-200 hover:bg-gold-600/20 hover:text-gold-300'"
-                                class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300">
-                                <i class="fas fa-map-marker-alt w-5 h-5"></i>
-                                <span class="font-medium">Addresses</span>
-                            </button>
-                            <button @click="activeTab = 'settings'"
-                                :class="activeTab === 'settings' ?
-                                    'bg-gradient-to-r from-gold-600 to-gold-400 text-black shadow-xl transform scale-105' :
-                                    'text-gold-200 hover:bg-gold-600/20 hover:text-gold-300'"
-                                class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300">
-                                <i class="fas fa-cog w-5 h-5"></i>
-                                <span class="font-medium">Settings</span>
-                            </button>
-                        </nav>
+        <!-- Overlay for mobile -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+
+        <!-- Main Content -->
+        <div id="main-content" class="transition-all md:ml-64 p-6">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 p-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <button id="menu-toggle" class="md:hidden p-2 rounded hover:bg-gray-100 mr-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                        <h2 class="text-2xl font-bold text-black">Order Management</h2>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 rounded-lg hover:bg-gray-100">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 17h5l-5 5v-5zM4 5h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z">
+                                </path>
+                            </svg>
+                        </button>
+                        <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                            <span class="text-white text-sm font-medium">JD</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <main class="p-6">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total Orders</p>
+                                <p class="text-3xl font-bold text-black">142</p>
+                            </div>
+                            <div class="p-3 bg-black rounded-full">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">+12% from last month</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Pending</p>
+                                <p class="text-3xl font-bold text-yellow-600">8</p>
+                            </div>
+                            <div class="p-3 bg-yellow-100 rounded-full">
+                                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Awaiting processing</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Shipped</p>
+                                <p class="text-3xl font-bold text-blue-600">23</p>
+                            </div>
+                            <div class="p-3 bg-blue-100 rounded-full">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">On the way</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total Spent</p>
+                                <p class="text-3xl font-bold text-green-600">$8,429</p>
+                            </div>
+                            <div class="p-3 bg-green-100 rounded-full">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">This year</p>
                     </div>
                 </div>
 
-                <!-- Main Content -->
-                <div class="flex-1">
-                    <!-- Overview Tab -->
-                    <div x-show="activeTab === 'overview'" class="space-y-8 animate-fade-in">
-                        <!-- Welcome Section -->
-                        <div
-                            class="bg-gradient-to-r from-gold-300 to-gold-200 rounded-2xl p-8 text-black shadow-2xl relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-gold-300/20 to-gold-200/20 gold-shimmer">
-                            </div>
-                            <div class="relative z-10">
-                                <h2 class="text-3xl font-bold mb-2">Welcome back, {{ Auth::user()->firstname }}! ✨</h2>
-                                <p class="text-black/80 text-lg mb-6">Ready to discover your next luxury piece?</p>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div class="bg-black/20 backdrop-blur-sm rounded-xl p-4">
-                                        <p class="text-sm text-black/80 mb-1">Total Orders</p>
-                                        <p class="text-2xl font-bold">{{ $cartCount }}</p>
-                                        
-                                    </div>
-                                    <div class="bg-black/20 backdrop-blur-sm rounded-xl p-4">
-                                        <p class="text-sm text-black/80 mb-1">Total Spent</p>
-                                        <p class="text-2xl font-bold">$2,847</p>
-                                    </div>
-                                    <div class="bg-black/20 backdrop-blur-sm rounded-xl p-4">
-                                        <p class="text-sm text-black/80 mb-1">Saved Items</p>
-                                        <p class="text-2xl font-bold">18</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Recent Orders -->
-                        <div class="glassmorphism rounded-2xl shadow-xl p-6">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-xl font-semibold text-gold-300">Recent Orders</h3>
-                                <a href="#"
-                                    class="text-gold-400 hover:text-gold-300 font-medium transition-colors">View All</a>
-                            </div>
-                            <div class="space-y-4">
-                                <div
-                                    class="flex items-center space-x-4 p-4 glassmorphism-light rounded-xl hover:shadow-md transition-all duration-300">
-                                    <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=80&h=80&fit=crop"
-                                        alt="Summer Dress"
-                                        class="w-16 h-16 rounded-lg object-cover border border-gold-600">
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-gold-200">Summer Dress</h4>
-                                        <p class="text-sm text-gold-400">#ORD001 • July 15, 2025</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-semibold text-gold-300">$89.99</p>
-                                        <span
-                                            class="inline-block px-2 py-1 bg-green-600/80 text-green-200 text-xs rounded-full">Delivered</span>
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex items-center space-x-4 p-4 glassmorphism-light rounded-xl hover:shadow-md transition-all duration-300">
-                                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=80&h=80&fit=crop"
-                                        alt="Denim Jacket"
-                                        class="w-16 h-16 rounded-lg object-cover border border-gold-600">
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-gold-200">Denim Jacket</h4>
-                                        <p class="text-sm text-gold-400">#ORD002 • July 18, 2025</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-semibold text-gold-300">$124.99</p>
-                                        <span
-                                            class="inline-block px-2 py-1 bg-blue-600/80 text-blue-200 text-xs rounded-full">Shipped</span>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- Recent Orders -->
+                <div class="bg-white rounded-lg border border-gray-200 mb-8">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-black">Recent Orders</h3>
+                            <button class="text-sm text-gray-500 hover:text-black">View All</button>
                         </div>
                     </div>
 
-                    <!-- Orders Tab -->
-                    <div x-show="activeTab === 'orders'" class="animate-fade-in">
-                        <div class="glassmorphism rounded-2xl shadow-xl p-6">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-2xl font-bold text-gray-800">Order History</h3>
-                                <div class="flex space-x-2">
-                                    <select
-                                        class="px-3 py-2 rounded-lg border border-gray-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100">
-                                        <option>All Orders</option>
-                                        <option>Delivered</option>
-                                        <option>Shipped</option>
-                                        <option>Processing</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="space-y-4">
-                                <!-- Order items would be dynamically generated here -->
-                                <div
-                                    class="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-300">
-                                    <div class="flex items-center justify-between mb-4">
-                                        <div>
-                                            <h4 class="font-semibold text-gray-800">Order #ORD001</h4>
-                                            <p class="text-sm text-gray-500">Placed on July 15, 2025</p>
-                                        </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Order ID</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Items</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Total</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        #ORD-2024-001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 items</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
                                         <span
-                                            class="px-3 py-1 bg-green-100 text-green-600 rounded-full font-medium">Delivered</span>
-                                    </div>
-                                    <div class="flex items-center space-x-4">
-                                        <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=60&h=60&fit=crop"
-                                            alt="Product" class="w-16 h-16 rounded-lg object-cover">
-                                        <div class="flex-1">
-                                            <h5 class="font-medium">Summer Dress</h5>
-                                            <p class="text-sm text-gray-500">Size: M, Color: Blue</p>
-                                        </div>
-                                        <p class="font-semibold">$89.99</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- profile Tab -->
-                    <div x-show="activeTab === 'profile'" class="animate-fade-in">
-                        <div class="glassmorphism rounded-2xl shadow-xl p-6">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-2xl font-bold text-gray-800">Order History</h3>
-                                <div class="flex space-x-2">
-                                    <select
-                                        class="px-3 py-2 rounded-lg border border-gray-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100">
-                                        <option>All Orders</option>
-                                        <option>Delivered</option>
-                                        <option>Shipped</option>
-                                        <option>Processing</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="space-y-4">
-                                <!-- Order items would be dynamically generated here -->
-                                <div
-                                    class="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-300">
-                                    <div class="flex items-center justify-between mb-4">
-                                        <div>
-                                            <h4 class="font-semibold text-gray-800">Order #ORD001</h4>
-                                            <p class="text-sm text-gray-500">Placed on July 15, 2025</p>
-                                        </div>
+                                            class="px-2 py-1 text-xs font-medium rounded-full status-delivered">Delivered</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">$129.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-black hover:text-gray-600 font-medium">View
+                                            Details</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        #ORD-2024-002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-19</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 item</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
                                         <span
-                                            class="px-3 py-1 bg-green-100 text-green-600 rounded-full font-medium">Delivered</span>
-                                    </div>
-                                    <div class="flex items-center space-x-4">
-                                        <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=60&h=60&fit=crop"
-                                            alt="Product" class="w-16 h-16 rounded-lg object-cover">
-                                        <div class="flex-1">
-                                            <h5 class="font-medium">Summer Dress</h5>
-                                            <p class="text-sm text-gray-500">Size: M, Color: Blue</p>
-                                        </div>
-                                        <p class="font-semibold">$89.99</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                            class="px-2 py-1 text-xs font-medium rounded-full status-shipped">Shipped</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">$59.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-black hover:text-gray-600 font-medium">View
+                                            Details</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        #ORD-2024-003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-18</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 items</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium rounded-full status-processing">Processing</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">$89.50</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-black hover:text-gray-600 font-medium">View
+                                            Details</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        #ORD-2024-004</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-17</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4 items</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium rounded-full status-pending">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">$199.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-black hover:text-gray-600 font-medium">View
+                                            Details</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        #ORD-2024-005</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 item</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium rounded-full status-delivered">Delivered</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">$39.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-black hover:text-gray-600 font-medium">View
+                                            Details</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        #ORD-2024-006</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 items</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium rounded-full status-cancelled">Cancelled</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">$79.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-black hover:text-gray-600 font-medium">View
+                                            Details</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <!-- Wishlist Tab -->
-                    <div x-show="activeTab === 'wishlist'" class="animate-fade-in">
-                        <div class="glassmorphism rounded-2xl shadow-xl p-6">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-6">My Wishlist</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <!-- Wishlist items would be dynamically generated here -->
-                                <div
-                                    class="group bg-white/60 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
-                                    <div class="relative overflow-hidden rounded-lg mb-4">
-                                        <img src="https://images.unsplash.com/photo-1564257577-8a19a6e8ad0a?w=300&h=300&fit=crop"
-                                            alt="Silk Blouse"
-                                            class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
-                                        <button
-                                            class="absolute top-2 right-2 bg-white/80 hover:bg-white p-2 rounded-full transition-all">
-                                            <i class="fas fa-heart text-red-500"></i>
-                                        </button>
-                                    </div>
-                                    <h4 class="font-semibold text-gray-800 mb-1">Silk Blouse</h4>
-                                    <p class="text-purple-600 font-bold text-lg mb-3">$78.00</p>
-                                    <button
-                                        class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 rounded-lg hover:shadow-lg transition-all duration-300">
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
+
+                <!-- Order Analytics -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-semibold text-black mb-4">Order Status Distribution</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Delivered</span>
+                                <div class="flex items-center">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                        <div class="bg-green-600 h-2 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                    <span class="text-sm font-medium">111</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Shipped</span>
+                                <div class="flex items-center">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 16%"></div>
+                                    </div>
+                                    <span class="text-sm font-medium">23</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Pending</span>
+                                <div class="flex items-center">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                        <div class="bg-yellow-600 h-2 rounded-full" style="width: 6%"></div>
+                                    </div>
+                                    <span class="text-sm font-medium">8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-semibold text-black mb-4">Monthly Spending</h3>
+                        <div class="flex items-end space-x-2 h-32">
+                            <div class="flex flex-col items-center">
+                                <div class="bg-gray-300 chart-bar"
+                                    style="height: 40%; width: 20px; margin-bottom: 8px;">
+                                </div>
+                                <span class="text-xs text-gray-500">Jan</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="bg-gray-400 chart-bar"
+                                    style="height: 60%; width: 20px; margin-bottom: 8px;">
+                                </div>
+                                <span class="text-xs text-gray-500">Feb</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="bg-gray-500 chart-bar"
+                                    style="height: 80%; width: 20px; margin-bottom: 8px;">
+                                </div>
+                                <span class="text-xs text-gray-500">Mar</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="bg-gray-600 chart-bar"
+                                    style="height: 45%; width: 20px; margin-bottom: 8px;">
+                                </div>
+                                <span class="text-xs text-gray-500">Apr</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="bg-gray-700 chart-bar"
+                                    style="height: 90%; width: 20px; margin-bottom: 8px;">
+                                </div>
+                                <span class="text-xs text-gray-500">May</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="bg-black chart-bar"
+                                    style="height: 100%; width: 20px; margin-bottom: 8px;">
+                                </div>
+                                <span class="text-xs text-gray-500">Jun</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
 
         <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            sans: ['Inter', 'sans-serif'],
-                        },
-                        colors: {
-                            gold: {
-                                50: '#fffdf7',
-                                100: '#fffbeb',
-                                200: '#fef3c7',
-                                300: '#fde68a',
-                                400: '#fcd34d',
-                                500: '#f59e0b',
-                                600: '#d97706',
-                                700: '#b45309',
-                                800: '#92400e',
-                                900: '#78350f',
-                            }
-                        },
-                        animation: {
-                            'fade-in': 'fadeIn 0.5s ease-in-out',
-                            'slide-up': 'slideUp 0.3s ease-out',
-                            'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                            'shimmer': 'shimmer 2s linear infinite',
-                        }
-                    }
-                }
-            }
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            document.getElementById('menu-toggle')?.addEventListener('click', () => {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            });
+            document.getElementById('close-sidebar')?.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+            overlay?.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
         </script>
+    </body>
 </main>
