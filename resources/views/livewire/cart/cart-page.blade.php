@@ -113,7 +113,7 @@
 
                     <div class="flex justify-between py-1">
                         <span class="text-[20px] opacity-60 font-medium">Delivery Fee</span>
-                        <span id="delivery" class="text-[20px] font-bold">₦15.00</span>
+                        <span id="delivery" class="text-[20px] font-bold">₦00.00</span>
                     </div>
 
                     <div class="border-t border-t-gray-300 my-2"></div>

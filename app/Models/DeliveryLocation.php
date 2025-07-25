@@ -8,11 +8,6 @@ class DeliveryLocation extends Model
 {
     protected $fillable = [
         'address',
-        'city',
-        'state',
-        'country',
-        'lat',
-        'lng',
         'fee',
     ];
 }

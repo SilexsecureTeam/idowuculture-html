@@ -3,6 +3,7 @@
 namespace App\Livewire\Checkout;
 
 use App\Models\Cart;
+use App\Models\DeliveryLocation;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -10,13 +11,15 @@ use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Component;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 
 class CheckoutPage extends Component
 {
     public $cartItems = [];
+    public $allLocations = [];
     public $subTotal = 0;
-    public $deliveryFee = 15;
+    public $deliveryFee = 0;
     public $total = 0;
 
     public $name;
@@ -36,12 +39,14 @@ class CheckoutPage extends Component
             });
         $this->cartItems = $query->get();
 
+        $this->allLocations = DeliveryLocation::all()->toArray();
+        // $this->deliveryFee = $->fee;
+
         $this->subTotal = $query->sum('total');
         $this->total = $this->subTotal + $this->deliveryFee;
 
         if (Auth::check()) {
             $this->name = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-            // dd($this->name);
             $this->email = Auth::user()->email;
             $this->phone = Auth::user()->phone;
 
@@ -51,6 +56,20 @@ class CheckoutPage extends Component
                 ->update(['user_id' => Auth::id()]);
         }
     }
+
+    public function locationChanged()
+{
+    $location = collect($this->allLocations)->firstWhere('address', $this->address);
+
+    if ($location) {
+        $this->deliveryFee = $location['fee'];
+    } else {
+        $this->deliveryFee = 0;
+    }
+
+    $this->total = $this->subTotal + $this->deliveryFee;
+}
+
 
     public function placeOrder()
     {
@@ -68,6 +87,17 @@ class CheckoutPage extends Component
         }
 
         // Validate any additional fields if needed
+         $location = DeliveryLocation::where('address', $this->address)->first();
+
+    if (!$location) {
+         LivewireAlert::title('Opps!')
+                ->text('address', 'Please select a valid address from the list.')
+                ->warning()
+                ->toast()
+                ->position('top-end')
+                ->show();
+        return;
+    }
         $this->validate([
             'address' => 'required',
         ]);

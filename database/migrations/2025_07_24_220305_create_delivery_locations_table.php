@@ -14,11 +14,6 @@ return new class extends Migration
         Schema::create('delivery_locations', function (Blueprint $table) {
             $table->id();
             $table->string('address');
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('country')->nullable();
-            $table->decimal('lat', 10, 7)->nullable();
-            $table->decimal('lng', 10, 7)->nullable();
             $table->decimal('fee', 10, 2);
             $table->timestamps();
         });

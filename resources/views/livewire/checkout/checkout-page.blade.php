@@ -80,10 +80,14 @@
                         </div>
 
                         <div class="col-span-2">
-                            <label for="address" class="mb-1 text-sm font-medium text-gray-700">Address</label>
-                            <textarea wire:model="address" id="addressInput"
-                                class="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-900 transition"
-                                placeholder="Address"></textarea>
+                            <select wire:model="address" wire:change="locationChanged" id="address"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                                <option value="">-- Select Delivery Location --</option>
+                                @foreach ($allLocations as $location)
+                                    <option value="{{ $location['address'] }}">{{ $location['address'] }} —
+                                        ₦{{ number_format($location['fee']) }}</option>
+                                @endforeach
+                            </select>
                             @error('address')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -117,7 +121,7 @@
                         </div>
                         <div class="flex justify-between border-b border-gray-400 items-center py-3 text-black">
                             <span class="font-medium">Delivery Fee</span>
-                            <span>₦{{ number_format($deliveryFee, 2) }}</span>
+                            <span>₦{{ number_format($deliveryFee) }}</span>
                         </div>
                         <div class="flex justify-between items-center pt-6 text-lg font-bold text-yellow-900">
                             <span>Total</span>
@@ -150,4 +154,36 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const locations = @json($allLocations);
+            const input = document.getElementById('addressInput');
+
+            const list = locations.map(loc => loc.address);
+            const datalist = document.createElement('datalist');
+            datalist.id = 'addressList';
+
+            list.forEach(addr => {
+                const option = document.createElement('option');
+                option.value = addr;
+                datalist.appendChild(option);
+            });
+
+            input.setAttribute('list', 'addressList');
+            document.body.appendChild(datalist);
+
+            input.addEventListener('change', function() {
+                const selectedAddress = input.value;
+                const match = locations.find(l => l.address === selectedAddress);
+
+                if (match) {
+                    Livewire.dispatch('updateAddress', {
+                        address: match.address,
+                        fee: match.fee,
+                    });
+                }
+            });
+        });
+    </script>
 </main>
