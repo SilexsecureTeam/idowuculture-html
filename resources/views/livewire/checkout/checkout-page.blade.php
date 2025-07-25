@@ -121,7 +121,7 @@
                         </div>
                         <div class="flex justify-between border-b border-gray-400 items-center py-3 text-black">
                             <span class="font-medium">Delivery Fee</span>
-                            <span>₦{{ number_format($deliveryFee) }}</span>
+                            <span>₦{{ number_format($deliveryFee, 2) }}</span>
                         </div>
                         <div class="flex justify-between items-center pt-6 text-lg font-bold text-yellow-900">
                             <span>Total</span>
