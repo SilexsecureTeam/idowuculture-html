@@ -26,6 +26,7 @@ class CheckoutPage extends Component
     public $email;
     public $phone;
     public $address;
+    public $hAddress;
 
     public function mount()
     {
@@ -115,6 +116,7 @@ class CheckoutPage extends Component
                     'name' => $user->firstname . ' ' . $user->lastname,
                     'phone' => $user->phone ?? 'N/A',
                     'address' => $this->address,
+                    'hAddress' => $this->hAddress,
                     'user_id' => $user->id,
                     'cart_item_ids' => $this->cartItems->pluck('id')->toArray(),
                 ],

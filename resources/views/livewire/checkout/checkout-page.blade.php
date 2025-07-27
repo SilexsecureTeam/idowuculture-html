@@ -80,6 +80,7 @@
                         </div>
 
                         <div class="col-span-2">
+                            <label for="phone" class="mb-1 text-sm font-medium text-gray-700">Address</label>
                             <select wire:model="address" wire:change="locationChanged" id="address"
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
                                 <option value="">-- Select Delivery Location --</option>
@@ -89,6 +90,16 @@
                                 @endforeach
                             </select>
                             @error('address')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-span-2">
+                            <label for="name" class="mb-1 text-sm font-medium text-gray-700">Home Address</label>
+                            <input wire:model="hAddress" type="text" id="hAddress" name="hAddress"
+                                class="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-900 transition"
+                                placeholder="Full Name" required>
+                            @error('name')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>

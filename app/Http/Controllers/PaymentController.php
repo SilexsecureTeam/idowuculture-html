@@ -29,17 +29,19 @@ class PaymentController extends Controller
         if ($response->successful() && $data['data']['status'] === 'success') {
             $metadata = $data['data']['metadata'];
 
+        
             $data = $data['data'];
             $ref = "IDC" . strtoupper(Str::random(10));
             $amount = $data['amount'] / 100;
-            // dd($response, $metadata, $ref, $amount);
-
+            // dd( $data);
+            
             DB::beginTransaction();
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'reference' => $ref,
                 'address' => $metadata['address'],
                 'amount' => $amount,
+                'home_address' => $metadata['hAddress'] ?? null,
                 'status' => OrderStatus::PLACED->value
             ]);
 

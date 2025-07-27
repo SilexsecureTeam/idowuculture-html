@@ -11,6 +11,7 @@ class Order extends Model
         'reference',
         'delivery_date',
         'address',
+        'home_address',
         'amount',
         'status'
     ];
