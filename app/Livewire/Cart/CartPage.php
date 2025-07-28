@@ -101,9 +101,11 @@ class CartPage extends Component
             $productDiscount = $this->discount->percentage;
             $discountRate = $productDiscount / 100;
             $finalPrice = ($originalPrice * $discountRate);
+            $cart->total = ($finalPrice + $fabricPrice) * $cart->quantity;
         }
 
-        $cart->total = ($finalPrice + $fabricPrice) * $cart->quantity;
+        $cart->total = ($originalPrice + $fabricPrice) * $cart->quantity;
+
         $cart->save();
 
         $this->refreshCart();
