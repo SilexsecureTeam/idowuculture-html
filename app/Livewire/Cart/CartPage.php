@@ -22,6 +22,7 @@ class CartPage extends Component
     public $discount = 0;
     public $deliveryFee = 0;
     public $total = 0;
+    // public $finalPrice;
 
     public function mount()
     {
@@ -53,26 +54,27 @@ class CartPage extends Component
 
         $cart->quantity += 1;
 
+        $originalPrice = $cart->product->price;
         $fabricPrice = 0;
 
-        if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
-            $index = $cart->fabric_id;
-            if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
-                $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
+        // Safely get the fabric price
+        if (!empty($cart->fabric_id) && is_array($cart->product->fabrics)) {
+            foreach ($cart->product->fabrics as $fabric) {
+                if (isset($fabric['id']) && $fabric['id'] == $cart->fabric_id) {
+                    $fabricPrice = isset($fabric['fabric_price']) ? (float) $fabric['fabric_price'] : 0;
+                    break;
+                }
             }
         }
 
-        $originalPrice = $cart->product->price;
-
+        $discountAmount = 0;
         if ($this->discount && isset($this->discount->percentage)) {
-
-            $productDiscount = $this->discount->percentage;
-            $discountRate = $productDiscount / 100;
-            $finalPrice = ($originalPrice * $discountRate);
-            $cart->total = ($finalPrice + $fabricPrice) * $cart->quantity;
+            $discountAmount = $originalPrice * ($this->discount->percentage / 100);
         }
 
-        $cart->total = ($originalPrice + $fabricPrice) * $cart->quantity;
+        $finalPricePerUnit = ($originalPrice - $discountAmount) + $fabricPrice;
+
+        $cart->total = $finalPricePerUnit * $cart->quantity;
         $cart->save();
 
         $this->refreshCart();
@@ -85,28 +87,29 @@ class CartPage extends Component
 
         $cart->quantity -= 1;
 
+        $originalPrice = $cart->product->price;
         $fabricPrice = 0;
 
-        if (isset($cart->product->fabrics) && is_array($cart->product->fabrics)) {
-            $index = $cart->fabric_id;
-            if (is_numeric($index) && isset($cart->product->fabrics[$index]['fabric_price'])) {
-                $fabricPrice = (float) $cart->product->fabrics[$index]['fabric_price'];
+        // Safely get the fabric price
+        if (!empty($cart->fabric_id) && is_array($cart->product->fabrics)) {
+            foreach ($cart->product->fabrics as $fabric) {
+                if (isset($fabric['id']) && $fabric['id'] == $cart->fabric_id) {
+                    $fabricPrice = isset($fabric['fabric_price']) ? (float) $fabric['fabric_price'] : 0;
+                    break;
+                }
             }
         }
 
-        $originalPrice = $cart->product->price;
-
-        // Apply discount if available
+        $discountAmount = 0;
         if ($this->discount && isset($this->discount->percentage)) {
-            $productDiscount = $this->discount->percentage;
-            $discountRate = $productDiscount / 100;
-            $finalPrice = ($originalPrice * $discountRate);
-            $cart->total = ($finalPrice + $fabricPrice) * $cart->quantity;
+            $discountAmount = $originalPrice * ($this->discount->percentage / 100);
         }
 
-        $cart->total = ($originalPrice + $fabricPrice) * $cart->quantity;
+        $finalPricePerUnit = ($originalPrice - $discountAmount) + $fabricPrice;
 
+        $cart->total = $finalPricePerUnit * $cart->quantity;
         $cart->save();
+
 
         $this->refreshCart();
     }

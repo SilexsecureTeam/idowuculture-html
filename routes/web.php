@@ -4,6 +4,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaystackWebhookController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Cart\CartPage;
 use App\Livewire\Checkout\CheckoutPage;
@@ -12,6 +13,7 @@ use App\Livewire\Product\SingleProduct;
 use App\Livewire\User\Profile;
 use App\Livewire\User\UserDashboard;
 use App\Livewire\User\UserProfile;
+use App\Livewire\User\ViewOrder;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -44,6 +46,9 @@ Route::get('product/{sku}', SingleProduct::class)->name('product.single.page');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', UserDashboard::class)->name('user.dashboard');
+    Route::get('/order/{order}', ViewOrder::class)->name('order.view');
+    Route::get('/order/{order}/download-pdf', [PDFController::class, 'downloadOrderPDF'])->name('order.download.pdf');
+
     Route::get('/profile', UserProfile::class)->name('profile');
 });
 

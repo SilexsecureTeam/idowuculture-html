@@ -99,7 +99,7 @@
         <div class="bg-gray-50">
             <div class="min-h-screen flex">
                 <!-- Enhanced Sidebar -->
-                
+
 
                 <!-- Sidebar Overlay for Mobile -->
                 <div id="sidebar-overlay"
@@ -170,8 +170,10 @@
                                 class="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300">
                                 <div class="flex items-center justify-between">
                                     <div>
+
                                         <p class="text-sm font-medium text-gray-600 mb-1">Total Spent</p>
-                                        <p class="text-3xl font-bold text-green-600">₦8,429</p>
+                                        <p class="text-3xl font-bold text-green-600">
+                                            ₦{{ number_format($totalAmount, 2) }}</p>
                                         <p class="text-sm text-gray-500 mt-2"></p>
                                     </div>
                                     <div class="p-3 bg-green-100 rounded-full">
@@ -190,7 +192,7 @@
                         <div class="bg-white rounded-xl border border-gray-200 mb-8 overflow-hidden">
                             <div class="p-6 border-b border-gray-200">
                                 <div class="flex items-center justify-between">
-                                    <h3 class="text-xl font-semibold text-gray-900">Recent Orders</h3>
+                                    <h3 class="text-xl font-semibold text-gray-900">My Orders</h3>
                                     <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All
                                         Orders</button>
                                 </div>
@@ -244,55 +246,10 @@
                                                 {{-- @dd($item->order_id) --}}
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                                     <!-- View Details Button -->
-                                                    <button wire:click="viewOrderDetails({{ $item->id }})"
+                                                    <a href="{{ route('order.view', ['order' => $item->id]) }}"
                                                         class="text-blue-600 hover:text-blue-800 font-medium">
                                                         View Details
-                                                    </button>
-
-                                                    <!-- Modal -->
-                                                    @if ($selectedOrderId)
-                                                        @php
-                                                            $selectedOrder = \App\Models\Order::with(
-                                                                'items.product',
-                                                            )->find($selectedOrderId);
-                                                        @endphp
-
-                                                        <div
-                                                            class="fixed inset-0 z-50 flex items-center justify-center bg-grey-700 bg-opacity-100">
-                                                            <div
-                                                                class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
-                                                                <button wire:click="closeModal"
-                                                                    class="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold">
-                                                                    &times;
-                                                                </button>
-                                                                <h2 class="text-xl font-bold mb-4">Order:
-                                                                    {{ $selectedOrder->reference }}</h2>
-                                                                <p class="text-sm text-gray-500 mb-4">Placed on
-                                                                    {{ $selectedOrder->created_at->format('M d, Y') }}
-                                                                </p>
-
-                                                                <div class="divide-y divide-gray-200">
-                                                                    @foreach ($selectedOrder->items as $item)
-                                                                        <div class="py-3 flex justify-between">
-                                                                            <div>
-                                                                                <p class="font-semibold">
-                                                                                    {{ $item->product->title ?? 'Product' }}
-                                                                                </p>
-                                                                                <p class="text-sm text-gray-500">Qty:
-                                                                                    {{ $item->quantity }}</p>
-                                                                            </div>
-                                                                            <div class="text-right">
-                                                                                <p class="text-gray-700 font-semibold">
-                                                                                    ₦{{ number_format($item->price, 2) }}
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endforeach
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @empty
@@ -307,11 +264,11 @@
                             <div class="mt-4 p-2">
                                 {{ $orderDetails->links() }}
                             </div>
-                        </div>                      
+                        </div>
                     </main>
                 </div>
             </div>
         </div>
-      
+
     </div>
 </main>

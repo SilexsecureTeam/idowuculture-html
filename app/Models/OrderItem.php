@@ -19,6 +19,10 @@ class OrderItem extends Model
         'status'
     ];
 
+    protected $casts = [
+         'selected_fabric' => 'array',
+    ];
+
     public function product()
     {
         return $this->belongsTo(Product::class);
