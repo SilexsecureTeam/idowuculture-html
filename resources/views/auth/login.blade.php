@@ -131,7 +131,7 @@
                 </form>
 
                 <p class="text-base font-normal pl-7 text-[#000000] mb-6">
-                    Don't have a PHC account?
+                    Don't have an account?
                     <a href="{{ route('register') }}" class="text-[#009345] pl-2 hover:underline">
                         Sign up
                     </a>

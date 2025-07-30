@@ -8,6 +8,7 @@ use App\Models\ClothCollection;
 use App\Models\Discount;
 use App\Models\HomePage;
 use App\Models\Hurray;
+use App\Models\Policy;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -44,7 +45,8 @@ class PagesController extends Controller
 
     public function privacy()
     {
-        return view('/privacy');
+        $policy = Policy::first();
+        return view('/policy', compact('policy'));
     }
 
     public function products()
@@ -59,7 +61,8 @@ class PagesController extends Controller
 
     public function term()
     {
-        return view('/term');
+        $policy = Policy::first('terms_and_conditions');
+        return view('/term', compact('policy'));
     }
 
     public function work()

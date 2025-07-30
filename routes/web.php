@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
 // pages
 Route::get('/contact', [PagesController::class, 'contactus'])->name('contact-page');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-Route::get('/privacy', [PagesController::class, 'privacy'])->name('privacy-page');
+Route::get('/policy', [PagesController::class, 'privacy'])->name('privacy-page');
 Route::get('/term', [PagesController::class, 'term'])->name('term-page');
 Route::get('/work', [PagesController::class, 'work'])->name('work-page');
 
