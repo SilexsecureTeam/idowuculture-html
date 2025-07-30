@@ -6,6 +6,7 @@ use App\Models\AboutPage;
 use App\Models\Article;
 use App\Models\ClothCollection;
 use App\Models\Discount;
+use App\Models\Faq;
 use App\Models\HomePage;
 use App\Models\Hurray;
 use App\Models\Policy;
@@ -67,8 +68,13 @@ class PagesController extends Controller
 
     public function work()
     {
-
         $discount = Discount::where('is_active', true)->first();
         return view('/work', compact('discount'));
+    }
+
+    public function question()
+    {
+        $faqs = Faq::all(); // or paginate(), or orderBy('created_at', 'desc') etc.
+        return view('faq', compact('faqs'));
     }
 }

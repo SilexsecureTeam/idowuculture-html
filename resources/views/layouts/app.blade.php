@@ -14,7 +14,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    
+    <!-- AOS CSS -->
+    {{-- <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 600,
+            once: true,
+        });
+    </script> --}}
+
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/about.js', 'resources/js/article.js', 'resources/js/category.js', 'resources/js/collection.js', 'resources/js/footer.js', 'resources/js/header.js', 'resources/js/hero.js', 'resources/js/hurray.js', 'resources/js/image.js', 'resources/js/newsletter.js', 'resources/js/product.js'])
@@ -139,6 +148,8 @@
     @livewireStyles
 </head>
 <!-- Page Content -->
+<!-- AOS JS -->
+
 
 <body class="w-full pt-26 mx-auto max-w-[1500px]">
     <div>
@@ -154,9 +165,9 @@
     @livewireScripts
 </body>
 
-   <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
-    <script defer src="https://unpkg.com/alpinejs" ></script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
+<script defer src="https://unpkg.com/alpinejs"></script>
 
 </html>

@@ -37,6 +37,7 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/policy', [PagesController::class, 'privacy'])->name('privacy-page');
 Route::get('/term', [PagesController::class, 'term'])->name('term-page');
 Route::get('/work', [PagesController::class, 'work'])->name('work-page');
+Route::get('/faqs', [PagesController::class, 'question'])->name('faq-page');
 
 // products
 Route::get('/products', ProductList::class)->name('all-products-page');

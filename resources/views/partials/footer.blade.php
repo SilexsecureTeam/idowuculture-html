@@ -42,7 +42,7 @@
                       <li><a href="{{ route('privacy-page') }}" class="hover:text-white transition">Return & Refund</a></li>
                       <li><a href="{{ route('term-page') }}" class="hover:text-white transition">Terms and Conditions</a></li>
                       <li><a href="{{ route('privacy-page') }}" class="hover:text-white transition">Privacy Policy</a></li>
-                      <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+                      <li><a href="{{ route('faq-page') }}" class="hover:text-white transition">FAQs</a></li>
                   </ul>
               </div>
               <div class="md:w-[160px] w-full">
