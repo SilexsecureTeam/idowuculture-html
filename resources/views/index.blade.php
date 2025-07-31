@@ -320,7 +320,7 @@
                         NO ARTICLE
                     </h2>
                 @endforelse
-                
+
             </div>
         </section>
 
@@ -395,5 +395,41 @@
 
             container.addEventListener('scroll', updateButtons);
             updateButtons();
+        </script>
+
+        <script>
+            function handleSubmit(event) {
+                event.preventDefault();
+                const emailInput = document.getElementById('email-input');
+                const message = document.getElementById('message');
+                const email = emailInput.value;
+
+                if (!email) {
+                    message.textContent = "Please enter your email address.";
+                    message.classList.remove("hidden");
+                    return;
+                }
+
+                fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // if using Laravel
+                        },
+                        body: JSON.stringify({
+                            email
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        message.textContent = data.message || "Subscribed successfully!";
+                        message.classList.remove("hidden");
+                        emailInput.value = "";
+                    })
+                    .catch(err => {
+                        message.textContent = "Something went wrong. Please try again.";
+                        message.classList.remove("hidden");
+                    });
+            }
         </script>
     @endsection

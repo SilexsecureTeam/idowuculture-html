@@ -83,28 +83,26 @@
         }
 
         /* Fixed Overlay for buttons */
-        .overlay {
+        .hover-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 0.5rem 0.5rem 0 0;
+            background: rgba(0, 0, 0, 0.6);
             opacity: 0;
-            visibility: hidden;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
         }
 
-
-        .product-card:hover .overlay {
+        .product-card:hover .hover-overlay {
             opacity: 1;
         }
+
     </style>
 
     <!-- Feature Section with Dropdown Filter -->
@@ -168,11 +166,16 @@
                                         class="product-image">
                                 @endif
 
-                                <div class="overlay">
+                                {{-- <div class="overlay">
                                     <a href="{{ route('product.single.page', $product->sku) }}"
                                         class="bg-gray-500 text-white py-2 px-4 rounded text-sm hover:bg-green-500 hover:text-white">
                                         View Product
                                     </a>
+                                </div> --}}
+                                <div class="hover-overlay">
+                                    <a href="{{ route('product.single.page', $product->sku) }}"
+                                        class="bg-white text-gray-800 py-2 px-4 rounded text-sm hover:bg-gray-100">View
+                                        Product</a>
                                 </div>
                             </div>
 

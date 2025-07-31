@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaystackWebhookController;
@@ -41,6 +42,8 @@ Route::get('/faqs', [PagesController::class, 'question'])->name('faq-page');
 
 Route::get('/article', [PagesController::class, 'articlePage'])->name('article-page');
 Route::get('/article/{slug}', [PagesController::class, 'articleShow'])->name('articles.show');
+
+Route::post('/subscribe', [NewsletterController::class, 'subscribe']);
 
 // products
 Route::get('/products', ProductList::class)->name('all-products-page');
