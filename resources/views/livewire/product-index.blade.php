@@ -38,7 +38,31 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <div class="text-yellow-400 text-sm mb-1">★★★★★</div>
+                                {{-- <div class="text-yellow-400 text-sm mb-1">★★★★★</div> --}}
+                                <!-- Average Rating -->
+                                <div class="flex items-center mb-6">
+                                    <div class="flex text-yellow-400">
+                                        @php
+                                            $averageRating = round($product->reviews->avg('rating'), 1);
+                                            $totalReviews = $product->reviews->count();
+                                        @endphp
+
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= floor($averageRating))
+                                                <i class="fas fa-star"></i>
+                                            @elseif ($i - $averageRating < 1)
+                                                <i class="fas fa-star-half-alt"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                    <p class="ml-2 text-sm text-gray-600">
+                                        {{-- {{ $averageRating }} out of 5 · {{ $totalReviews }} --}}
+                                        {{-- {{ Str::plural('Review', $totalReviews) }} --}}
+                                    </p>
+                                </div>
+
                                 <h3 class="font-semibold mb-2">{{ $product->title }}</h3>
                                 <h3 class="text-sm">{!! Str::limit($product->description ?? '', 50) !!}</h3>
                                 <div class="flex items-center gap-2 mb-3 pt-2">
