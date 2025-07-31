@@ -20,8 +20,8 @@ class FaqResource extends Resource
 {
     protected static ?string $model = Faq::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationGroup = 'Content Mgmt';
     public static function form(Form $form): Form
     {
         return $form
@@ -39,11 +39,11 @@ class FaqResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('question')
-                ->html()
-                ->limit(50),
+                    ->html()
+                    ->limit(50),
                 TextColumn::make('answer')
-                ->html()
-                ->limit(50),
+                    ->html()
+                    ->limit(50),
             ])
             ->filters([
                 //

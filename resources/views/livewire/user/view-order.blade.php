@@ -156,10 +156,10 @@
             // @dd($transaction);
         @endphp
 
-        <div class="mb-4 bg-gray-300 p-3">
-            <h2 class="text-lg font-bold text-gray-700 mb-2 text-center">Transaction Details</h2>
+        <div class="mb-4 bg-[#B8860B] p-3">
+            <h2 class="text-lg font-bold text-white mb-2 text-center">Transaction Details</h2>
             @if ($transaction)
-                <div class="text-sm text-gray-600 space-y-1">
+                <div class="text-sm text-white space-y-1">
                     <p><strong>Payment(made with):</strong> {{ ucfirst($transaction->channel) }}</p>
                     <p><strong>Currency:</strong> {{ $transaction->currency }}</p>
                     <p><strong>Total Amount:</strong> ₦{{ number_format($transaction->amount, 2) }}</p>

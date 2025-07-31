@@ -12,8 +12,10 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Illuminate\Support\Str;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -31,20 +33,24 @@ class ArticleResource extends Resource
     {
         return $form
             ->schema([
-
-                TextInput::make('heading')
-                    ->label('Article Title')
-                    ->required()
-                    ->columnSpanFull(),
-
                 Section::make([
-                    FileUpload::make('images')
-                        ->multiple()
+                    TextInput::make('title')
+                        ->label('Article Title')
+                        ->required()
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                    TextInput::make('slug')
+                        ->required(),
+                    TextInput::make('author')
+                        ->label('Author'),
+                ])
+                    ->columnSpan(1),
+                Section::make([
+                    FileUpload::make('image')
                         ->required()
                         ->image()
                         ->imageEditor()
                         ->directory('images/article')
-                        ->reorderable()
                         ->openable()
                         ->maxFiles(1)
                         ->maxSize(5120)
@@ -57,8 +63,7 @@ class ArticleResource extends Resource
                     RichEditor::make('content')
                         ->required()
                 ])
-                    ->columnSpan(1)->heading('Content'),
-
+                    ->columnSpan(2)->heading('Content'),
             ]);
     }
 
@@ -69,12 +74,16 @@ class ArticleResource extends Resource
                 ImageColumn::make('images')
                     ->label('Article Image')
                     ->circular(),
-                TextColumn::make('heading')
-                    ->label('Article Heading')
+                TextColumn::make('title')
+                    ->label('Title')
+                    ->formatStateUsing(fn($state) => strip_tags($state))
+                    ->wrap(),
+                TextColumn::make('slug')
+                    ->label('Slug')
                     ->formatStateUsing(fn($state) => strip_tags($state))
                     ->wrap(),
                 TextColumn::make('content')
-                    ->label('Article Content')
+                    ->label('Content')
                     ->formatStateUsing(fn($state) => strip_tags($state))
                     ->wrap(),
             ])

@@ -26,7 +26,7 @@
                       <li><a href="{{ '/' }}" class="hover:text-white transition">Home</a></li>
                       <li><a href="{{ route('about-page') }}" class="hover:text-white transition">About Us</a></li>
                       <li><a href="{{ route('all-products-page') }}" class="hover:text-white transition">Product</a></li>
-                      <li><a href="#" class="hover:text-white transition">Articles</a></li>
+                      <li><a href="{{ route('article-page') }}" class="hover:text-white transition">Articles</a></li>
                       <li><a href="{{ route('contact-page') }}" class="hover:text-white transition">Contact Us</a></li>
                   </ul>
               </div>
@@ -82,8 +82,8 @@
           <div class="hidden md:flex w-full items-center justify-between">
               <p class="text-[#E8ECEF] poppins text-[12px]">
                   © 2025 Idowucouture. All rights reserved |
-                  <a href="#" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
-                  <a href="#" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
+                  <a href="{{ route('privacy-page') }}" class="text-[#6C7275] hover:text-white ml-1">Privacy Policy</a>
+                  <a href="{{ route('term-page') }}" class="text-[#6C7275] hover:text-white ml-1">Terms & Conditions</a>
               </p>
               <div class="flex gap-2 items-center flex-wrap">
                   <img src="/assets/visa.png" class="h-6" alt="Visa" />

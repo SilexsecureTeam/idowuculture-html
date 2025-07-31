@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('articles', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('images')->nullable();
-            $table->string('heading')->nullable();
-            $table->string('content')->nullable();
+            $table->string('title');
+            $table->string('slug')->unique()->nullable();
+            $table->text('content');
+            $table->string('image')->nullable(); // for article images
+            $table->string('author')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-       Schema::table('articles', function (Blueprint $table) {
-            $table->dropColumn('articles');
-        });
+        Schema::dropIfExists('articles');
     }
 };

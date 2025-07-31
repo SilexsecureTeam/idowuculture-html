@@ -60,6 +60,17 @@ class PagesController extends Controller
         return view('/products');
     }
 
+    public function articlePage()
+    {
+        $articles = Article::latest()->paginate(3); 
+        return view('/article', compact('articles'));
+    }
+    public function articleShow($slug)
+    {
+        $articles = Article::where('slug', $slug)->firstOrFail(); 
+        return view('/articleshow', compact('articles'));
+    }
+
     public function term()
     {
         $policy = Policy::first('terms_and_conditions');

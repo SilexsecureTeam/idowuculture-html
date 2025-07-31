@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $fillable = [
-        'images',
-        'heading',
-        'content'
-    ];
-
-    protected $casts = [
-        'images'=> 'array',
+        'title',
+        'slug',
+        'content',
+        'image',
+        'author',
+        'published_at',
     ];
 }

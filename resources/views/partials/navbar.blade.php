@@ -19,10 +19,10 @@
                 @else
                     <h2 class="flex items-center justify-center gap-x-2">
                     Have an amazing time shopping
+                    <a href="{{ route('all-products-page') }}">
                     <span
                         class="flex items-center gap-x-1 sm:border-b-2 border-b-1 pb-[0.5px] sm:pb-[1px] border-b-black">
                         Shop Now
-                        <a href="{{ route('all-products-page') }}">
                             <img src="{{ asset('assets/shopping-cart.png') }}" alt="icon" class="w-4 h-4" />
                         </a>
                     </span>
