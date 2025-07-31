@@ -16,7 +16,7 @@ class PagesController extends Controller
 {
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->get();
+        $articles = Article::orderBy('created_at', 'desc')->limit(3)->get();
         $hurray = Hurray::first();
         $slider = HomePage::first();
         $collections = ClothCollection::orderBy('position', 'asc')->get();

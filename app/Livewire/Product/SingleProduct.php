@@ -6,6 +6,7 @@ use App\Livewire\Cart\CartIcon;
 use App\Models\Cart;
 use App\Models\Discount;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;

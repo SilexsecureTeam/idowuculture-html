@@ -276,7 +276,7 @@
         <section class="px-5 sm:px-10 lg:px-20 py-8" id="article">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="poppins text-[20px] md:text-[40px] font-medium">Latest Articles</h1>
-                <a href="{{ route('all-products-page') }}"
+                <a href="{{ route('article-page') }}"
                     class="text-base text-[#121212] h-fit pb-1 font-medium flex items-center gap-1 border-b border-black hover:border-[#E0B654] transition-colors">
                     View More <span>→</span>
                 </a>
@@ -287,17 +287,26 @@
                         class = "card article-card flex flex-col bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
 
                         <div class="overflow-hidden">
-                            <img src="{{ asset('storage/' . $item->images[0]) }}" alt=""
+                            {{-- <img src="{{ asset('storage/' . $item->image ?? null) }}" alt=""
                             class="article-image w-full h-60 md:h-64 object-cover"
                             style="opacity: 1; transition: opacity 0.3s ease;"
-                            >
+                            > --}}
+                            @if (isset($item->image) > 0)
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="About Image 5"
+                                    class="article-image w-full h-60 md:h-64 object-cover" data-loading="true"
+                                    loading="lazy">
+                            @else
+                                <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                    <span class="text-gray-500">No image available</span>
+                                </div>
+                            @endif
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <h3 class="text-[20px] poppins text-[#23262F] font-medium mb-3 line-clamp-2 flex-1">
                                 {{ $item->heading }}
                             </h3>
                             <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {!! $item->content !!}
+                                {!! Str::limit($item->content, 100) !!}
                             </p>
 
                             <a href="#"
@@ -311,7 +320,8 @@
                         NO ARTICLE
                     </h2>
                 @endforelse
-
+                
+            </div>
         </section>
 
         <!-- Newsletter Section -->

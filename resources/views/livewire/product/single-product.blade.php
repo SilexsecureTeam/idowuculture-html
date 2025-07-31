@@ -8,30 +8,56 @@
             <span id="product-title" class="text-black font-medium">{{ $product->title }}</span>
         </nav>
         <div id="product-content" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="space-y-4">
+            <div x-data="{ currentImage: '{{ asset('storage/' . $product->images[0]) }}' }" class="space-y-4">
+                <!-- Main Product Image -->
                 <div class="relative">
-                    <img src="{{ asset('storage/' . $product->images[0]) }}" alt="Air Jordan 1 - SS23"
-                        class="w-full h-96 object-cover rounded">
+                    <img :src="currentImage" alt="{{ $product->title }}"
+                        class="w-full h-96 object-cover rounded transition duration-300 ease-in-out">
                     <span
                         class="absolute top-4 left-4 bg-white text-black px-2 py-1 text-xs font-semibold uppercase">New</span>
-                    {{-- @if (isset($discount))
-                        <span
-                            class="absolute top-4 right-4 bg-green-500 text-black px-2 py-1 text-xs font-semibold uppercase">{{ $percent }}</span>
-                    @endif --}}
+                </div>
 
+                <!-- Thumbnail Images (Scrollable) -->
+                <div
+                    class="flex justify-center space-x-3 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 py-2">
+                    @foreach ($product->images as $img)
+                        <img src="{{ asset('storage/' . $img) }}"
+                            @click="currentImage = '{{ asset('storage/' . $img) }}'"
+                            :class="currentImage === '{{ asset('storage/' . $img) }}'
+                                ?
+                                'ring-2 ring-yellow-500 border-yellow-500' :
+                                'border-transparent'"
+                            class="w-24 h-20 flex-shrink-0 object-cover rounded border-2 cursor-pointer hover:border-yellow-500 transition-all duration-200"
+                            alt="Thumbnail">
+                    @endforeach
                 </div>
+
             </div>
+
             <div>
-                <div class="flex items-center mb-2">
-                    <div class="flex">
-                        <i class="fa-solid fa-star text-yellow-400"></i><i
-                            class="fa-solid fa-star text-yellow-400"></i><i
-                            class="fa-solid fa-star text-yellow-400"></i><i
-                            class="fa-solid fa-star text-yellow-400"></i><i
-                            class="fa-solid fa-star text-yellow-400"></i>
+                <!-- Average Rating -->
+                <div class="flex items-center mb-6">
+                    <div class="flex text-yellow-400">
+                        @php
+                            $averageRating = round($product->reviews->avg('rating'), 1);
+                            $totalReviews = $product->reviews->count();
+                        @endphp
+
+                        @for ($i = 1; $i <= 5; $i++)
+                            @if ($i <= floor($averageRating))
+                                <i class="fas fa-star"></i>
+                            @elseif ($i - $averageRating < 1)
+                                <i class="fas fa-star-half-alt"></i>
+                            @else
+                                <i class="far fa-star"></i>
+                            @endif
+                        @endfor
                     </div>
-                    <span class="ml-2 text-[12px] font-normal text-[#141718] poppins">5 Reviews</span>
+                    <p class="ml-2 text-sm text-gray-600">
+                        {{ $averageRating }} out of 5 · {{ $totalReviews }} {{ Str::plural('Review', $totalReviews) }}
+                    </p>
                 </div>
+
                 <h1 class="text-2xl md:text-[40px] font-normal poppins text-[#141718] mb-3">{{ $product->title }}</h1>
                 <p class="text-[#6C7275] text-base font-normal mb-4">{!! Str::limit($product->description ?? '', 50) !!}</p>
                 <div class="flex items-center mb-4">
@@ -48,7 +74,7 @@
                         </span>
                     @endif
 
-                    
+
                 </div>
                 <div class="mb-6">
                     <h3 class="font-medium text-base text-[#6C7275] mb-2">Choose Color</h3>
@@ -268,6 +294,8 @@
                     Add to Cart
                 </button>
             </div>
+
+            <livewire:product-reviews :product="$product" />
         </div>
     </div>
 

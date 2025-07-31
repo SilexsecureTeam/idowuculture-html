@@ -25,7 +25,7 @@ class Product extends Model
     protected $with = [
         'category'
     ];
-    
+
     protected $casts = [
         'colors' => 'array',
         'sizes' => 'array',
@@ -34,7 +34,7 @@ class Product extends Model
         'fabrics' => 'array',
         'is_featured' => 'boolean',
         'price' => 'decimal:2',
-        
+
     ];
 
     public function category()
@@ -46,6 +46,8 @@ class Product extends Model
     {
         return $this->belongsTo(ClothCollection::class);
     }
-    
-   
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
