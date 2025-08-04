@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentController;
@@ -68,5 +69,8 @@ Route::middleware(['auth'])->group(function () {
 // paystack 
 Route::get('/payment/{id}/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
 Route::middleware('api')->post('/api/paystack/webhook', [PaystackWebhookController::class, 'handleWebhook']);
+
+Route::get('auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 
 require __DIR__ . '/auth.php';
