@@ -125,7 +125,7 @@
                             $about_details &&
                             isset($about_details->images) &&
                             is_array($about_details->images) &&
-                            count($about_details->images) > 0)
+                            array_key_exists(0, $about_details->images))
                         <img src="{{ asset('storage/' . $about_details->images[0]) }}" alt="About Image 1"
                             class="w-full h-80 object-cover" data-loading="true" loading="lazy">
                     @else
@@ -141,7 +141,7 @@
                             $about_details &&
                             isset($about_details->images) &&
                             is_array($about_details->images) &&
-                            count($about_details->images) > 0)
+                            array_key_exists(1, $about_details->images))
                         <img src="{{ asset('storage/' . $about_details->images[1]) }}" alt="About Image 2"
                             class="w-full bg-gray-300  h-full hidden md:block object-cover" data-loading="true"
                             loading="lazy">
@@ -161,7 +161,7 @@
                             $about_details &&
                             isset($about_details->images) &&
                             is_array($about_details->images) &&
-                            count($about_details->images) > 0)
+                            array_key_exists(2, $about_details->images))
                         <img src="{{ asset('storage/' . $about_details->images[2]) }}" alt="About Image 3"
                             class="md:h-60 bg-gray-300 md:w-60 md:block hidden rounded-lg" data-loading="true"
                             loading="lazy">
@@ -205,7 +205,7 @@
                             $about_details &&
                             isset($about_details->images) &&
                             is_array($about_details->images) &&
-                            count($about_details->images) > 0)
+                            array_key_exists(3, $about_details->images))
                         <img src="{{ asset('storage/' . $about_details->images[3]) }}" alt="About Image 4"
                             class="bg-gray-300 w-full h-64 object-cover md:h-90" data-loading="true" loading="lazy">
                     @else
@@ -238,7 +238,7 @@
                             $about_details &&
                             isset($about_details->images) &&
                             is_array($about_details->images) &&
-                            count($about_details->images) > 0)
+                            array_key_exists(4, $about_details->images))
                         <div class="absolute top-0 left-0 w-full h-[90vh] flex items-center justify-center bg-gray-300">
                             <img src="{{ asset('storage/' . $about_details->images[4]) }}" alt="About Image 5"
                                 class="absolute bg-gray-300 top-0 left-0 w-full h-[90vh] object-cover object-top"

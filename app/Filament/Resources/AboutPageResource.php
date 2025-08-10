@@ -31,6 +31,7 @@ class AboutPageResource extends Resource
             ->schema([
                 Section::make([
                     FileUpload::make('images')
+                    ->hint('NOTE:Upload five(5) images(below 2 mb max) required - image 1(portrait), image 2(landscape), image3(square), image 4(square), image5(landscape)')
                         ->multiple()
                         ->required()
                         ->image()
@@ -39,7 +40,7 @@ class AboutPageResource extends Resource
                         ->reorderable()
                         ->openable()
                         ->maxFiles(5)
-                        ->maxSize(5120)
+                        ->maxSize(2048)
                         ->panelLayout('grid')
 
                 ])

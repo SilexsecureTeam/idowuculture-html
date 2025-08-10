@@ -106,7 +106,7 @@
                                     +234 80234545061
                                 </p>
                                 <p class="text-black font-bold poppin text-[16px]">
-                                    contact@npfinsurance.com
+                                    info@idowucouture.ng
                                 </p>
                             </div>
                         </div>

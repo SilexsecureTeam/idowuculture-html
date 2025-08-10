@@ -4,7 +4,7 @@
           <div id="footer-left" class="md:w-1/3 mb-2 md:mb-0 border-b border-b-gray-700 md:border-b-0 pb-4">
               <img src="/assets/logo.png" alt="logo" class="h-20 mb-4" />
               <p class="text-[20px] poppins font-medium text-[#fefefe] mb-6 text-center md:text-left">
-                  More than just a game.<br>It’s a lifestyle.
+                  Home of African Wears
               </p>
               <div class="flex gap-4 justify-center md:justify-start">
                   <a href="#" aria-label="Instagram" class="text-[#fefefe]"><i

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +15,8 @@ class GoogleAuthController extends Controller
 
     public function handleGoogleCallback()
     {
+        // dd(Socialite::driver('google'));
+
         $googleUser = Socialite::driver('google')->stateless()->user();
 
         $user = User::firstOrCreate(
@@ -28,6 +30,6 @@ class GoogleAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended('/dashboard'); // or wherever
+        return redirect()->intended('/cart'); // or wherever
     }
 }

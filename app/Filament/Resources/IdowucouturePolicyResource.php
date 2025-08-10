@@ -10,6 +10,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Illuminate\Support\Str;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -42,24 +43,27 @@ protected static ?string $navigationIcon = null;
                 Section::make([
                     FileUpload::make('policy_image')
                     ->label('Policy (Required Dimension - 1723 x 635)')
+                    ->hint('Upload image size : 2mb max')
                         ->required()
                         ->image()
                         ->imageEditor()
                         ->directory('images/policy')
                         ->openable()
                         ->maxFiles(1)
-                        ->maxSize(5120)
+                        ->maxSize(2048)
                         ->panelLayout('grid'),
 
                     FileUpload::make('terms_image')
                     ->label('Terms and Conditions (Required Dimension - 1723 x 635)')
+                    
+                    ->hint('Upload image size : 2mb max')
                         ->required()
                         ->image()
                         ->imageEditor()
                         ->directory('images/terms')
                         ->openable()
                         ->maxFiles(1)
-                        ->maxSize(5120)
+                        ->maxSize(2048)
                         ->panelLayout('grid')
 
                 ])
@@ -73,19 +77,20 @@ protected static ?string $navigationIcon = null;
             ->columns([
                 TextColumn::make('shipping_policy')
                     ->label('Shipping Policy')
-                    ->formatStateUsing(fn($state) => strip_tags($state))
+                    // ->formatStateUsing(fn($state) => strip_tags($state))
+                    ->formatStateUsing(fn($state) => Str::words(strip_tags($state), 10, '...'))
                     ->wrap(),
                 TextColumn::make('refund_policy')
                     ->label('Refund Policy')
-                    ->formatStateUsing(fn($state) => strip_tags($state))
+                    ->formatStateUsing(fn($state) => Str::words(strip_tags($state), 10, '...'))
                     ->wrap(),
                 TextColumn::make('terms_and_conditions')
                     ->label('Terms and Conditions')
-                    ->formatStateUsing(fn($state) => strip_tags($state))
+                    ->formatStateUsing(fn($state) => Str::words(strip_tags($state), 10, '...'))
                     ->wrap(),
                 TextColumn::make('privacy_policy')
                     ->label('Privacy Policy')
-                    ->formatStateUsing(fn($state) => strip_tags($state))
+                    ->formatStateUsing(fn($state) => Str::words(strip_tags($state), 10, '...'))
                     ->wrap(),
                 ImageColumn::make('policy_image')
                     ->label('Policy Image')

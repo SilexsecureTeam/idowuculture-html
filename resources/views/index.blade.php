@@ -202,10 +202,10 @@
                     <img src="{{ asset('storage/' . $collections[0]['image']) }}" alt="{{ $collections[0]['title'] }}"
                         class="w-full h-full object-cover bg-gray-300" loading="lazy" />
                     <div class="absolute bottom-4 left-4">
-                        <h3 class="sm:text-[34px] text-xl poppins text-[#9E0505] font-medium mb-1 md:mb-2">
+                        <h3 class="sm:text-[34px] text-xl poppins text-[#E9A319] font-medium mb-1 md:mb-2">
                             {{ $collections[0]['title'] }}</h3>
                         <a href="{{ route('products-page', ['collection' => $collections[0]['slug']]) }}"
-                            class="text-base text-white font-medium flex items-center gap-1 border-b border-white pb-1 w-fit">
+                            class="text-base text-white font-medium flex items-center gap-1 border-b border-white pb-1 w-fit ">
                             Collections <span>→</span>
                         </a>
                     </div>
@@ -219,7 +219,7 @@
                             <img src="{{ asset('storage/' . $item['image']) }}" alt="{{ $item['title'] }}"
                                 class="w-full h-full object-cover bg-gray-300" loading="lazy" />
                             <div class="absolute bottom-4 left-4">
-                                <h3 class="sm:text-[34px] text-xl poppins text-[#9E0505] font-medium mb-1 md:mb-2">
+                                <h3 class="sm:text-[34px] text-xl poppins text-[#E9A319] font-medium mb-1 md:mb-2">
                                     {{ $item['title'] }}</h3>
                                 <a href="{{ route('products-page', ['collection' => $item['slug']]) }}"
                                     class="text-base text-white font-medium flex items-center gap-1 border-b border-white pb-1 w-fit">
